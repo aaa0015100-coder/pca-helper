@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="攝護腺癌決策">
+<meta name="theme-color" content="#173a63">
+<title>攝護腺癌臨床決策參考</title>
+<style>
+:root{
+  --bg:#f4f6f9; --panel:#ffffff; --panel2:#f8fafc; --ink:#14202e; --ink2:#465567; --ink3:#6b7a8c;
+  --line:#dde3ea; --line2:#eef1f5;
+  --pri:#1d4e89; --pri2:#173a63; --priSoft:#e8f0fa;
+  --ok:#1f7a4d; --okSoft:#e6f4ec; --warn:#a15c00; --warnSoft:#fdf1e0; --bad:#b42318; --badSoft:#fdecea;
+  --upd:#0f7b6c; --updSoft:#ddf3ef; --gray:#5d6b7b; --graySoft:#eef1f5;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
+  --r:10px;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f141a; --panel:#171e26; --panel2:#1c242e; --ink:#e6ebf1; --ink2:#b3bfcc; --ink3:#8a98a8;
+    --line:#2a3542; --line2:#222c37; --pri:#7fb2ec; --pri2:#0f2b4a; --priSoft:#1b2e45;
+    --ok:#5cc792; --okSoft:#163326; --warn:#f0b35b; --warnSoft:#3a2a12; --bad:#ff8a80; --badSoft:#3d1a18;
+    --upd:#4fd1bf; --updSoft:#123530; --gray:#a3b0be; --graySoft:#232d38; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --panel:#171e26; --panel2:#1c242e; --ink:#e6ebf1; --ink2:#b3bfcc; --ink3:#8a98a8;
+  --line:#2a3542; --line2:#222c37; --pri:#7fb2ec; --pri2:#0f2b4a; --priSoft:#1b2e45;
+  --ok:#5cc792; --okSoft:#163326; --warn:#f0b35b; --warnSoft:#3a2a12; --bad:#ff8a80; --badSoft:#3d1a18;
+  --upd:#4fd1bf; --updSoft:#123530; --gray:#a3b0be; --graySoft:#232d38; --shadow:none;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--pri)}
+.wrap{max-width:920px;margin:0 auto;padding:0 14px}
+header.top{background:var(--pri2);color:#fff;position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top)}
+header.top .wrap{display:flex;align-items:center;gap:10px;min-height:54px}
+.brand{flex:1;min-width:0}
+.brand h1{margin:0;font-size:17px;font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{display:block;font-size:11.5px;opacity:.75;letter-spacing:.03em}
+.ver{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:2px 7px}
+.themeBtn{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer}
+nav.tabs{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:calc(54px + env(safe-area-inset-top));z-index:19}
+nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.tabs .wrap::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:2.5px solid transparent;padding:11px 12px 9px;font-size:14.5px;color:var(--ink3);cursor:pointer;white-space:nowrap}
+nav.tabs button.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:700}
+.strip{background:var(--panel2);border-bottom:1px solid var(--line)}
+.strip .wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-top:7px;padding-bottom:7px;font-size:12.5px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--ink2);white-space:nowrap}
+.chip b{color:var(--ink)}
+.strip .lbl{color:var(--ink3);margin-right:2px}
+.linkbtn{background:none;border:0;color:var(--pri);cursor:pointer;padding:0 4px;font-size:12.5px;text-decoration:underline}
+.disc{font-size:12.5px;color:var(--ink3);padding:10px 0 0}
+main{padding:12px 0 40px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin:0 0 12px;overflow:hidden}
+.card>h2,.card>h3{margin:0;padding:11px 14px;font-size:15.5px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card>h2 .sub,.card>h3 .sub{font-weight:400;color:var(--ink3);font-size:12.5px}
+.cb{padding:12px 14px}
+.sec{font-size:13px;font-weight:700;color:var(--ink3);letter-spacing:.04em;margin:18px 2px 8px;text-transform:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 12px}
+.f{display:flex;flex-direction:column;gap:3px;min-width:0}
+.f>span{font-size:12.5px;color:var(--ink2)}
+.f input,.f select{border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:7px 9px;min-height:38px;width:100%}
+.f input:focus,.f select:focus{outline:2px solid var(--pri);outline-offset:-1px;background:var(--panel)}
+.f.wide{grid-column:1/-1}
+.chk{display:flex;align-items:flex-start;gap:7px;font-size:14px;padding:5px 0;cursor:pointer}
+.chk input{margin-top:4px;width:16px;height:16px;flex:0 0 auto}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;color:var(--ink2)}
+.seg button.on{background:var(--pri);border-color:var(--pri);color:#fff;font-weight:600}
+:root[data-theme="dark"] .seg button.on{color:#0f141a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button.on{color:#0f141a}}
+.res{background:var(--panel2);border-top:1px solid var(--line2);padding:12px 14px}
+.big{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.unit{font-size:13px;color:var(--ink3);font-weight:400;margin-left:3px}
+.muted{color:var(--ink3)}
+.small{font-size:12.5px}
+.note{font-size:12.5px;color:var(--ink2);margin-top:6px}
+.tag{display:inline-block;font-size:12px;font-weight:600;border-radius:5px;padding:1px 7px;line-height:1.6;white-space:nowrap}
+.t-low{background:var(--okSoft);color:var(--ok)}
+.t-mid{background:var(--warnSoft);color:var(--warn)}
+.t-high{background:var(--badSoft);color:var(--bad)}
+.t-info{background:var(--priSoft);color:var(--pri)}
+.t-gray{background:var(--graySoft);color:var(--gray)}
+.upd{display:inline-block;font-size:11px;font-weight:700;color:var(--upd);background:var(--updSoft);border:1px solid color-mix(in srgb,var(--upd) 35%,transparent);border-radius:4px;padding:0 5px;line-height:1.55;cursor:pointer;vertical-align:1px;margin:0 2px}
+.src{display:inline-block;font-size:11px;color:var(--pri);background:var(--priSoft);border:0;border-radius:4px;padding:0 5px;line-height:1.6;cursor:pointer;vertical-align:1px;margin:0 2px;white-space:nowrap}
+abbr.gl{text-decoration:underline dotted;text-underline-offset:3px;cursor:help}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th,table.t td{border-bottom:1px solid var(--line2);padding:7px 8px;text-align:left;vertical-align:top}
+table.t th{font-size:12px;color:var(--ink3);font-weight:600;background:var(--panel2)}
+.tscroll{overflow-x:auto}
+@media (max-width:600px){table.rt thead{display:none}table.rt,table.rt tbody,table.rt tr,table.rt td{display:block;width:auto!important}
+table.rt tr{border-bottom:1px solid var(--line);padding:8px 2px}table.rt td{border:0;padding:2px 6px}
+table.rt td:first-child{display:inline-block}table.rt td:nth-child(2){display:inline-block}}
+.opt{border:1px solid var(--line);border-radius:9px;margin:10px 0;background:var(--panel)}
+.opt.pref{border-left:4px solid var(--pri)}
+.opt.no{opacity:.92;border-left:4px solid var(--gray)}
+.opt-h{padding:9px 12px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid var(--line2)}
+.opt-h b{font-size:15px}
+.opt-b{padding:9px 12px;font-size:14px}
+.row{display:grid;grid-template-columns:72px 1fr;gap:6px 10px;padding:4px 0;border-bottom:1px dashed var(--line2)}
+.row:last-child{border-bottom:0}
+.row>.k{font-size:12px;color:var(--ink3);font-weight:600;padding-top:2px}
+.ok{color:var(--ok);font-weight:700}.ng{color:var(--bad);font-weight:700}.cau{color:var(--warn);font-weight:700}
+ul.tight{margin:4px 0;padding-left:18px}ul.tight li{margin:2px 0}
+details{border-top:1px solid var(--line2)}
+details>summary{cursor:pointer;padding:9px 14px;font-size:13.5px;color:var(--ink2);list-style:none}
+details>summary::before{content:"▸ ";color:var(--ink3)}
+details[open]>summary::before{content:"▾ "}
+details .cb{padding-top:2px}
+.kv{display:flex;flex-wrap:wrap;gap:6px 16px;margin:4px 0}
+.kv>div{min-width:130px}
+.kv .k{font-size:12px;color:var(--ink3)}
+.alert{border-radius:8px;padding:9px 11px;font-size:13.5px;margin:8px 0}
+.a-warn{background:var(--warnSoft);color:var(--ink)}
+.a-info{background:var(--priSoft);color:var(--ink)}
+.a-bad{background:var(--badSoft);color:var(--ink)}
+.btn{border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:6px 12px;cursor:pointer;font-size:13.5px}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+.psaRow{display:grid;grid-template-columns:1fr 1fr 34px;gap:8px;margin-bottom:6px;align-items:center}
+.psaRow input{border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:7px 8px;min-height:38px;width:100%}
+.x{border:1px solid var(--line);background:var(--panel2);border-radius:7px;height:38px;cursor:pointer;color:var(--ink3)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.drug h3 .brand2{font-weight:400;color:var(--ink3);font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink2)}
+footer{color:var(--ink3);font-size:12px;padding:10px 0 calc(28px + env(safe-area-inset-bottom));border-top:1px solid var(--line);margin-top:10px}
+#ov{position:fixed;inset:0;background:rgba(10,15,22,.45);display:none;z-index:50;align-items:flex-end;justify-content:center}
+#ov.on{display:flex}
+#ovBox{background:var(--panel);color:var(--ink);width:100%;max-width:640px;border-radius:14px 14px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));max-height:70vh;overflow:auto;box-shadow:0 -6px 24px rgba(0,0,0,.2)}
+#ovBox h4{margin:0 0 6px;font-size:15px}
+#ovBox p{margin:6px 0;font-size:14px}
+@media (min-width:700px){#ov{align-items:center}#ovBox{border-radius:14px}}
+.step{border:1px solid var(--line);border-left:4px solid var(--gray);border-radius:9px;margin:10px 0;background:var(--panel)}
+.step.st-go{border-left-color:var(--pri)}.step.st-bx{border-left-color:var(--bad)}.step.st-stop{border-left-color:var(--ok)}.step.st-wait{border-left-color:var(--warn)}
+.st-h{display:flex;gap:8px;align-items:center;padding:8px 12px 2px}
+.st-n{flex:0 0 auto;min-width:22px;height:22px;border-radius:11px;background:var(--graySoft);color:var(--ink2);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+.st-go .st-n{background:var(--priSoft);color:var(--pri)}.st-bx .st-n{background:var(--badSoft);color:var(--bad)}.st-stop .st-n{background:var(--okSoft);color:var(--ok)}.st-wait .st-n{background:var(--warnSoft);color:var(--warn)}
+.st-t{font-size:12.5px;color:var(--ink3);font-weight:700;letter-spacing:.03em}
+.st-c{padding:2px 12px 8px;font-size:14.5px}
+.st-x{padding:0 12px 9px;font-size:12.5px;color:var(--ink2)}
+.step details.st-d>summary{padding:6px 12px;font-size:12.5px}
+.opt-q{display:inline-block;margin-left:auto}
+.opt details>summary{padding:6px 12px;font-size:12.5px}
+.opt details .opt-b{padding-top:0}
+.hl{background:var(--priSoft);border-radius:8px;padding:10px 12px;margin:6px 0}
+.stage{font-size:26px;font-weight:800;color:var(--pri);letter-spacing:.02em}
+@media (max-width:520px){
+  .grid{grid-template-columns:1fr 1fr}
+  .row{grid-template-columns:62px 1fr}
+  .brand h1{font-size:16px}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand"><h1>攝護腺癌臨床決策參考</h1><small>Prostate Cancer Clinical Decision Support</small></div>
+  <button class="themeBtn" id="themeBtn" aria-label="切換深淺色">自動</button>
+  <span class="ver" id="ver">v1.0</span>
+</div></header>
+<nav class="tabs"><div class="wrap" id="tabs"></div></nav>
+<div class="strip"><div class="wrap" id="strip"></div></div>
+<main><div class="wrap">
+  <div class="disc">僅供臨床決策參考，不取代臨床判斷、院內規範與最新指引原文。本頁不儲存任何病人資料，重新整理即清空。</div>
+  <div id="panels" style="margin-top:12px"></div>
+  <footer>
+    <div>v<span id="ver2"></span>　最後查證日期：<span id="checked"></span></div>
+    <div>指引版本：NCCN v1.2027、NCCN Early Detection v2.2026 ／ EAU 2026 ／ AUA/ASTRO 2026、AUA/ASTRO/SUO 救援治療 2024、AUA/SUO 2026（晚期、早期偵測）／ 健保藥品給付規定 115.09.22 版。詳見「來源・版本」。</div>
+  </footer>
+</div></main>
+<div id="ov" role="dialog" aria-modal="true"><div id="ovBox"></div></div>
+
+<script>
+"use strict";
+/* ================= 基本設定 ================= */
+const APP_VERSION = "1.0";
+const CHECKED = "2026-10-17";
+
+/* ================= 出處 ================= */
+const REF = {
+  nccn:{t:"NCCN v1.2027",f:"NCCN Clinical Practice Guidelines in Oncology: Prostate Cancer, Version 1.2027（2026 年 10 月現行版）。NCCN 全文需登入，本工具之 NCCN 內容依公開資料整理：NCCN Guidelines Insights v5.2026（JNCCN 2026;24(5)）、Prostate Cancer v3.2026（JNCCN 2025;23(11)）、v1–2.2026 更新摘要與 2026 年會報導。使用前請至 nccn.org 核對。",u:"https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1459"},
+  nccnI:{t:"NCCN Insights v5.2026",f:"Spratt DE, Srinivas S, Adra N, et al. NCCN Guidelines® Insights: Prostate Cancer, Version 5.2026. J Natl Compr Canc Netw 2026;24(5). doi:10.6004/jnccn.2026.0023。重點：刪除 very-low-risk 組、更新 active surveillance 原則、新診斷者不建議 focal therapy 作為初始治療。",u:"https://jnccn.org/view/journals/jnccn/24/5/article-p140.xml"},
+  nccnUpd:{t:"NCCN v1–2.2026 更新摘要",f:"NCCN Prostate Cancer v1.2026：刪除 very-low-risk group。v2.2026（2025-09-15）：多數 FIR 接受 RT 不建議併用 ADT；新增心血管風險評估頁；新增 FDA 核可 PET tracer 表。"},
+  nccn326:{t:"NCCN v3.2026（JNCCN）",f:"Prostate Cancer, Version 3.2026, NCCN Clinical Practice Guidelines in Oncology. J Natl Compr Canc Netw 2025;23(11)。mCSPC 依同時性／異時性與轉移負荷決定強化程度及 prostate-directed／metastasis-directed therapy。"},
+  ascoNccn:{t:"NCCN 2026 年會（ASCO Post）",f:"2026 NCCN Clinical Practice Guidelines in Oncology: Key Updates Across Tumor Types. The ASCO Post, 2026-05-25。異時性寡轉移 APMS 疾病納入 MDT；「other hormonal agents」統一改稱 ARPI。",u:"https://ascopost.com/issues/may-25-2026/2026-nccn-clinical-practice-guidelines-in-oncology-key-updates-across-tumor-types/"},
+  eau:{t:"EAU 2026",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer, 2026 edition（limited update, March 2026）. Cornford P, Tilki D, et al. EAU Guidelines Office, Arnhem.",u:"https://uroweb.org/guidelines/prostate-cancer"},
+  eauRisk:{t:"EAU 2026 Table 4.3",f:"EAU 2026 Table 4.3 EAU risk groups：Low＝ISUP GG1 且 PSA <10 且 cT1–2；Favourable intermediate＝GG2 且 PSA <10（cT1–2），或 GG1 且 PSA 10–20；Unfavourable intermediate＝GG2 且 PSA 10–20，或 GG3（cT1–2）；High＝GG4–5 或 PSA >20；Locally advanced＝cT3–4 和/或 cN+（任何 PSA、GG）。cT 依 DRE；影像分期另行記錄。",u:"https://uroweb.org/guidelines/prostate-cancer/chapter/classification-and-staging-systems"},
+  eauP1:{t:"EAU 2026 Part I（Eur Urol）",f:"EAU–EANM–ESTRO–ESUR–ISUP–SIOG Guidelines on Prostate Cancer—2026 Update. Part I: Screening, Diagnosis, and Local Treatment with Curative Intent. Eur Urol 2026。新五級 EAU 分組；PSMA PET 為建議分期檢查。",u:"https://www.sciencedirect.com/science/article/pii/S0302283826021147"},
+  auaLoc:{t:"AUA/ASTRO 2026",f:"Eastham JA, Barocas DA, Chu CE, Morgans AK, Rodrigues G, et al. Clinically Localized Prostate Cancer: AUA/ASTRO Guideline (2022; amended 2026). J Urol 2026;216(1):2–11。Table 3 risk groups；Statement 6–8 分期影像；Statement 44 高風險 RT＋ADT＋abiraterone 24 個月。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/clinically-localized-prostate-cancer"},
+  auaApc:{t:"AUA/SUO 2026",f:"Advanced Prostate Cancer: AUA/SUO Guideline (2023; amended 2026)。Part I（BCR、mHSPC）2026 年 5 月；Part II（mCRPC）2026 年 7 月。文獻檢索至 2025-08-26，共 40 條建議。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/advanced-prostate-cancer"},
+  eauDx:{t:"EAU 2026 Ch.5",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer 2026, Chapter 5 Diagnostic Evaluation：5.2.8 Recommendations for individual early detection and germline testing；5.3 病理（ASAP、HGPIN）；5.5 Biopsy strategy；5.5.8 Recommendations on MRI imaging in biopsy indication and strategy；Table 5.5 PI-RADS × PSA density。",u:"https://uroweb.org/guidelines/prostate-cancer/chapter/diagnostic-evaluation"},
+  auaEd:{t:"AUA/SUO EDPC 2026",f:"Wei JT, Barocas D, Carlsson S, et al. Early Detection of Prostate Cancer: AUA/SUO Guideline (2023; amended 2026，AUA 理事會 2026-02 通過，文獻至 2024-12)。Statement 1–35（篩檢、初次切片、重複切片、切片技術）。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/early-detection-of-prostate-cancer-guidelines"},
+  auaEdAm:{t:"AUA EDPC 2026 修訂摘要",f:"AUA/SUO Early Detection of Prostate Cancer 2026 Amendment Summary：#13 MRI 於初次切片前 Grade B→A；#28 ASAP 由 Expert Opinion 改為 Moderate/C（明列可含重複切片）；#35 經直腸或經會陰 Grade C→B；Table 6 生物標記更新。",u:"https://www.auanet.org/documents/Guidelines/PDF/2026%20Guidelines/EDPC%20Guideline%202026%20-%20Amendment%20Summary.pdf"},
+  nccnEd:{t:"NCCN Early Detection v2.2026",f:"NCCN Clinical Practice Guidelines in Oncology: Prostate Cancer Early Detection, Version 2.2026（2026-02-18）。PSA ≥3 ng/mL 或明顯可疑 DRE：重驗 PSA、DRE、排除良性原因，mpMRI（category 1）；MRI 陰性不能排除癌症；經會陰可降低敗血症風險與抗生素需求；生物標記不可取代 mpMRI。全文需登入，請至 nccn.org 核對。",u:"https://www.nccn.org/guidelines/guidelines-detail?category=2&id=1460"},
+  pilatz:{t:"EAU 切片感染立場文件",f:"Pilatz A, Veeratterapillay R, Dimitropoulos K, et al. European Association of Urology Position Paper on the Prevention of Infectious Complications Following Prostate Biopsy. Eur Urol 2021;79:11–15。經會陰感染較少；經直腸以 povidone-iodine 直腸清潔（RR 0.50）；歐盟停用 fluoroquinolone 作切片預防。"},
+  mohwScr:{t:"衛福部 2025-10-30",f:"衛生福利部國民健康署。攝護腺癌篩檢相關說明（2025-10-30）：引用 USPSTF，55–69 歲與醫師討論 PSA 篩檢利弊後決定，70 歲以上不建議；目前無公費 PSA 篩檢。",u:"https://mohw.gov.tw/cp-16-84354-1.html"},
+  auaStp:{t:"AUA/ASTRO/SUO 救援 2024",f:"Morgan TM, Boorjian SA, Buyyounouski MK, et al. Salvage Therapy for Prostate Cancer: AUA/ASTRO/SUO Guideline（2024 年 2 月通過）。BCR 定義：RP 後 PSA ≥0.2 ng/mL 兩次；RT 後 Phoenix（nadir＋2）。Statement 1–30：救援 RT 時機、PET、ADT 合併與長度、RT／消融後局部救援、淋巴結與寡轉移復發。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/prostate-cancer-salvage-therapy"},
+  eauBcr:{t:"EAU BCR 風險分組",f:"Van den Broeck T, van den Bergh RCN, Briers E, et al. Biochemical Recurrence in Prostate Cancer: The European Association of Urology Prostate Cancer Guidelines Panel Recommendations. Eur Urol Focus 2020;6:231–4。RP 後低風險：PSADT >1 年且 pISUP <4；RT 後低風險：至 BCR 間隔 >18 個月且切片 ISUP <4；其餘為高風險。"},
+  twPsma:{t:"聯合報 2026-06-08",f:"聯合新聞網，2026-06-08：PSMA PET 尚未納入健保給付，屬自費項目。台灣給付狀態請以健保署公告為準。",u:"https://udn.com/news/story/7266/9552437"},
+  EMBARK:{t:"EMBARK",f:"Freedland SJ, de Almeida Luz M, De Giorgi U, et al. Improved Outcomes with Enzalutamide in Biochemically Recurrent Prostate Cancer. N Engl J Med 2023;389:1453–65。高風險 BCR（PSADT ≤9 個月）：enzalutamide＋leuprolide vs leuprolide，5 年 MFS 87.3% vs 71.4%（HR 0.42）；enzalutamide 單用 MFS HR 0.63。最終 OS：8 年 78.9% vs 69.5%（HR ≈0.60），依 AUA/SUO 2026 引述。"},
+  STAMPEDEabiM0:{t:"STAMPEDE M0 abiraterone",f:"Attard G, Murphy L, Clarke NW, et al. Abiraterone acetate and prednisolone with or without enzalutamide for high-risk non-metastatic prostate cancer: a meta-analysis of primary results from two randomised controlled phase 3 trials of the STAMPEDE platform protocol. Lancet 2022;399:447–60。高風險 M0（N1，或 ≥2 項：T3–4、Gleason 8–10、PSA ≥40）：ADT＋RT 加 abiraterone 2 年，MFS 與 OS 改善。"},
+  nhi554:{t:"健保 5.5.4",f:"5.5.4 Denosumab（如 Xgeva），113/10/1 修訂：限多發性骨髓瘤，及乳癌、前列腺癌、肺癌、大腸直腸癌、膀胱癌、腎癌、子宮頸癌、卵巢癌、食道癌、胃癌、胰臟癌併有蝕骨性骨轉移之病患。",u:"https://www.nhi.gov.tw/ch/dl-74211-b654a33cfe914120979f4e7e467fc353-1.pdf"},
+  nhi561:{t:"健保 5.6.1",f:"5.6.1 抗骨質再吸收劑（115/7/1 修訂）：限停經後婦女；alendronate、zoledronate、denosumab、risedronate 35 mg 亦可用於男性。條件：DXA T-score ≤−2.5 並有脊椎或髖部骨折，或 −2.5～−1.0 並有 ≥2 處脊椎或髖部骨折（Prolia 等部分品項另含遠端橈骨、近端肱骨骨折）；骨鬆合併 RA、胰島素治療糖尿病、長期類固醇者限特定品項。不得併用兩種骨鬆藥物。ADT 本身不在高風險條件內。",u:"https://www.rootlaw.com.tw/Attach/S-Doc/01611505190025-002.pdf"},
+  nhiZol:{t:"Zoledronic acid 健保整理",f:"Zoledronic acid 4 mg（Zometa、Zodonic）健保給付：惡性腫瘤高血鈣（血清鈣 >2.75 mmol/L〔11.0 mg/dL〕或游離鈣 >5.6 mg/dL），及多發性骨髓瘤、乳癌、前列腺癌之骨轉移。來源為醫師整理（2024-02-29），條文編號與是否限蝕骨性請以健保署原文確認。",u:"https://mycancerfree.com/tw-3/zometa-zodonic-t-2024-02-29/"},
+  nhi551:{t:"健保 5.5.1",f:"5.5.1 Gn-RH analogue（leuprorelin、goserelin、triptorelin 等）：條文主要規範停經前乳癌、子宮內膜異位症等用途；前列腺癌依許可證適應症使用。申報前請以健保署條文確認。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  zytigaPI:{t:"Zytiga 仿單",f:"ZYTIGA（abiraterone acetate）Prescribing Information：ALT／AST／bilirubin 於基線、每 2 週 × 3 個月、之後每月；血壓、血鉀、水腫至少每月；AST/ALT >5×ULN 或 bilirubin >3×ULN 暫停；ALT >3×ULN 合併 bilirubin >2×ULN 永久停藥；腎上腺功能不全；併 TZD／repaglinide 低血糖；併 radium-223 不建議（ERA 223 骨折 28.6% vs 11.4%）。",u:"https://www.drugs.com/pro/zytiga.html"},
+  erleadaPI:{t:"Erleada 仿單",f:"ERLEADA（apalutamide）Prescribing Information：皮疹 TITAN 28%、SPARTAN 25%（3–4 級 5–6%）；甲狀腺功能低下合併約 8%（試驗每 4 個月驗 TSH）；跌倒 16%、骨折 12%（SPARTAN）；癲癇永久停藥；監測嚴重皮膚不良反應與缺血性心血管事件。",u:"https://www.drugs.com/pro/erleada.html"},
+  xtandiPI:{t:"Xtandi 仿單",f:"XTANDI（enzalutamide）Prescribing Information：Warnings 包括癲癇、PRES、過敏反應、缺血性心臟病、跌倒與骨折；強效 CYP3A4 誘導劑、CYP2C8 受質（併 gemfibrozil 減量）。"},
+  nubeqaPI:{t:"Nubeqa 仿單",f:"NUBEQA（darolutamide）Prescribing Information：BCRP、OATP1B1/1B3 抑制劑——併用 rosuvastatin 等受質需注意；嚴重腎功能不全與中度肝功能不全減量至 300 mg BID。"},
+  parpPI:{t:"PARP 抑制劑仿單",f:"Lynparza（olaparib）等 PARP 抑制劑 Prescribing Information：基線與每月 CBC；MDS／AML（持續血球低下需血液科評估）、肺炎、靜脈血栓。"},
+  adtPI:{t:"ADT 仿單／FDA 2010",f:"GnRH agonist／antagonist 仿單：QT 延長警語；FDA 2010 要求 GnRH agonist 標示糖尿病與心血管疾病（心肌梗塞、猝死、中風）風險增加，治療中監測血糖／HbA1c 與心血管危險因子。"},
+  HALT:{t:"HALT 138",f:"Smith MR, Egerdie B, Hernández Toriz N, et al. Denosumab in men receiving androgen-deprivation therapy for prostate cancer. N Engl J Med 2009;361:745–55（denosumab 60 mg q6m，36 個月新脊椎骨折 1.5% vs 3.9%）。"},
+  calgb:{t:"CALGB 90202",f:"Smith MR, Halabi S, Ryan CJ, et al. Randomized controlled trial of early zoledronic acid in men with castration-sensitive prostate cancer and bone metastases: results of CALGB 90202 (Alliance). J Clin Oncol 2014;32:1143–50（早期 zoledronic acid 未延後首次 SRE）。"},
+  PRONOUNCE:{t:"PRONOUNCE",f:"Lopes RD, Higano CS, Slovin SF, et al. Cardiovascular Safety of Degarelix Versus Leuprolide in Patients With Prostate Cancer: The Primary Results of the PRONOUNCE Randomized Trial. Circulation 2021。已有 ASCVD 者，1 年 MACE 5.5% vs 4.1%（HR 1.28，95% CI 0.59–2.79）；因收案不足提早終止。"},
+  damico:{t:"D'Amico 1998",f:"D'Amico AV, Whittington R, Malkowicz SB, et al. Biochemical outcome after radical prostatectomy, external beam radiation therapy, or interstitial radiation therapy for clinically localized prostate cancer. JAMA 1998;280:969–74."},
+  capra:{t:"CAPRA 2005",f:"Cooperberg MR, Pasta DJ, Elkin EP, et al. The UCSF Cancer of the Prostate Risk Assessment score. J Urol 2005;173:1938–42。0–2 低、3–5 中、6–10 高風險。"},
+  ajcc:{t:"AJCC 8th",f:"Buyyounouski MK, Choyke PL, McKenney JK, et al. Prostate cancer – major changes in the AJCC 8th edition. CA Cancer J Clin 2017;67:245–53；AJCC Cancer Staging Manual, 8th ed. 2017。"},
+  isup:{t:"ISUP 2014/2019",f:"Epstein JI, et al. The 2014 ISUP Consensus Conference on Gleason Grading of Prostatic Carcinoma. Am J Surg Pathol 2016;40:244–52；EAU 2026 建議使用 ISUP 2019 分級。"},
+  catalona:{t:"Catalona 1998",f:"Catalona WJ, Partin AW, Slawin KM, et al. Use of the percentage of free PSA to enhance differentiation of prostate cancer from benign prostatic disease. JAMA 1998;279:1542–7。"},
+  pcwg3:{t:"PCWG3",f:"Scher HI, Morris MJ, Stadler WM, et al. Trial design and objectives for castration-resistant prostate cancer: updated recommendations from the Prostate Cancer Clinical Trials Working Group 3. J Clin Oncol 2016;34:1402–18。"},
+  mskDT:{t:"PSADT 計算法",f:"PSADT＝ln2 ÷ 斜率（ln PSA 對時間之線性迴歸，單位：月）。與 MSKCC PSADT 計算器相同原理；AUA/SUO 2026 引用此工具。"},
+  nhi:{t:"健保給付規定",f:"衛生福利部中央健康保險署「藥品給付規定」第 9 節 抗癌瘤藥物（整份文件 115.09.22 版，含 115/10/1 生效條文）。申報前請以健保署公告為準。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi949:{t:"健保 9.49",f:"9.49 Abiraterone（如 Zytiga），最新修訂 114/6/1。新診斷高風險 mCSPC（ECOG ≤1，高風險 3 項符合 ≥2 項）總療程上限 36 個月（Ateron 24 個月）；mCRPC 化療前（ECOG 0–1、無症狀或輕度症狀、無臟器轉移；ADT 後 <12 個月即 CRPC 且 Gleason ≥8 者不得於化療前使用）；docetaxel ≥2 療程無效後（ECOG ≤2）；與 olaparib 併用（BRCA1/2）。每 3 個月再申請；PSA 下降未達 50% 停藥；PSA 較最低值上升 ≥50% 且 ≥2 ng/mL 停藥（影像未惡化可續用）。新型荷爾蒙藥品終生限一種，不得互換。不得與 radium-223 併用。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi954:{t:"健保 9.54",f:"9.54 Enzalutamide（如 Xtandi），最新修訂 114/10/1。高風險 nmCRPC（ECOG ≤1、PSADT ≤10 個月）；高風險 mCSPC 併 ADT，總療程上限 36 個月；mCRPC 化療前（條件同 abiraterone）；docetaxel ≥2 療程無效後（ECOG ≤2）。化療前已用過者，化療失敗後不得再申請。終生限一種新型荷爾蒙藥品。不得與 radium-223 併用。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi990:{t:"健保 9.90",f:"9.90 Apalutamide（如 Erleada），最新修訂 114/6/1。高風險 nmCRPC（ECOG ≤1、PSADT ≤10 個月，依線性迴歸計算）；高風險 mCSPC 總療程上限 36 個月。無 mCRPC 給付。終生限一種新型荷爾蒙藥品。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi994:{t:"健保 9.94",f:"9.94 Darolutamide（如 Nubeqa），最新修訂 115/4/1。單一療法或與 docetaxel 併用於高風險 mCSPC，總療程上限 36 個月（併用時 docetaxel 限 6 療程，且 ECOG ≤1、ANC ≥1500/mm³、血小板 ≥100,000/mm³、GPT ≤2 倍 ULN、total bilirubin ≤ULN、eGFR ≥30）；高風險 nmCRPC（ECOG ≤1、PSADT ≤10 個月）。終生限一種新型荷爾蒙藥品。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi985:{t:"健保 9.85",f:"9.85 PARP 抑制劑，最新修訂 114/10/1。攝護腺癌僅給付 olaparib：(1) 單用於 germline 或 somatic BRCA1/2 致病性突變、曾用新型荷爾蒙藥物後惡化之 mCRPC；(2) 與 abiraterone＋prednisone(olone) 併用於 BRCA1/2 突變、未接受化療之 mCRPC，且未曾使用新型荷爾蒙藥品（或 mCRPC 階段使用 abiraterone ≤4 個月且未惡化）。每 3 個月再申請；不得合併化療。niraparib、talazoparib 未給付於攝護腺癌。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi9137:{t:"健保 9.137",f:"9.137 Cabazitaxel（如 Cabazred），115/8/1 新增。併 prednisone(olone) 用於 mCRPC，須同時符合：docetaxel ≥3 療程、曾用新型荷爾蒙藥品後惡化、ECOG ≤1。事前審查、每 3 個月再申請；總療程上限 7 療程；不得與新型荷爾蒙藥品或 olaparib 併用。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi968:{t:"健保 9.68",f:"9.68 Radium-223（如 Xofigo），108/3/1。CRPC 合併有症狀骨轉移（≥2 處）且無臟器轉移；最多 6 療程；事前審查；不得合併 abiraterone、enzalutamide 及 denosumab、bisphosphonates 等骨事件藥品。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi93:{t:"健保 9.3",f:"9.3 Docetaxel，最新修訂 115/8/1。依許可證適應症給付；Doce、Phyxotere 限：荷爾蒙治療失敗之轉移性前列腺癌，及與 darolutamide 併用於高風險 mCSPC（須符合 darolutamide 規定）。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  nhi969:{t:"健保 9.69",f:"9.69 免疫檢查點抑制劑，最新修訂 115/10/1。給付範圍未包含攝護腺癌，亦無不分癌別之 MSI-H/dMMR 給付（MSI-H/dMMR 僅限大腸直腸癌第一線 pembrolizumab）。",u:"https://www.nhi.gov.tw/ch/np-2508-1.html"},
+  fdaCapi:{t:"FDA 2026-06-12",f:"FDA approves capivasertib with abiraterone and prednisone for PTEN-deficient metastatic androgen pathway modulation-naïve or -sensitive prostate cancer（June 12, 2026）。依據 CAPItello-281；PTEN 缺失以 VENTANA PTEN (SP218) IHC 判定（≥90% 腫瘤細胞無染色）。",u:"https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-capivasertib-abiraterone-and-prednisone-pten-deficient-androgen-pathway-modulation"},
+  fdaLu:{t:"FDA 2026-07-31",f:"FDA 核准 lutetium Lu 177 vipivotide tetraxetan（Pluvicto）併用 ARPI，用於 PSMA 陽性 mAPMN/S（即 mHSPC）攝護腺癌（July 31, 2026），依據 phase 3 PSMAddition（n=1,144）。",u:"https://www.novartis.com/news/media-releases/fda-approves-pluvicto-psma-metastatic-hormone-sensitive-prostate-cancer-mhspc-advancing-potential-new-standard-care-across-metastatic-disease"},
+  fdaAkeega:{t:"FDA 2025-12-12／EC 2026-03-09",f:"FDA 2025-12-12 核准 niraparib/abiraterone（Akeega）＋prednisone 用於 BRCA2 突變 mCSPC；歐盟 EC 2026-03-09 核准用於 BRCA1/2 突變 mHSPC。依據 phase 3 AMPLITUDE。",u:"https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-niraparib-and-abiraterone-acetate-plus-prednisone-brca2-mutated-metastatic-castration"},
+  fdaPsmafore:{t:"FDA 2025-03-28",f:"FDA 2025-03-28 擴大 Pluvicto 適應症至曾用 ARPI、適合延後化療之 PSMA 陽性 mCRPC（化療前），依據 PSMAfore（rPFS HR 0.41）。"},
+  fdaTala:{t:"FDA 2025-06",f:"FDA 2025 年 6 月將 TALAPRO-2 最終 OS 納入 talazoparib＋enzalutamide 仿單，但維持僅限 HRR 突變 mCRPC，未擴大至非 HRR 族群（ODAC 2025-05 投票 8:0 反對擴大）。",u:"https://www.onclive.com/view/fda-declines-to-expand-label-for-talazoparib-enzalutamide-in-mcrpc"},
+  tfdaLu:{t:"TFDA 114/1/23",f:"鎦必妥（Pluvicto）衛福部藥證 114/1/23 核發。台灣核准適應症：PSMA 陽性 mCRPC，曾接受 AR pathway 抑制治療及 taxane 化療之成人病人。健保未給付。"},
+  /* 試驗 */
+  LATITUDE:{t:"LATITUDE",f:"Fizazi K, et al. NEJM 2017;377:352–60；final OS: Lancet Oncol 2019;20:686–700（OS HR 0.66）。"},
+  STAMPEDEabi:{t:"STAMPEDE (abiraterone)",f:"James ND, et al. NEJM 2017;377:338–51（OS HR 0.63）。"},
+  TITAN:{t:"TITAN",f:"Chi KN, et al. NEJM 2019;381:13–24；final OS: J Clin Oncol 2021;39:2294–303（OS HR 0.65）。"},
+  ARCHES:{t:"ARCHES",f:"Armstrong AJ, et al. J Clin Oncol 2019；OS: J Clin Oncol 2022;40:1616–22（OS HR 0.66）。"},
+  ENZAMET:{t:"ENZAMET",f:"Davis ID, et al. NEJM 2019;381:121–31（OS HR 0.67）。"},
+  ARANOTE:{t:"ARANOTE",f:"Saad F, et al. J Clin Oncol 2024（darolutamide＋ADT vs ADT；rPFS HR 0.54）。"},
+  CHAARTED:{t:"CHAARTED",f:"Sweeney CJ, et al. NEJM 2015;373:737–46；Kyriakopoulos CE, et al. J Clin Oncol 2018;36:1080–7（OS HR 0.72；效益集中於高轉移量）。"},
+  PEACE1:{t:"PEACE-1",f:"Fizazi K, et al. Lancet 2022;399:1695–707（abiraterone 加入 ADT±docetaxel：OS HR 0.82；ADT＋docetaxel 族群 OS HR 0.75）；放射治療 2×2 分析見 AUA/SUO 2026 引述。"},
+  ARASENS:{t:"ARASENS",f:"Smith MR, et al. NEJM 2022;386:1132–42（darolutamide＋ADT＋docetaxel：OS HR 0.68）。"},
+  STAMPEDEH:{t:"STAMPEDE arm H",f:"Parker CC, et al. Lancet 2018;392:2353–66（prostate RT；低轉移量 OS HR 0.68）。"},
+  AMPLITUDE:{t:"AMPLITUDE",f:"Phase 3 AMPLITUDE：niraparib＋AAP vs placebo＋AAP（HRR 突變 mCSPC，n=696）；rPFS HR 0.63（HRR）、0.52（BRCA）；非 BRCA 之 HRR 族群效益不確定（HR 0.81，95% CI 0.56–1.18）。OS 尚未成熟。"},
+  CAPI281:{t:"CAPItello-281",f:"Phase 3 CAPItello-281（n=1,012，PTEN 缺失 mHSPC）：capivasertib＋abiraterone＋ADT vs placebo＋abiraterone＋ADT；rPFS 風險降低 19%、中位數延長 7.5 個月。OS 為次要終點，追蹤中。"},
+  PSMAddition:{t:"PSMAddition",f:"Phase 3 PSMAddition（n=1,144，PSMA 陽性 mHSPC）：177Lu-PSMA-617（6 療程）＋ADT＋ARPI vs ADT＋ARPI；主要終點 rPFS 改善。OS 尚未成熟，對照組交叉比例高。"},
+  SPARTAN:{t:"SPARTAN",f:"Smith MR, et al. NEJM 2018;378:1408–18；final OS: Eur Urol 2021;79:150–8（MFS HR 0.28；OS HR 0.78）。"},
+  PROSPER:{t:"PROSPER",f:"Hussain M, et al. NEJM 2018;378:2465–74；Sternberg CN, et al. NEJM 2020;382:2197–206（MFS HR 0.29；OS HR 0.73）。"},
+  ARAMIS:{t:"ARAMIS",f:"Fizazi K, et al. NEJM 2019;380:1235–46；NEJM 2020;383:1040–9（MFS HR 0.41；OS HR 0.69）。"},
+  COU302:{t:"COU-AA-302",f:"Ryan CJ, et al. NEJM 2013；final OS Lancet Oncol 2015;16:152–60（OS HR 0.81）。"},
+  PREVAIL:{t:"PREVAIL",f:"Beer TM, et al. NEJM 2014;371:424–33（OS HR 0.71）。"},
+  TAX327:{t:"TAX327",f:"Tannock IF, et al. NEJM 2004;351:1502–12（docetaxel q3w＋prednisone vs mitoxantrone：OS HR 0.76）。"},
+  CARD:{t:"CARD",f:"de Wit R, et al. NEJM 2019;381:2506–18（曾用 docetaxel 且 ARPI 12 個月內惡化：cabazitaxel vs 另一 ARPI，rPFS HR 0.54、OS HR 0.64）。"},
+  PROSELICA:{t:"PROSELICA",f:"Eisenberger M, et al. J Clin Oncol 2017;35:3198–206（cabazitaxel 20 mg/m² 不劣於 25 mg/m²，毒性較低）。"},
+  VISION:{t:"VISION",f:"Sartor O, et al. NEJM 2021;385:1091–103（曾用 ARPI 及 taxane 之 PSMA 陽性 mCRPC：OS HR 0.62）。"},
+  PSMAfore:{t:"PSMAfore",f:"Morris MJ, et al. Lancet 2024（曾用一種 ARPI、化療前：rPFS HR 0.41；OS 因交叉 60% 無統計差異）。"},
+  ALSYMPCA:{t:"ALSYMPCA",f:"Parker C, et al. NEJM 2013;369:213–23（有症狀骨轉移、無臟器轉移：OS HR 0.70）。"},
+  ERA223:{t:"ERA 223",f:"Smith M, et al. Lancet Oncol 2019;20:408–19（radium-223＋abiraterone＋prednisone 增加骨折與死亡，不得併用）。"},
+  PROfound:{t:"PROfound",f:"de Bono J, et al. NEJM 2020;382:2091–102；Hussain M, et al. NEJM 2020;383:2345–57（cohort A：BRCA1/2、ATM；OS HR 0.69）。"},
+  PROpel:{t:"PROpel",f:"Clarke NW, et al. NEJM Evid 2022（olaparib＋abiraterone 一線 mCRPC，rPFS HR 0.66；FDA 限 BRCA 突變）。"},
+  MAGNITUDE:{t:"MAGNITUDE",f:"Chi KN, et al. J Clin Oncol 2023;41:3339–51（BRCA 族群 rPFS HR 0.53）。"},
+  TALAPRO2:{t:"TALAPRO-2",f:"Agarwal N, et al. Lancet 2023;402:291–303；final OS ASCO GU 2025（all-comers OS HR 0.80）。"},
+  KN158:{t:"Pembrolizumab tissue-agnostic",f:"FDA 2017 核准 pembrolizumab 用於 MSI-H/dMMR 實體腫瘤；2020 核准 TMB-H（≥10 mut/Mb）。攝護腺癌 MSI-H/dMMR 約 3–5%，發現時應做 Lynch syndrome germline 檢測。"},
+  HERO:{t:"HERO",f:"Shore ND, et al. NEJM 2020;382:2187–96（relugolix 48 週持續去勢率 96.7% vs leuprolide 88.8%；次要分析 MACE 2.9% vs 6.2%）。"}
+};
+
+/* ================= 縮寫 ================= */
+const GLOSS = {
+  "ePLND":"extended pelvic lymph node dissection，擴大骨盆淋巴結廓清",
+  "PLND":"pelvic lymph node dissection，骨盆淋巴結廓清",
+  "SRT":"salvage radiotherapy，救援放射治療",
+  "LDR":"low-dose-rate brachytherapy，低劑量率近接治療（seed）",
+  "HDR":"high-dose-rate brachytherapy，高劑量率近接治療",
+  "IMRT":"intensity-modulated radiotherapy",
+  "PI-RADS":"Prostate Imaging–Reporting and Data System（v2.1）：1–5 分，3＝不確定，4–5＝可能有 csPCa",
+  "csPCa":"clinically significant prostate cancer，一般指 ISUP GG ≥2",
+  "EPE":"extraprostatic extension，包膜外侵犯（對應 T3a）",
+  "SVI":"seminal vesicle invasion，精囊侵犯（對應 T3b）",
+  "ASAP":"atypical small acinar proliferation，非典型小腺泡增生",
+  "HGPIN":"high-grade prostatic intraepithelial neoplasia，高級別攝護腺上皮內瘤",
+  "AIP":"atypical intraductal proliferation，非典型導管內增生",
+  "mpMRI":"multiparametric MRI（T2W＋DWI＋DCE）",
+  "PHI":"Prostate Health Index＝(p2PSA ÷ free PSA) × √PSA",
+  "5-ARI":"5α-reductase inhibitor（finasteride、dutasteride），約 6 個月後使 PSA 下降約 50%",
+  "ADT":"androgen deprivation therapy，雄性素去除療法（LHRH agonist／GnRH antagonist／睪丸切除）",
+  "ARPI":"androgen receptor pathway inhibitor，雄性素受體路徑抑制劑：abiraterone、enzalutamide、apalutamide、darolutamide",
+  "APMS":"androgen pathway modulator–sensitive，NCCN 2026 用語，即 hormone/castration-sensitive",
+  "mHSPC":"metastatic hormone-sensitive prostate cancer，與 mCSPC、mAPMN/S 同義",
+  "mCSPC":"metastatic castration-sensitive prostate cancer，與 mHSPC 同義",
+  "nmCRPC":"non-metastatic castration-resistant prostate cancer（傳統影像無轉移）",
+  "mCRPC":"metastatic castration-resistant prostate cancer",
+  "CRPC":"castration-resistant prostate cancer：睪固酮達去勢濃度下仍惡化",
+  "BCR":"biochemical recurrence，生化復發",
+  "PSAD":"PSA density＝PSA ÷ 攝護腺體積（ng/mL/cc）",
+  "PSADT":"PSA doubling time，PSA 倍增時間",
+  "PSAV":"PSA velocity，PSA 速度（ng/mL/年）",
+  "ISUP":"International Society of Urological Pathology",
+  "GG":"ISUP Grade Group",
+  "HRR":"homologous recombination repair，同源重組修復（BRCA1/2、ATM、CDK12、PALB2 等）",
+  "MSI-H":"microsatellite instability–high，高度微衛星不穩定",
+  "dMMR":"mismatch repair deficient，錯配修復缺陷",
+  "TMB-H":"tumor mutational burden–high（≥10 mut/Mb）",
+  "PSMA":"prostate-specific membrane antigen",
+  "PET":"positron emission tomography，正子造影",
+  "EBRT":"external beam radiotherapy，體外放射治療",
+  "MDT":"metastasis-directed therapy，轉移病灶導向治療（多為 SBRT）",
+  "ECOG":"Eastern Cooperative Oncology Group performance status（0 完全正常 → 4 臥床）",
+  "rPFS":"radiographic progression-free survival，影像學無惡化存活",
+  "OS":"overall survival，整體存活",
+  "MFS":"metastasis-free survival，無轉移存活",
+  "HR":"hazard ratio，風險比",
+  "FIR":"favorable intermediate risk，有利中風險",
+  "UIR":"unfavorable intermediate risk，不利中風險",
+  "IRF":"intermediate risk factor：cT2b–c、GG2–3、PSA 10–20 ng/mL",
+  "LHRH":"luteinizing hormone–releasing hormone",
+  "GnRH":"gonadotropin-releasing hormone",
+  "PARPi":"poly(ADP-ribose) polymerase inhibitor，PARP 抑制劑",
+  "CAPRA":"Cancer of the Prostate Risk Assessment（UCSF）",
+  "TFDA":"衛生福利部食品藥物管理署",
+  "FDA":"美國食品藥物管理局",
+  "EMA":"歐洲藥品管理局",
+  "G-CSF":"granulocyte colony-stimulating factor，白血球生長激素",
+  "BSA":"body surface area，體表面積",
+  "SRE":"skeletal-related event，骨骼相關事件",
+  "CAB":"combined androgen blockade，LHRH agonist＋第一代抗雄性素長期併用",
+  "ONJ":"osteonecrosis of the jaw，顎骨壞死",
+  "DDI":"drug–drug interaction，藥物交互作用",
+  "ULN":"upper limit of normal，正常值上限",
+  "ANC":"absolute neutrophil count，嗜中性球絕對值",
+  "AAP":"abiraterone acetate＋prednisone",
+  "DRE":"digital rectal examination，肛門指診",
+  "IHC":"immunohistochemistry，免疫組織化學染色",
+  "SBRT":"stereotactic body radiotherapy，立體定位放射治療"
+};
+
+/* ================= 狀態 ================= */
+const S0 = {
+  psa:null, p1:null, p2:null, ct:"", cn:"N0", cm:"M0", basis:"c", pos:null, tot:null, g45:null, age:null, vol:null,
+  // calculators
+  vl:null, vw:null, vh:null, fpsa:null, testo:null, tunit:"ngdl",
+  psadt:null, psadtNhi:null,
+  // mHSPC
+  h_time:"", h_bone:null, h_out:"", h_visc:"", h_ecog:"", h_fit:"", h_hrr:"", h_pten:"", h_psma:"", h_seiz:false, h_liver:false,
+  // nmCRPC
+  n_castr:"", n_ci:"", n_ecog:"",
+  // mCRPC
+  c_arpi:"", c_doc:"", c_doccyc:null, c_cabazi:false, c_lu:false, c_parp:false, c_ra:false,
+  c_hrr:"", c_msi:"", c_psma:"", c_sympbone:"", c_visc:"", c_ecog:"", c_fit:"", c_early:false,
+  // 診斷流程
+  le:"", fhx:false, germ:false, ari:false, uti:false, psaRep:false, prevBx:"", pirads:"", mr_epe:"", mr_svi:"", mr_n:"",
+  // 局部治療
+  l_crib:false, l_p4:false, loc:"init",
+  b_prim:"", b_pt:"", b_r:"", b_pgg:"", b_pn:"", b_nn:null, b_stat:"", b_psa:null, b_srt:false, b_pet:"", b_mo:null, b_bx:"", b_fit:"",
+  // 監測
+  m_adt:"", m_long:false, m_abi:false, m_enza:false, m_apa:false, m_daro:false, m_parp:false, m_bone:"", m_cvd:false, m_dm:false, m_t:null, m_fx:false, m_rf:false, m_bmets:"",
+  adv:"mhspc",
+  // drugs
+  wt:null, ht:null, dflt:"all", _kin:null
+};
+let S = JSON.parse(JSON.stringify(S0));
+let PSA_ROWS = [{d:"",v:""},{d:"",v:""},{d:"",v:""}];
+
+/* ================= 工具函式 ================= */
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num = v => (v===null||v===""||v===undefined||isNaN(+v)) ? null : +v;
+const fmt = (x,d=2)=> (x===null||!isFinite(x)) ? "—" : (+x).toFixed(d).replace(/\.?0+$/,"") ;
+const fx = (x,d)=> (x===null||!isFinite(x)) ? "—" : (+x).toFixed(d);
+const src = (k,extra)=> `<button class="src" data-ref="${k}" type="button">${esc(REF[k]?REF[k].t:k)}${extra?"・"+esc(extra):""}</button>`;
+const upd = note => `<span class="upd" data-upd="${esc(note)}" role="button" tabindex="0">更新</span>`;
+const tag = (txt,cls)=> `<span class="tag ${cls}">${txt}</span>`;
+const T_ORDER = ["T1a","T1b","T1c","T2a","T2b","T2c","T3a","T3b","T4"];
+const tIdx = t => T_ORDER.indexOf(t);
+
+function gleasonSum(){ return (S.p1&&S.p2)? S.p1+S.p2 : null; }
+function GG(){
+  const p=S.p1, s=S.p2; if(!p||!s) return null;
+  const sum=p+s; if(sum<=6) return 1; if(sum===7) return p===3?2:3; if(sum===8) return 4; return 5;
+}
+function pctCores(){ const p=num(S.pos), t=num(S.tot); if(p===null||!t||p>t) return null; return p/t*100; }
+
+/* ================= 計算器 ================= */
+function calcVolume(){ const l=num(S.vl),w=num(S.vw),h=num(S.vh); if(!l||!w||!h) return null; return l*w*h*Math.PI/6; }
+function calcPSAD(){ const p=num(S.psa), v=num(S.vol); if(p===null||!v) return null; return p/v; }
+function psadBand(d){
+  if(d===null) return "";
+  if(d<0.10) return tag("<0.10","t-low");
+  if(d<0.15) return tag("0.10–0.15","t-low");
+  if(d<0.20) return tag("0.15–0.20","t-mid");
+  return tag("≥0.20","t-high");
+}
+function parseRows(){
+  const pts=[];
+  for(const r of PSA_ROWS){
+    const v=num(r.v); if(!r.d||v===null) continue;
+    const t=new Date(r.d+"T00:00:00").getTime(); if(isNaN(t)) continue;
+    pts.push({t,v,d:r.d});
+  }
+  pts.sort((a,b)=>a.t-b.t);
+  return pts;
+}
+function regress(xs,ys){
+  const n=xs.length; const mx=xs.reduce((a,b)=>a+b,0)/n, my=ys.reduce((a,b)=>a+b,0)/n;
+  let sxx=0,sxy=0; for(let i=0;i<n;i++){sxx+=(xs[i]-mx)**2; sxy+=(xs[i]-mx)*(ys[i]-my);}
+  if(sxx===0) return null; const b=sxy/sxx; return {b,a:my-b*mx};
+}
+function calcKinetics(pts){
+  const out={n:pts.length, warn:[]};
+  if(pts.length<2) return out;
+  if(pts.some(p=>p.v<=0)){ out.warn.push("PSA 需 >0 才能做對數迴歸"); return out; }
+  const MS=30.4375*864e5; const t0=pts[0].t;
+  const xs=pts.map(p=>(p.t-t0)/MS);
+  const span=xs[xs.length-1];
+  if(span<=0){ out.warn.push("日期需不同"); return out; }
+  const r1=regress(xs,pts.map(p=>Math.log(p.v)));
+  const r2=regress(xs.map(x=>x/12),pts.map(p=>p.v));
+  out.spanMo=span; out.slope=r1?r1.b:null;
+  out.dt = (r1&&r1.b>0)? Math.LN2/r1.b : null;
+  out.falling = r1 && r1.b<=0;
+  out.psav = r2? r2.b : null;
+  // 健保 nmCRPC PSADT 條件
+  const nhi=[];
+  nhi.push({ok:pts.length>=3, t:"至少 3 個連續 PSA 值"});
+  nhi.push({ok:pts.every(p=>p.v>=0.2), t:"每個 PSA ≥0.2 ng/mL"});
+  nhi.push({ok:Math.max(...pts.map(p=>p.v))>1.0, t:"最高 PSA >1.0 ng/mL"});
+  const wk=(pts[pts.length-1].t-pts[0].t)/(7*864e5);
+  nhi.push({ok:wk>=8 && span<=12, t:"第一與最後一次間隔 ≥8 週且 ≤12 個月"});
+  nhi.push({ok:null, t:"含 ADT 治療期間數值，且至少一值為最近 3 個月內（請自行確認）"});
+  out.nhi=nhi;
+  out.nhiOk = nhi.filter(c=>c.ok!==null).every(c=>c.ok);
+  if(pts.length===2) out.warn.push("只有 2 點，迴歸不穩定；建議 ≥3 點");
+  return out;
+}
+function testoConv(){
+  const v=num(S.testo); if(v===null) return null;
+  const ngdl = S.tunit==="ngdl"? v : v*28.84;
+  return {ngdl, nmol: ngdl/28.84};
+}
+function calcBSA(){ const w=num(S.wt), h=num(S.ht); if(!w||!h) return null; return Math.sqrt(w*h/3600); }
+
+/* ================= 風險分級 ================= */
+function needBasics(){
+  const miss=[]; if(num(S.psa)===null) miss.push("PSA"); if(!GG()) miss.push("Gleason"); if(!S.ct) miss.push("cT");
+  return miss;
+}
+function riskNCCN(){
+  const why=[]; const psa=num(S.psa), g=GG(), ct=S.ct, pct=pctCores(), g45=num(S.g45);
+  if(S.cm && S.cm!=="M0") return {g:"轉移性（M1）",cls:"t-high",why:["任何 M1"]};
+  if(S.cn==="N1") return {g:"Regional（N1）",cls:"t-high",why:["任何 T、N1、M0"]};
+  const miss=needBasics(); if(miss.length) return {g:null,miss};
+  const hf=[]; if(ct==="T3a") hf.push("cT3a"); if(g>=4) hf.push("GG4–5"); if(psa>20) hf.push("PSA >20");
+  const vh=[]; if(ct==="T3b"||ct==="T4") vh.push("cT3b–T4"); if(S.p1===5) vh.push("primary Gleason pattern 5");
+  if(hf.length>=2) vh.push("2–3 項高風險特徵（"+hf.join("、")+"）"); if(g45!==null && g45>4) vh.push(">4 針 GG4–5");
+  if(vh.length) return {g:"Very high",cls:"t-high",why:vh};
+  if(hf.length===1) return {g:"High",cls:"t-high",why:["恰 1 項高風險特徵："+hf[0]]};
+  const irf=[]; if(ct==="T2b"||ct==="T2c") irf.push("cT2b–c"); if(g===2||g===3) irf.push("GG"+g); if(psa>=10&&psa<=20) irf.push("PSA 10–20");
+  if(irf.length){
+    const why2=["IRF："+irf.join("、")+"（"+irf.length+" 項）"];
+    const unf=[]; if(irf.length>=2) unf.push("≥2 項 IRF"); if(g===3) unf.push("GG3"); if(pct!==null&&pct>=50) unf.push("陽性針數 ≥50%");
+    if(unf.length) return {g:"Intermediate－Unfavorable",cls:"t-mid",why:why2.concat(["UIR 條件："+unf.join("、")])};
+    if(pct===null) return {g:"Intermediate－Favorable（暫定）",cls:"t-mid",why:why2.concat(["FIR 需陽性針數 <50%：請輸入針數確認"])};
+    return {g:"Intermediate－Favorable",cls:"t-mid",why:why2.concat(["1 項 IRF＋GG1–2＋陽性針數 <50%（"+fmt(pct,0)+"%）"])};
+  }
+  return {g:"Low",cls:"t-low",why:["cT1–T2a 且 GG1 且 PSA <10"],note:"NCCN 2026 已刪除 very-low-risk 組"};
+}
+function riskEAU(){
+  const psa=num(S.psa), g=GG(), ct=S.ct;
+  if(S.cm && S.cm!=="M0") return {g:"轉移性（不在 Table 4.3）",cls:"t-high",why:["M1"]};
+  if(S.cn==="N1") return {g:"Locally advanced",cls:"t-high",why:["cN+（CT／骨掃描）"]};
+  if(ct==="T3a"||ct==="T3b"||ct==="T4") return {g:"Locally advanced",cls:"t-high",why:["cT3–4（DRE）"]};
+  const miss=[]; if(psa===null) miss.push("PSA"); if(!g) miss.push("Gleason"); if(!ct) miss.push("cT"); if(miss.length) return {g:null,miss};
+  if(g>=4||psa>20) return {g:"High",cls:"t-high",why:[(g>=4?"GG4–5":"")+(g>=4&&psa>20?"、":"")+(psa>20?"PSA >20":"")]};
+  if((g===2&&psa>=10)||g===3) return {g:"Intermediate－Unfavourable",cls:"t-mid",why:[g===3?"GG3":"GG2 且 PSA 10–20"]};
+  if((g===2&&psa<10)||(g===1&&psa>=10)) return {g:"Intermediate－Favourable",cls:"t-mid",why:[g===2?"GG2 且 PSA <10":"GG1 且 PSA 10–20"]};
+  return {g:"Low",cls:"t-low",why:["GG1 且 PSA <10 且 cT1–2"],note:(ct==="T2b"||ct==="T2c")?"EAU 2026 分組不再以 cT2b／cT2c 區分；同一病人在 NCCN／AUA 為中風險、D'Amico 為中／高風險":null};
+}
+function riskAUA(){
+  const psa=num(S.psa), g=GG(), ct=S.ct, pct=pctCores();
+  if(S.cm && S.cm!=="M0") return {g:"轉移性（超出本指引範圍）",cls:"t-high",why:["M1 → AUA/SUO Advanced Prostate Cancer"]};
+  if(S.cn==="N1") return {g:"cN1（超出局限性範圍）",cls:"t-high",why:["cN1 若接受 RT：ADT＋abiraterone 24 個月（Statement 44）"]};
+  const miss=needBasics(); if(miss.length) return {g:null,miss};
+  const hi=[]; if(psa>=20) hi.push("PSA ≥20"); if(g>=4) hi.push("GG4–5"); if(tIdx(ct)>=6) hi.push(ct==="T4"?"cT4（超出局限性定義）":"cT3");
+  if(hi.length) return {g:"High",cls:"t-high",why:hi};
+  const p1020 = psa>=10&&psa<20, t2bc = ct==="T2b"||ct==="T2c";
+  if(!(p1020||g===2||g===3||t2bc)) return {g:"Low",cls:"t-low",why:["PSA <10 且 GG1 且 cT1–T2a"],note:"AUA 2022 起 very-low 與 low 合併"};
+  if(g===3) return {g:"Intermediate－Unfavorable",cls:"t-mid",why:["GG3 且 PSA <20"]};
+  if(g===1){
+    if(p1020&&t2bc) return {g:"Intermediate－Unfavorable",cls:"t-mid",why:["GG1 且 PSA 10–<20 且 cT2b–c"]};
+    const f=p1020?"PSA 10–<20":"cT2b–c";
+    if(pct===null) return {g:"Intermediate－Favorable（暫定）",cls:"t-mid",why:["GG1＋"+f,"FIR 需陽性針數 <50%：請輸入針數確認"]};
+    if(pct<50) return {g:"Intermediate－Favorable",cls:"t-mid",why:["GG1＋"+f+"＋陽性針數 <50%"]};
+    return {g:"Intermediate－Unfavorable",cls:"t-mid",why:["GG1＋"+f+"＋陽性針數 ≥50%"],note:"Table 3 未明列此組合；因不符 FIR 條件（<50%）歸為 UIR"};
+  }
+  // g===2
+  const u=[]; if(p1020) u.push("PSA 10–<20"); if(t2bc) u.push("cT2b–c"); if(pct!==null&&pct>=50) u.push("陽性針數 ≥50%");
+  if(u.length) return {g:"Intermediate－Unfavorable",cls:"t-mid",why:["GG2＋"+u.join("、")]};
+  if(pct===null) return {g:"Intermediate－Favorable（暫定）",cls:"t-mid",why:["GG2＋PSA <10＋cT1–2a","FIR 需陽性針數 <50%：請輸入針數確認"]};
+  return {g:"Intermediate－Favorable",cls:"t-mid",why:["GG2＋PSA <10＋cT1–2a＋陽性針數 <50%"]};
+}
+function riskDamico(){
+  const psa=num(S.psa), sum=gleasonSum(), ct=S.ct;
+  if((S.cm&&S.cm!=="M0")||S.cn==="N1") return {g:"不適用",cls:"t-gray",why:["D'Amico 僅用於臨床局限性（N0M0）"]};
+  if(psa===null||!sum||!ct) return {g:null,miss:needBasics()};
+  const hi=[]; if(psa>20) hi.push("PSA >20"); if(sum>=8) hi.push("Gleason ≥8"); if(tIdx(ct)>=5) hi.push("cT2c 以上");
+  if(hi.length) return {g:"High",cls:"t-high",why:hi,note:(ct==="T3b"||ct==="T4")?"原始 D'Amico 定義至 cT2c–T3a；cT3b–T4 為外推":null};
+  const mid=[]; if(psa>10) mid.push("PSA 10–20"); if(sum===7) mid.push("Gleason 7"); if(ct==="T2b") mid.push("cT2b");
+  if(mid.length) return {g:"Intermediate",cls:"t-mid",why:mid};
+  return {g:"Low",cls:"t-low",why:["PSA ≤10 且 Gleason ≤6 且 cT1c–T2a"],note:(ct==="T1a"||ct==="T1b")?"原始定義為 cT1c–T2a；cT1a／T1b 為外推":null};
+}
+function capra(){
+  const psa=num(S.psa), age=num(S.age), pct=pctCores(), ct=S.ct, p=S.p1, s=S.p2;
+  const parts=[], miss=[]; let sc=0;
+  if((S.cm&&S.cm!=="M0")||S.cn==="N1") return {score:null,na:true,miss:["CAPRA 僅用於臨床局限性（N0M0）"]};
+  if(psa===null) miss.push("PSA"); else { const v=psa<=6?0:psa<=10?1:psa<=20?2:psa<=30?3:4; sc+=v; parts.push("PSA "+v); }
+  if(!p||!s) miss.push("Gleason"); else { const v=p>=4?3:(s>=4?1:0); sc+=v; parts.push("Gleason "+v); }
+  if(!ct) miss.push("cT"); else { const v=tIdx(ct)>=6?1:0; sc+=v; parts.push("T "+v); }
+  if(pct===null) miss.push("陽性針數／總針數"); else { const v=pct>=34?1:0; sc+=v; parts.push("陽性針% "+v); }
+  if(age===null) miss.push("年齡"); else { const v=age>=50?1:0; sc+=v; parts.push("年齡 "+v); }
+  if(miss.length) return {score:null,miss,partial:sc};
+  const g = sc<=2?"Low (0–2)":sc<=5?"Intermediate (3–5)":"High (6–10)";
+  const cls= sc<=2?"t-low":sc<=5?"t-mid":"t-high";
+  return {score:sc,g,cls,parts,note:(ct==="T3b"||ct==="T4")?"CAPRA 原始設計 T 僅分 T1–2／T3a；cT3b–T4 不適用":null};
+}
+function ajcc(){
+  const psa=num(S.psa), g=GG(), ct=S.ct, p=S.basis==="p";
+  if(S.cm && S.cm!=="M0") return {st:"IVB",why:["任何 T、任何 N、"+S.cm]};
+  if(S.cn==="N1") return {st:"IVA",why:["任何 T、N1、M0"]};
+  if(!g) return {st:null,miss:["Gleason（Grade Group）"]};
+  if(g===5) return {st:"IIIC",why:["Grade Group 5（任何 T、任何 PSA、N0M0）"]};
+  if(!ct) return {st:null,miss:["T 分期"]};
+  if(tIdx(ct)>=6) return {st:"IIIB",why:["T3–T4、GG1–4、任何 PSA"]};
+  if(psa===null) return {st:null,miss:["PSA"]};
+  if(psa>=20) return {st:"IIIA",why:["T1–2、PSA ≥20、GG1–4"]};
+  if(g===3||g===4) return {st:"IIC",why:["T1–2、PSA <20、GG"+g]};
+  if(g===2) return {st:"IIB",why:["T1–2、PSA <20、GG2"]};
+  // GG1
+  const lowT = p ? true : tIdx(ct)<=3; // cT1a–c、cT2a 或 pT2
+  if(!lowT) return {st:"IIA",why:["cT2b–c、PSA <20、GG1"]};
+  if(psa<10) return {st:"I",why:[(p?"pT2":"cT1a–c／cT2a")+"、PSA <10、GG1"]};
+  return {st:"IIA",why:[(p?"pT2":"cT1a–c／cT2a")+"、PSA 10–<20、GG1"]};
+}
+
+/* ================= 晚期：mHSPC ================= */
+function mhspcDerived(){
+  const g=GG(); const gs8 = g===null? null : g>=4;
+  const bone=num(S.h_bone); const out=S.h_out==="y", visc=S.h_visc==="y";
+  const known = bone!==null && S.h_out!=="" && S.h_visc!=="";
+  const highVol = known ? (visc || (bone>=4 && out)) : null;
+  // LATITUDE: ≥2 of GS≥8, ≥3 bone lesions, measurable visceral
+  let lat=null, latN=null;
+  if(gs8!==null && bone!==null && S.h_visc!==""){ latN=(gs8?1:0)+(bone>=3?1:0)+(visc?1:0); lat=latN>=2; }
+  // 健保高風險: ≥2 of GS≥8, ≥3 bone lesions with ≥1 non-spine non-pelvis, visceral
+  let nhi=null, nhiN=null;
+  if(gs8!==null && known){ nhiN=(gs8?1:0)+((bone>=3&&out)?1:0)+(visc?1:0); nhi=nhiN>=2; }
+  return {g,gs8,bone,out,visc,highVol,lat,latN,nhi,nhiN};
+}
+function ynTxt(b){ return b===null? '<span class="muted">待輸入</span>' : (b? '<span class="ok">是</span>':'<span class="muted">否</span>'); }
+
+function nhiQuick(rows){
+  const r=(rows||[]).find(x=>x&&x[1]&&(x[0]==="健保"||x[0]==="台灣")); if(!r) return "";
+  const st=new Set(); const re=/<span class="(?:ok|ng|cau)">([^<]*)<\/span>/g; let m;
+  while((m=re.exec(r[1]))){ const t=m[1]; if(t.indexOf("符合")>=0&&t.indexOf("不符")<0) st.add("ok"); else if(t.indexOf("不符")>=0) st.add("ng"); else if(t==="自費") st.add("self"); else if(t==="待確認") st.add("q"); }
+  if(!st.size) return "";
+  if(st.size>1) return tag("健保 依藥物而異","t-mid");
+  const k=[...st][0];
+  return {ok:tag("健保 ✔","t-low"),ng:tag("健保 ✘","t-high"),self:tag("健保未給付／自費","t-gray"),q:tag("健保 待確認","t-mid")}[k];
+}
+function optCard(o){
+  const all=(o.rows||[]).filter(r=>r&&r[1]);
+  const R=r=>`<div class="row"><div class="k">${r[0]}</div><div>${r[1]}</div></div>`;
+  const open = o.open || o.cls==="no";
+  const vis = open? all : all.filter(r=>r[0]==="提醒");
+  const hid = open? [] : all.filter(r=>r[0]!=="提醒");
+  const q = nhiQuick(o.rows);
+  return `<div class="opt ${o.cls||""}"><div class="opt-h"><b>${o.title}</b>${o.tags||""}${q?`<span class="opt-q">${q}</span>`:""}</div>`+
+    ((o.lead||vis.length)?`<div class="opt-b">${o.lead?`<div>${o.lead}</div>`:""}${vis.length?`<div style="margin-top:6px">${vis.map(R).join("")}</div>`:""}</div>`:"")+
+    (hid.length?`<details><summary>詳細：${hid.map(r=>r[0]).join("、")}</summary><div class="opt-b">${hid.map(R).join("")}</div></details>`:"")+`</div>`;
+}
+const nhiOK = t=>`<span class="ok">✔ 符合</span> ${t||""}`;
+const nhiNG = t=>`<span class="ng">✘ 不符</span> ${t||""}`;
+const nhiSelf = t=>`<span class="cau">自費</span> ${t||""}`;
+const nhiQ = t=>`<span class="cau">待確認</span> ${t||""}`;
+
+function renderMHSPC(){
+  const d=mhspcDerived(); const H=[];
+  const ecog=S.h_ecog===""?null:+S.h_ecog; const sync=S.h_time==="sync", meta=S.h_time==="meta";
+  const fit=S.h_fit==="y", unfit=S.h_fit==="n";
+  // 分類摘要
+  H.push(`<div class="hl"><div class="kv">
+    <div><div class="k">CHAARTED 高轉移量</div>${ynTxt(d.highVol)}</div>
+    <div><div class="k">LATITUDE 高風險（≥2/3）</div>${ynTxt(d.lat)}${d.latN!==null?` <span class="muted small">(${d.latN}/3)</span>`:""}</div>
+    <div><div class="k">健保高風險（≥2/3）</div>${ynTxt(d.nhi)}${d.nhiN!==null?` <span class="muted small">(${d.nhiN}/3)</span>`:""}</div>
+    <div><div class="k">轉移時序</div>${sync?"同時性（de novo）":meta?"異時性（局部治療後）":'<span class="muted">待輸入</span>'}</div>
+  </div><div class="note">三種定義不同：CHAARTED ${src("CHAARTED")} 看「骨轉移數＋脊椎骨盆外」或臟器；LATITUDE 看 Gleason ≥8、骨轉移 ≥3、可測量臟器轉移；健保把 LATITUDE 的骨轉移條件改成「≥3 處且至少 1 處在脊椎骨盆以外」。${src("auaApc","Table 3")}${src("nhi")}</div></div>`);
+  if(d.g===null) H.push(`<div class="alert a-warn">尚未輸入 Gleason，Gleason ≥8 條件無法判定。</div>`);
+
+  // ADT backbone
+  H.push(optCard({cls:"pref",title:"基礎：持續 ADT（所有病人）",tags:src("auaApc","#14 Strong/B"),
+    rows:[["做法","LHRH agonist、GnRH antagonist（degarelix；relugolix 口服）或雙側睪丸切除，三者擇一，終生持續。"],
+      ["注意","LHRH agonist 起始可能 testosterone flare：骨轉移負荷大、脊髓壓迫風險時，選 GnRH antagonist，或 LHRH agonist ＋ bicalutamide 短期（≤4 週）同時使用以阻斷 flare。"+src("auaApc","#18 Strong/A")],
+      ["不建議","長期 CAB（LHRH agonist ＋ 第一代抗雄性素）取代 ARPI；mHSPC 不建議 intermittent ADT。"+src("auaApc","#18")]]}));
+
+  // Triplet
+  if(!unfit){
+    const pref = sync && d.highVol===true && fit;
+    let nhiAbi = nhiTripAbi(d,ecog,sync), nhiDaro = nhiTripDaro(d,ecog);
+    H.push(optCard({cls:pref?"pref":"",title:"三合一：ADT ＋ docetaxel ＋ ARPI",
+      tags:(pref?tag("最適族群","t-info"):"")+src("auaApc","#16 Strong")+src("eau","Strong")+src("nccn"),
+      lead:"ADT ＋ docetaxel 75 mg/m² q3w × 6 ＋（abiraterone＋prednisone 或 darolutamide，二擇一），三者同時使用。",
+      rows:[["適用","可耐受化療、無重大共病之 de novo（同時性）轉移；高轉移量受益最明確。異時性轉移之證據不足。"+src("auaApc","#16")],
+        ["證據",`PEACE-1：ADT＋docetaxel 族群加 abiraterone，OS HR 0.75 ${src("PEACE1")}；ARASENS：darolutamide，OS HR 0.68 ${src("ARASENS")}。兩試驗多為 de novo。`],
+        ["健保",`darolutamide ＋ docetaxel：${nhiDaro} ${src("nhi994")}<br>abiraterone ＋ docetaxel：${nhiAbi} ${src("nhi949")}`],
+        ["提醒", meta?'<span class="cau">異時性轉移：AUA 指出三合一角色尚未確立。</span>':(sync&&d.highVol===false?"低轉移量：三合一證據較弱，可考慮雙藥＋prostate RT。":"")]]}));
+  }else{
+    H.push(optCard({cls:"no",title:"三合一（含 docetaxel）",tags:tag("不適用","t-gray"),rows:[["原因","無法耐受化療。"]]}));
+  }
+
+  // Doublet
+  H.push(optCard({cls:(!fit||d.highVol===false||meta)?"pref":"",title:"雙藥：ADT ＋ ARPI（四擇一）",
+    tags:src("auaApc","#15 Strong/A")+src("eau","Strong")+src("nccn","category 1"),
+    lead:"ADT 持續，同時使用下列其中一種 ARPI：",
+    rows:[["選項",`<ul class="tight">
+        <li>abiraterone 1,000 mg QD ＋ prednisone 5 mg QD（同時使用）— LATITUDE OS HR 0.66 ${src("LATITUDE")}、STAMPEDE OS HR 0.63 ${src("STAMPEDEabi")}</li>
+        <li>apalutamide 240 mg QD — TITAN OS HR 0.65 ${src("TITAN")}</li>
+        <li>enzalutamide 160 mg QD — ARCHES OS HR 0.66 ${src("ARCHES")}；ENZAMET OS HR 0.67 ${src("ENZAMET")}</li>
+        <li>darolutamide 600 mg BID — ARANOTE rPFS HR 0.54 ${src("ARANOTE")} ${upd("AUA/SUO 2026 首次將 darolutamide 雙藥納入 mHSPC 強建議（#15）")}</li></ul>`],
+      ["選藥",drugChoiceHints()],
+      ["健保",nhiDoublet(d,ecog,sync)]]}));
+
+  // Prostate RT
+  if(sync && d.highVol===false){
+    H.push(optCard({cls:"pref",title:"加做 prostate EBRT（低轉移量、同時性）",tags:src("auaApc","#17 Conditional/C")+src("eau","Strong")+src("nccn"),
+      lead:"ADT（± ARPI）同時加上攝護腺局部放射治療。",
+      rows:[["證據",`STAMPEDE arm H：低轉移量 OS HR 0.68 ${src("STAMPEDEH")}；PEACE-1：低轉移量＋abiraterone 時 rPFS 改善、嚴重泌尿道事件減少，OS 無差異 ${src("PEACE1")}。`],
+        ["常用劑量","36 Gy／6 fx（每週 1 次）或 55 Gy／20 fx（STAMPEDE）。"],
+        ["不建議","高轉移量不建議（STAMPEDE 無效益）；RP 用於 M1 仍屬試驗性。"+src("auaApc","#17")]]}));
+  }
+  // MDT
+  if(meta && d.visc!==true && d.bone!==null && d.bone<=5){
+    H.push(optCard({title:"異時性寡轉移：MDT（SBRT）",tags:upd("NCCN 2026 將 MDT 納入異時性寡轉移 APMS 疾病之治療選項")+src("ascoNccn")+src("auaApc","MDT 討論"),
+      rows:[["說明","對 PSMA PET 或傳統影像可見之少數病灶做 SBRT；可與全身治療合併或作為延後 ADT 的選項。"],
+        ["證據等級","phase II（STOMP、ORIOLE）顯示延後 ADT／進展；尚無 OS 效益之 phase 3 證據。"+src("auaApc")],
+        ["寡轉移","本工具以「無臟器轉移且骨病灶 ≤5」提示，定義各試驗不一。"]]}));
+  }
+  // Biomarker-directed
+  const bio=[];
+  if(S.h_hrr==="brca2"||S.h_hrr==="brca1"||S.h_hrr==="hrr"){
+    const isB=S.h_hrr!=="hrr";
+    bio.push(optCard({cls:isB?"pref":"",title:"HRR／BRCA 突變：ADT ＋ niraparib ＋ abiraterone ＋ prednisone",
+      tags:upd("FDA 2025-12 核准（BRCA2 mCSPC）；EC 2026-03 核准（BRCA1/2 mHSPC）")+src("auaApc","#19 Expert Opinion")+src("fdaAkeega"),
+      lead:"niraparib/abiraterone 固定劑量錠（Akeega）200/1,000 mg QD ＋ prednisone 5 mg QD ＋ ADT，同時使用。",
+      rows:[["證據",`AMPLITUDE：rPFS HR 0.63（HRR）、0.52（BRCA）；非 BRCA 之 HRR 效益不確定 ${src("AMPLITUDE")}`],
+        ["適用", isB?(S.h_hrr==="brca2"?"BRCA2：FDA 核准範圍":"BRCA1：EU 核准範圍；FDA 僅 BRCA2"):'<span class="cau">非 BRCA 之 HRR 變異：AUA 指出不應外推效益</span>'],
+        ["健保",nhiSelf("niraparib/abiraterone 未列入健保給付規定（9.85 攝護腺癌僅 olaparib）")+src("nhi985")],
+        ["比較","與 docetaxel 三合一無直接比較；高轉移量需個別討論。"]]}));
+  }
+  if(S.h_pten==="def"){
+    bio.push(optCard({title:"PTEN 缺失（IHC）：ADT ＋ capivasertib ＋ abiraterone ＋ prednisone",
+      tags:upd("FDA 2026-06-12 核准；PTEN 缺失之第一個標靶治療")+src("fdaCapi"),
+      lead:"capivasertib 400 mg BID（每週服 4 天、停 3 天）＋ abiraterone 1,000 mg QD ＋ prednisone 5 mg QD ＋ ADT，同時使用。",
+      rows:[["證據",`CAPItello-281：rPFS 風險降低 19%、中位數多 7.5 個月；OS 未成熟 ${src("CAPI281")}`],
+        ["指引","EAU 2026 已討論（rPFS 改善、尚無 OS）；AUA/SUO 2026 文獻截止前未納入。"+src("eau")],
+        ["副作用","高血糖、腹瀉、皮疹——需監測血糖。"],
+        ["健保",nhiSelf("健保 9.135 capivasertib 僅給付乳癌")]]}));
+  }
+  if(S.h_psma==="pos"){
+    bio.push(optCard({title:"PSMA PET 陽性：ADT ＋ ARPI ＋ 177Lu-PSMA-617",
+      tags:upd("FDA 2026-07-31 核准 Pluvicto＋ARPI 用於 PSMA 陽性 mHSPC")+src("fdaLu"),
+      lead:"ADT ＋ ARPI 持續，同時加上 177Lu-PSMA-617 7.4 GBq q6w × 6 療程。",
+      rows:[["證據",`PSMAddition：rPFS 改善；OS 未成熟 ${src("PSMAddition")}`],
+        ["指引","EAU 2026 年會時仍未列為標準治療；AUA/SUO 2026 未納入。屬最新 FDA 適應症。"],
+        ["台灣",nhiSelf("TFDA 適應症僅 mCRPC（ARPI＋taxane 後）；健保未給付")+src("tfdaLu")]]}));
+  }
+  if(bio.length){ H.push(`<div class="sec">依生物標記之選項</div>`); H.push(...bio); }
+  if(S.h_hrr===""||S.h_hrr==="unk"){
+    H.push(`<div class="alert a-info">建議所有轉移病人做 germline 檢測，並做 somatic（腫瘤）檢測：HRR（BRCA1/2 等）、MSI-H/dMMR、TMB；PTEN IHC 可作為 capivasertib 適用評估。${src("auaApc","#4 Clinical Principle")}${src("eau")}</div>`);
+  }
+  // Not recommended
+  H.push(optCard({cls:"no",title:"一般不建議",rows:[["ADT 單用","除非無法耐受任何加強治療。"+src("auaApc","#15")],
+    ["ADT＋docetaxel（不含 ARPI）","僅在無法取得或不能使用 ARPI 時。"+src("auaApc","docetaxel 討論")],
+    ["兩種 ARPI 併用","無證據（如 abiraterone＋enzalutamide）。"]]}));
+  return H.join("");
+}
+function drugChoiceHints(){
+  const h=[];
+  if(S.h_seiz) h.push("癲癇／跌倒高風險：enzalutamide、apalutamide 有癲癇與跌倒風險，偏好 abiraterone 或 darolutamide。"+src("auaApc","治療選擇"));
+  if(S.h_liver) h.push('<span class="cau">肝功能不全（Child-Pugh B/C）：abiraterone 需減量或避免（Child-Pugh B 250 mg QD；C 禁用）；darolutamide Child-Pugh B 300 mg BID。</span>');
+  h.push("糖尿病控制差、骨鬆嚴重：abiraterone 需合併類固醇，留意血糖與骨質。");
+  h.push("多重用藥：enzalutamide、apalutamide 為強效 CYP3A4 誘導劑；darolutamide 交互作用較少。");
+  return '<ul class="tight">'+h.map(x=>"<li>"+x+"</li>").join("")+"</ul>";
+}
+function nhiDoublet(d,ecog,sync){
+  if(d.nhi===null) return nhiQ("請輸入 Gleason、骨轉移數、是否有脊椎骨盆外骨轉移、臟器轉移")+src("nhi");
+  if(!d.nhi) return nhiSelf("不符健保高風險（需 Gleason ≥8／骨轉移 ≥3 處且至少 1 處在脊椎骨盆外／臟器轉移，三項中 ≥2 項）。ARPI 須自費。")+src("nhi");
+  const L=[];
+  L.push("enzalutamide、apalutamide、darolutamide："+nhiOK("高風險 mCSPC，總療程上限 36 個月")+src("nhi954")+src("nhi990")+src("nhi994"));
+  let abi = !sync? nhiNG("abiraterone 限「新診斷」mCSPC") : (ecog!==null&&ecog>1? nhiNG("abiraterone 需 ECOG ≤1") : (ecog===null? nhiQ("abiraterone 需 ECOG ≤1"): nhiOK("新診斷、ECOG ≤1，36 個月（Ateron 24 個月）")));
+  L.push("abiraterone："+abi+src("nhi949"));
+  L.push('<span class="muted small">共同規定：事前審查、每 3 個月再申請；PSA 下降未達 50% 停藥；新型荷爾蒙藥品終生限一種、不得互換（嚴重不耐受除外）。</span>');
+  return L.join("<br>");
+}
+function nhiTripDaro(d,ecog){
+  if(d.nhi===null) return nhiQ("需先判定健保高風險");
+  if(!d.nhi) return nhiSelf("不符健保高風險");
+  if(ecog!==null && ecog>1) return nhiNG("需 ECOG ≤1");
+  return nhiOK("高風險；docetaxel 限 6 療程；需 ECOG ≤1、ANC ≥1500、PLT ≥10 萬、GPT ≤2×ULN、bilirubin ≤ULN、eGFR ≥30");
+}
+function nhiTripAbi(d,ecog,sync){
+  if(d.nhi===null) return nhiQ("需先判定健保高風險");
+  if(!d.nhi) return nhiSelf("不符健保高風險");
+  return nhiQ("abiraterone 本身符合時（新診斷、ECOG ≤1）可給付，但條文未明列與 docetaxel 併用；docetaxel 依許可證適應症。送審前確認。");
+}
+
+/* ================= 晚期：nmCRPC ================= */
+function renderNMCRPC(){
+  const H=[]; const dt=num(S.psadt); const ecog=S.n_ecog===""?null:+S.n_ecog;
+  H.push(defBoxCRPC());
+  if(S.n_castr==="n"){ H.push(`<div class="alert a-bad">睪固酮未達去勢濃度（<50 ng/dL）即不能診斷 CRPC：先確認 ADT 遵從性與劑型，必要時改用 GnRH antagonist 或睪丸切除。${src("auaApc","Table 3")}</div>`); }
+  if(S.n_ci==="n"){ H.push(`<div class="alert a-warn">傳統影像（CT／MRI／骨掃描）已見轉移 → 屬 mCRPC，請切換至 mCRPC。</div>`); }
+  if(dt===null){ H.push(`<div class="alert a-info">請輸入 PSADT（可用「計算器」的 PSA 動力學自動帶入）。</div>`); return H.join(""); }
+  if(dt<=10){
+    const nhiDT = S.psadtNhi===true? nhiOK("PSADT 計算符合健保 4 項條件") : S.psadtNhi===false? nhiNG("PSADT 計算未符合健保條件（見計算器檢核）") : nhiQ("PSADT 需依健保規定之線性迴歸條件計算");
+    const nhiE = ecog===null? nhiQ("需 ECOG ≤1") : ecog<=1? nhiOK("ECOG ≤1") : nhiNG("需 ECOG ≤1");
+    H.push(optCard({cls:"pref",title:`PSADT ${fmt(dt,1)} 個月（≤10）：持續 ADT ＋ ARPI（三擇一）`,tags:tag("高轉移風險","t-high")+src("auaApc","#22 Strong/A")+src("eau","Strong")+src("nccn","category 1"),
+      lead:"ADT 持續，同時加上以下其中一種：",
+      rows:[["選項",`<ul class="tight"><li>apalutamide 240 mg QD — SPARTAN MFS HR 0.28、OS HR 0.78 ${src("SPARTAN")}</li><li>darolutamide 600 mg BID — ARAMIS MFS HR 0.41、OS HR 0.69 ${src("ARAMIS")}</li><li>enzalutamide 160 mg QD — PROSPER MFS HR 0.29、OS HR 0.73 ${src("PROSPER")}</li></ul>`],
+        ["選藥","三者無直接比較；darolutamide 中樞神經副作用與交互作用較少；apalutamide 注意皮疹、甲狀腺低下；enzalutamide 注意疲倦、跌倒、癲癇。"],
+        ["健保",`${nhiE}；${nhiDT}；需 3 個月內影像證明無遠端轉移；每 3 個月再申請（有 PSA progression 時附影像；無 progression 則每 6 個月附影像），影像證實轉移即停藥。三藥及 abiraterone 終生限一種。${src("nhi990")}${src("nhi994")}${src("nhi954")}`]]}));
+  }else{
+    H.push(optCard({cls:"pref",title:`PSADT ${fmt(dt,1)} 個月（>10）：持續 ADT、觀察`,tags:src("auaApc","#23 Clinical Principle"),
+      rows:[["追蹤","PSA 每 3–6 個月，計算 PSADT；傳統影像或 PSMA PET 每 6–12 個月。"+src("auaApc","#20–21")],
+        ["健保","ARPI 不符 nmCRPC 給付（需 PSADT ≤10 個月）。"]]}));
+  }
+  H.push(optCard({cls:"no",title:"不建議",rows:[["化療／免疫治療","nmCRPC 不應在臨床試驗外使用。"+src("auaApc","#24")],["PSMA PET 陽性","僅 PSMA PET 見病灶、傳統影像陰性者，試驗族群定義仍為 nmCRPC；不要因 PSMA PET 結果拒絕上述治療。"]]}));
+  return H.join("");
+}
+function defBoxCRPC(){
+  return `<details><summary>CRPC 定義（EAU／PCWG3／AUA）</summary><div class="cb small">
+  <ul class="tight"><li>前提：血清睪固酮達去勢濃度 <b>&lt;50 ng/dL（1.7 nmol/L）</b>（睪丸切除後多 <20 ng/dL）。</li>
+  <li><b>生化進展</b>：PSA 連續上升（間隔 ≥1 週），較最低值上升 ≥25% 且絕對值 ≥2 ng/mL（PCWG3）；EAU：連續 3 次上升、間隔 ≥1 週，兩次較最低值上升 50%，且 PSA >2 ng/mL。</li>
+  <li>或 <b>影像進展</b>：骨掃描 ≥2 處新病灶，或軟組織依 RECIST 惡化。</li>
+  <li>健保 nmCRPC 之 PSA progression：較 nadir 上升 ≥25% 且 ≥2 ng/mL，≥3 週後再驗確認。</li></ul>
+  ${src("pcwg3")}${src("eau")}${src("auaApc","Table 3")}${src("nhi990")}</div></details>`;
+}
+
+/* ================= 晚期：mCRPC ================= */
+function renderMCRPC(){
+  const H=[]; const ecog=S.c_ecog===""?null:+S.c_ecog;
+  const arpi=S.c_arpi && S.c_arpi!=="none"; const arpiKnown=S.c_arpi!=="";
+  const doc=S.c_doc==="y"; const docKnown=S.c_doc!==""; const cyc=num(S.c_doccyc);
+  const brca=S.c_hrr==="brca", atm=S.c_hrr==="atm", ohrr=S.c_hrr==="hrr"; const anyHRR=brca||atm||ohrr;
+  const psmaPos=S.c_psma==="pos"; const visc=S.c_visc==="y"; const symp=S.c_sympbone==="y"; const fit=S.c_fit!=="n";
+  if(!arpiKnown||!docKnown){ H.push(`<div class="alert a-info">請先輸入先前用過的 ARPI 與 docetaxel，才能排出可用選項。</div>`); H.push(defBoxCRPC()); return H.join(""); }
+  const line = !arpi&&!doc? "未用過 ARPI、未用過 docetaxel" : arpi&&!doc? "已用 ARPI、未用 docetaxel" : !arpi&&doc? "已用 docetaxel、未用 ARPI" : "已用 ARPI ＋ docetaxel";
+  H.push(`<div class="hl"><b>目前狀態：</b>${line}${S.c_cabazi?"、已用 cabazitaxel":""}${S.c_lu?"、已用 Lu-PSMA":""}${S.c_parp?"、已用 PARPi":""}${S.c_ra?"、已用 radium-223":""}</div>`);
+  const cards=[];
+
+  // ARPI naive
+  if(!arpi){
+    let nhi;
+    if(!doc){
+      const r=[];
+      if(ecog!==null&&ecog>1) r.push("ECOG 需 0–1");
+      if(visc) r.push("不得有臟器轉移");
+      if(symp) r.push("需無症狀或輕度症狀（未常規使用止痛藥）");
+      if(S.c_early && GG()!==null && GG()>=4) r.push("ADT 後 <12 個月即 CRPC 且 Gleason ≥8：須先化療");
+      nhi = r.length? nhiNG(r.join("；")) : nhiOK("化療前：ECOG 0–1、無症狀或輕度症狀、無臟器轉移（需附 3 個月內影像）");
+    }else{
+      nhi = (cyc!==null&&cyc<2)? nhiNG("需 docetaxel ≥2 療程無效") : (ecog!==null&&ecog>2? nhiNG("化療後需 ECOG ≤2") : nhiOK("docetaxel ≥2 療程無效後、ECOG ≤2"));
+    }
+    cards.push(optCard({cls:"pref",title:"ADT ＋ ARPI（abiraterone＋prednisone 或 enzalutamide，二擇一）",tags:src("auaApc","#27 Strong/A")+src("eau","Strong")+src("nccn","category 1"),
+      lead:"abiraterone 1,000 mg QD ＋ prednisone 5 mg BID（同時使用），或 enzalutamide 160 mg QD。",
+      rows:[["證據",`COU-AA-302 OS HR 0.81 ${src("COU302")}；PREVAIL OS HR 0.71 ${src("PREVAIL")}`],
+        ["健保",nhi+src("nhi949")+src("nhi954")+'<br><span class="muted small">化療前用過者，化療失敗後不得再申請同一藥；新型荷爾蒙藥品終生限一種。</span>']]}));
+    if(anyHRR){
+      cards.push(optCard({cls:brca?"pref":"",title:"HRR／BRCA：PARPi ＋ ARPI 一線合併",tags:src("eau","Strong（BRCA／HRR）")+src("auaApc","#35 Conditional/C")+src("nccn"),
+        lead:"以下三種組合擇一（兩藥同時使用）：",
+        rows:[["選項",`<ul class="tight">
+          <li>olaparib 300 mg BID ＋ abiraterone 1,000 mg QD ＋ prednisone 5 mg BID — PROpel rPFS HR 0.66 ${src("PROpel")}（FDA：限 BRCA）</li>
+          <li>niraparib/abiraterone 200/1,000 mg QD ＋ prednisone 10 mg QD — MAGNITUDE BRCA rPFS HR 0.53 ${src("MAGNITUDE")}（限 BRCA）</li>
+          <li>talazoparib 0.5 mg QD ＋ enzalutamide 160 mg QD — TALAPRO-2 all-comers OS HR 0.80 ${src("TALAPRO2")}；FDA 限 HRR 突變 ${upd("FDA 2025-06 納入最終 OS，但拒絕擴大到非 HRR 族群")}${src("fdaTala")}</li></ul>`],
+          ["適用", brca?'<span class="ok">BRCA1/2：三種組合皆可考慮</span>':'<span class="cau">非 BRCA 之 HRR：僅 talazoparib＋enzalutamide 在 FDA 適應症內</span>'],
+          ["健保", "olaparib＋abiraterone："+(!brca? nhiNG("健保限 BRCA1/2") : doc? nhiNG("需未接受化學治療") : nhiOK("BRCA1/2、未化療、未曾用新型荷爾蒙藥品（或 mCRPC 階段 abiraterone ≤4 個月且未惡化）；計入終生一種新型荷爾蒙藥品"))+src("nhi985")+"<br>niraparib/abiraterone、talazoparib＋enzalutamide："+nhiSelf("攝護腺癌未給付")],
+          ["提醒", doc? "PROpel、MAGNITUDE、TALAPRO-2 允許 mHSPC 階段曾用 docetaxel；mCRPC 階段化療後的證據有限。":""]]}));
+    }
+  }else{
+    cards.push(optCard({cls:"no",title:"換用另一種 ARPI",tags:tag("一般不建議","t-gray"),rows:[["理由",`交叉抗藥，PSA 反應率低；曾用 docetaxel＋ARPI 者，cabazitaxel 優於換 ARPI（CARD：OS HR 0.64）${src("CARD")}${src("auaApc","#33 Strong/B")}`],["健保",nhiNG("新型荷爾蒙藥品終生限一種、不得互換")]]}));
+  }
+
+  // Docetaxel
+  if(!doc){
+    cards.push(optCard({cls:!fit?"no":(arpi||visc||symp)?"pref":"",title:"Docetaxel ＋ prednisone"+(!fit?"（不適合化療）":""),tags:(arpi?src("auaApc","#28 Strong/B"):"")+src("eau","Strong")+src("nccn","category 1"),
+      lead:"docetaxel 75 mg/m² IV q3w ＋ prednisone 5 mg BID（同時使用），最多 10 療程。",
+      rows:[["證據",`TAX327 OS HR 0.76 ${src("TAX327")}`],["適用", fit?"可耐受化療者；臟器轉移、症狀明顯、快速進展者優先考慮。":'<span class="ng">勾選為不適合化療</span>'],
+        ["健保",nhiOK("依許可證適應症（荷爾蒙治療失敗之轉移性前列腺癌）")+src("nhi93")]]}));
+  }else if(S.c_doc==="y" && !arpi){
+    cards.push(optCard({title:"Docetaxel 再挑戰",rows:[["說明","mHSPC 階段用過 docetaxel 且當時反應良好、距離最後一劑較久者，可考慮再挑戰（證據為回溯性）。"]]}));
+  }
+  // Cabazitaxel
+  if(doc && !S.c_cabazi){
+    const r=[]; if(cyc!==null&&cyc<3) r.push("docetaxel 需 ≥3 療程"); if(!arpi) r.push("需曾用新型荷爾蒙藥品後惡化"); if(ecog!==null&&ecog>1) r.push("ECOG 需 ≤1");
+    const nhi = r.length? nhiNG(r.join("；")) : (cyc===null||ecog===null? nhiQ("需 docetaxel ≥3 療程、ARPI 後惡化、ECOG ≤1") : nhiOK("docetaxel ≥3 療程、ARPI 後惡化、ECOG ≤1；上限 7 療程"));
+    cards.push(optCard({cls:!fit?"no":arpi?"pref":"",title:"Cabazitaxel ＋ prednisone"+(!fit?"（不適合化療）":""),tags:src("auaApc",arpi?"#33 Strong/B":"#32 Conditional/B")+src("eau","Strong")+src("nccn"),
+      lead:"cabazitaxel 20 mg/m² IV q3w（體能好可 25 mg/m²）＋ prednisone 10 mg QD，同時使用；建議預防性 G-CSF。",
+      rows:[["證據",`CARD：rPFS HR 0.54、OS HR 0.64 ${src("CARD")}；20 vs 25 mg/m² 不劣 ${src("PROSELICA")}`],
+        ["健保",nhi+" "+upd("健保 115/8/1 新增 cabazitaxel（Cabazred）給付")+src("nhi9137")+'<br><span class="muted small">不得與新型荷爾蒙藥品或 olaparib 併用。</span>']]}));
+  }
+  // Lu-PSMA
+  if(arpi && !S.c_lu){
+    if(psmaPos){
+      if(doc){
+        cards.push(optCard({cls:"pref",title:"177Lu-PSMA-617（ARPI ＋ taxane 後）",tags:src("auaApc","#31 Strong/B")+src("eau","Strong")+src("nccn","category 1"),
+          lead:"177Lu-PSMA-617 7.4 GBq（200 mCi）IV q6w，最多 6 療程；ADT 持續。",
+          rows:[["證據",`VISION OS HR 0.62 ${src("VISION")}`],["條件","PSMA PET 陽性（病灶攝取高），且無明顯 PSMA 陰性病灶（EAU）。"],
+            ["台灣","TFDA 核准適應症內；"+nhiSelf("健保未給付")+src("tfdaLu")]]}));
+      }else{
+        cards.push(optCard({title:"177Lu-PSMA-617（ARPI 後、化療前）",tags:upd("FDA 2025-03 擴大至化療前（PSMAfore）")+src("auaApc","#31 Strong/B")+src("eau","Weak（不適合 docetaxel）")+src("fdaPsmafore"),
+          lead:"177Lu-PSMA-617 7.4 GBq IV q6w × 最多 6 療程。",
+          rows:[["證據",`PSMAfore rPFS HR 0.41；OS 因交叉無差異 ${src("PSMAfore")}`],
+            ["指引差異","AUA：曾用 ARPI 且 PSMA PET 陽性者，不論是否用過 docetaxel 皆建議；EAU：限不適合 docetaxel 者（weak）。"],
+            ["台灣",'<span class="cau">TFDA 適應症需曾用 taxane（此情境為仿單外）</span>；'+nhiSelf("健保未給付")+src("tfdaLu")]]}));
+      }
+    }else if(S.c_psma!=="neg"){
+      H.push(`<div class="alert a-info">已用 ARPI：建議安排 PSMA PET 評估 177Lu-PSMA-617 適用性。</div>`);
+    }
+  }
+  // PARPi mono
+  if(arpi && anyHRR && !S.c_parp){
+    cards.push(optCard({cls:brca?"pref":"",title:"Olaparib 單藥（ARPI 後）",tags:src("auaApc","#34 Conditional/C")+src("eau","Strong（BRCA）")+src("nccn","category 1（BRCA）"),
+      lead:"olaparib 300 mg BID；ADT 持續。",
+      rows:[["證據",`PROfound cohort A（BRCA1/2、ATM）OS HR 0.69 ${src("PROfound")}`],
+        ["適用", brca?'<span class="ok">BRCA1/2：效益最明確</span>':atm?"ATM：cohort A 內，但效益弱於 BRCA":'<span class="cau">其他 HRR：效益不確定</span>'],
+        ["健保", brca? nhiOK("BRCA1/2、新型荷爾蒙藥物後惡化")+src("nhi985") : nhiNG("健保限 BRCA1/2")+src("nhi985")],
+        ["替代","無法取得 PARPi 時可考慮含鉑化療（AUA #34）。"]]}));
+  }
+  // Radium
+  if(!S.c_ra){
+    if(symp && !visc){
+      const r=[];
+      cards.push(optCard({title:"Radium-223",tags:src("auaApc","#30 Strong/B")+src("eau")+src("nccn","category 1"),
+        lead:"radium-223 55 kBq/kg IV q4w × 6 療程。",
+        rows:[["條件","有症狀骨轉移、無臟器轉移、淋巴結 <3 cm。"+src("auaApc","#30")],["證據",`ALSYMPCA OS HR 0.70 ${src("ALSYMPCA")}`],
+          ["禁忌",`不可與 abiraterone＋prednisone 同時使用（ERA 223 骨折與死亡增加）${src("ERA223")}`],
+          ["健保",nhiOK("骨轉移 ≥2 處且有症狀（需常規止痛藥）、無臟器轉移；最多 6 療程")+'<br><span class="cau">健保規定不得合併 abiraterone、enzalutamide、denosumab 或 bisphosphonate——與 EAU 建議 radium 期間使用骨保護劑不同。</span>'+src("nhi968")]]}));
+    }else if(S.c_sympbone==="n" && !visc){
+      // nothing
+    }
+  }
+  // Pembro
+  if(S.c_msi==="y"){
+    cards.push(optCard({title:"Pembrolizumab（MSI-H／dMMR／TMB-H）",tags:src("auaApc","#36 Moderate/C")+src("nccn"),
+      lead:"pembrolizumab 200 mg IV q3w 或 400 mg q6w。",
+      rows:[["證據",src("KN158")+" 不分癌別適應症；攝護腺癌 MSI-H 約 3–5%。"],["另做","MSI-H／dMMR 應做 Lynch syndrome germline 檢測。"],
+        ["健保",nhiSelf("9.69 未給付攝護腺癌")+src("nhi969")]]}));
+  }
+  H.push(...cards);
+  // supportive
+  H.push(optCard({title:"所有 mCRPC 共同處置",open:true,rows:[
+    ["ADT","持續（維持去勢濃度）。"],
+    ["骨保護","骨轉移者使用 denosumab 120 mg SC q4w 或 zoledronic acid 4 mg IV q3–4w（依腎功能調整），並補充鈣與維生素 D。"+src("auaApc","#40 Moderate/B")],
+    ["基因檢測", (S.c_hrr===""||S.c_hrr==="unk"||S.c_msi===""||S.c_msi==="unk")?'<span class="cau">尚未完成：germline＋somatic（HRR、MSI-H/dMMR、TMB）</span>'+src("auaApc","#4"):"已輸入"],
+    ["追蹤","基線 PSA、睪固酮、LDH、Hb、ALP；無惡化時至少每年影像。"+src("auaApc","#25–26")]]}));
+  H.push(defBoxCRPC());
+  return H.join("");
+}
+
+/* ================= 藥物資料 ================= */
+const DRUGS = [
+ {id:"leup",cls:"adt",name:"Leuprorelin",brand:"Leuplin、Eligard",type:"LHRH agonist",
+  dose:"Eligard：7.5 mg q1m、22.5 mg q3m、45 mg q6m SC；Leuplin：3.75 mg q4w、11.25 mg q12w SC。",
+  adj:"無需腎肝調整。",
+  caut:"起始 1–2 週 testosterone flare：高骨轉移負荷或脊髓壓迫風險者，同時使用 bicalutamide 50 mg QD（開始前 ≥1 週起，共 ≤4 週）或改用 GnRH antagonist。",
+  guide:"所有 mHSPC／CRPC 之 ADT 基礎；與 antagonist、睪丸切除同等。"+src("auaApc","#14"),
+  nhi:"5.5.1 Gn-RH analogue：前列腺癌依許可證適應症。",ref:"nhi551"},
+ {id:"gos",cls:"adt",name:"Goserelin",brand:"Zoladex",type:"LHRH agonist",dose:"3.6 mg SC q4w 或 10.8 mg SC q12w（植入劑）。",adj:"無需調整。",caut:"同 leuprorelin，注意 flare。",guide:"ADT 基礎。",nhi:"5.5.1 Gn-RH analogue：前列腺癌依許可證適應症（條文另規範乳癌用途）。",ref:"nhi551"},
+ {id:"trip",cls:"adt",name:"Triptorelin",brand:"Diphereline",type:"LHRH agonist",dose:"3.75 mg IM q4w、11.25 mg q12w、22.5 mg q24w。",adj:"無需調整。",caut:"同 leuprorelin，注意 flare。",guide:"ADT 基礎。",nhi:"5.5.1 Gn-RH analogue：前列腺癌依許可證適應症。",ref:"nhi551"},
+ {id:"dega",cls:"adt",name:"Degarelix",brand:"Firmagon",type:"GnRH antagonist",dose:"起始 240 mg SC（120 mg × 2 處），之後 80 mg SC q28d。",adj:"無需調整。",caut:"無 flare，3 天內達去勢；注射部位反應常見。適合脊髓壓迫、阻塞等需快速去勢者。",guide:"ADT 基礎；即將出現臨床併發症時起始首選（EAU Strong）"+src("eau")+"；已有 ASCVD 者與 leuprolide 1 年 MACE 無顯著差異"+src("PRONOUNCE"),nhi:"未查到專屬給付條文；請以健保署收載與院內規定確認。"},
+ {id:"relu",cls:"adt",name:"Relugolix",brand:"Orgovyx",type:"口服 GnRH antagonist",dose:"第 1 天 360 mg，之後 120 mg PO QD。",adj:"嚴重腎功能不全謹慎。",caut:"P-gp 抑制劑（如部分 macrolide）會升高濃度；停藥 >7 天需重新負荷劑量。",guide:"ADT 基礎（AUA #14）；HERO：持續去勢率 96.7% vs leuprolide 88.8%"+src("HERO"),nhi:"台灣許可證與健保狀態請確認。"},
+ {id:"bical",cls:"adt",name:"Bicalutamide",brand:"Casodex",type:"第一代抗雄性素",dose:"50 mg QD（阻斷 flare 用）。",adj:"肝功能不全謹慎。",caut:"僅短期阻斷 flare（≤4 週）；不建議長期 CAB 取代 ARPI。",guide:"mHSPC 不應與 LHRH agonist 長期併用。"+src("auaApc","#18 Strong/A"),nhi:"9.40 依規定給付。"},
+
+ {id:"abi",cls:"arpi",name:"Abiraterone acetate",brand:"Zytiga；學名藥 Ateron 等",type:"CYP17A1 抑制劑（雄性素合成抑制）",
+  dose:"1,000 mg PO QD，空腹（餐前 ≥1 小時或餐後 ≥2 小時）＋ prednisone：mHSPC 5 mg QD；mCRPC 5 mg BID（兩藥同時使用）。",
+  adj:"Child-Pugh B：250 mg QD；Child-Pugh C：禁用。治療中 ALT/AST >5×ULN 或 bilirubin >3×ULN 先停藥。",
+  caut:"礦物皮質素過多：高血壓、低血鉀、水腫。監測 LFT 每 2 週 × 3 個月、之後每月；每月量血壓、K。不可與 radium-223 同時使用。",
+  guide:"mHSPC 雙藥"+src("LATITUDE")+"／三合一"+src("PEACE1")+"；mCRPC 一線"+src("COU302")+"；BRCA 合併 olaparib"+src("PROpel")+"或 niraparib"+src("MAGNITUDE")+"；高風險局限性 RT＋ADT＋abiraterone 24 個月"+src("auaLoc","#44 Strong/B"),
+  nhi:"9.49：新診斷高風險 mCSPC（ECOG ≤1，36 個月；Ateron 24 個月）；mCRPC 化療前（ECOG 0–1、無症狀或輕度症狀、無臟器轉移；ADT 後 <12 個月 CRPC 且 Gleason ≥8 者須先化療）；docetaxel ≥2 療程後（ECOG ≤2）；與 olaparib 併用（BRCA1/2）。終生限一種新型荷爾蒙藥品。",ref:"nhi949"},
+ {id:"enza",cls:"arpi",name:"Enzalutamide",brand:"Xtandi；學名藥 Enadi、Enzuta、Inamide",type:"AR 拮抗劑",
+  dose:"160 mg PO QD。",adj:"併用強效 CYP2C8 抑制劑（gemfibrozil）減為 80 mg；併用強效 CYP3A4 誘導劑可增至 240 mg。",
+  caut:"癲癇（約 0.5%）、疲倦、跌倒與骨折、高血壓。強效 CYP3A4 誘導劑——檢查 warfarin、DOAC、部分降血脂與免疫抑制劑交互作用。",
+  guide:"mHSPC 雙藥"+src("ARCHES")+src("ENZAMET")+"；nmCRPC"+src("PROSPER")+"；mCRPC 一線"+src("PREVAIL")+"；HRR 合併 talazoparib"+src("TALAPRO2")+"；局部治療後 PSADT ≤9 個月之 BCR：ADT＋enzalutamide"+src("auaApc","#9"),
+  nhi:"9.54：高風險 nmCRPC（ECOG ≤1、PSADT ≤10 個月）；高風險 mCSPC 36 個月；mCRPC 化療前（條件同 abiraterone）；docetaxel ≥2 療程後。化療前用過者化療失敗後不得再申請。",ref:"nhi954"},
+ {id:"apa",cls:"arpi",name:"Apalutamide",brand:"Erleada",type:"AR 拮抗劑",
+  dose:"240 mg PO QD（台灣健保品項為 60 mg × 4 錠）。",adj:"輕中度腎肝功能不全無需調整。",
+  caut:"皮疹（約 25%，少數 SJS/TEN）、甲狀腺功能低下（定期 TSH）、跌倒與骨折、癲癇。強效 CYP3A4／2C19 誘導劑。",
+  guide:"mHSPC 雙藥"+src("TITAN")+"；nmCRPC"+src("SPARTAN")+"。無 mCRPC 適應症。",
+  nhi:"9.90：高風險 nmCRPC（ECOG ≤1、PSADT ≤10 個月）；高風險 mCSPC 36 個月。",ref:"nhi990"},
+ {id:"daro",cls:"arpi",name:"Darolutamide",brand:"Nubeqa",type:"AR 拮抗劑（低血腦屏障穿透）",
+  dose:"600 mg PO BID，隨餐。",adj:"eGFR 15–29（未透析）：300 mg BID；Child-Pugh B：300 mg BID。",
+  caut:"中樞神經副作用與交互作用較少；為 BCRP／OATP 受質，併用 rosuvastatin 等需注意。",
+  guide:"nmCRPC"+src("ARAMIS")+"；mHSPC 三合一"+src("ARASENS")+"與雙藥"+src("ARANOTE")+src("auaApc","#15–16"),
+  nhi:"9.94：單一療法或與 docetaxel 併用於高風險 mCSPC，36 個月（115/4/1 起單一療法亦給付、上限由 24 改 36 個月）；高風險 nmCRPC。",ref:"nhi994",upd:"健保 115/4/1 起 darolutamide 單一療法用於高風險 mCSPC 亦給付，總療程上限延長至 36 個月"},
+
+ {id:"doce",cls:"chemo",name:"Docetaxel",brand:"Taxotere 等",type:"Taxane",
+  dose:"75 mg/m² IV q3w。mHSPC：× 6 療程（併 ADT ± ARPI；類固醇非必要）；mCRPC：＋ prednisone 5 mg BID，最多 10 療程。前置給藥 dexamethasone 8 mg（輸注前 12、3、1 小時）。",
+  adj:"bilirubin >ULN，或 AST/ALT >1.5×ULN 且 ALP >2.5×ULN：不建議使用。",
+  caut:"嗜中性球低下（依風險使用 G-CSF）、周邊神經病變、水腫、指甲變化、過敏反應。",
+  guide:"mHSPC 三合一"+src("auaApc","#16")+"；ARPI 後 mCRPC"+src("auaApc","#28 Strong/B")+src("TAX327"),
+  nhi:"9.3：依許可證適應症；併 darolutamide 時須符合 9.94。",ref:"nhi93",bsa:75},
+ {id:"caba",cls:"chemo",name:"Cabazitaxel",brand:"Cabazred（健保品項）、Jevtana",type:"Taxane",
+  dose:"20 mg/m² IV q3w（體能好可 25 mg/m²）＋ prednisone 10 mg QD。前置給藥：抗組織胺、類固醇、H2 blocker。",
+  adj:"輕度肝功能不全：20 mg/m²；中度：15 mg/m²；重度：禁用。",
+  caut:"嗜中性球低下性發燒——建議預防性 G-CSF（CARD 採用）；腹瀉、血尿。",
+  guide:"docetaxel 後"+src("CARD")+src("auaApc","#32–33"),
+  nhi:"9.137（115/8/1 新增）：docetaxel ≥3 療程＋ARPI 後惡化＋ECOG ≤1；上限 7 療程；不得與新型荷爾蒙藥品或 olaparib 併用。",ref:"nhi9137",bsa:20,bsa2:25,upd:"健保 115/8/1 新增 cabazitaxel 給付"},
+
+ {id:"ola",cls:"parp",name:"Olaparib",brand:"Lynparza",type:"PARP 抑制劑",
+  dose:"300 mg PO BID（錠劑）。合併 abiraterone＋prednisone 時劑量相同。",
+  adj:"CrCl 31–50：200 mg BID；≤30 不建議。併用強效 CYP3A 抑制劑：100 mg BID；中效：150 mg BID。",
+  caut:"貧血、疲倦、噁心；MDS/AML（罕見）；PROpel 合併組靜脈栓塞增加。CBC 每月 × 12 個月，之後定期。",
+  guide:"ARPI 後 HRR mCRPC"+src("PROfound")+"；一線 BRCA mCRPC 合併 abiraterone（FDA 限 BRCA）"+src("PROpel"),
+  nhi:"9.85：單用於 BRCA1/2 且新型荷爾蒙藥物後惡化；併 abiraterone 用於 BRCA1/2、未化療、未用過新型荷爾蒙藥品（或 mCRPC 階段 abiraterone ≤4 個月未惡化）。每日最多 4 粒。",ref:"nhi985"},
+ {id:"nira",cls:"parp",name:"Niraparib／abiraterone",brand:"Akeega（固定劑量錠）",type:"PARP 抑制劑＋CYP17 抑制劑",
+  dose:"200/1,000 mg（100/500 mg × 2 錠）PO QD 空腹 ＋ prednisone：mCRPC 10 mg QD；mHSPC 5 mg QD；ADT 持續。減量規格 50/500 mg。",
+  adj:"肝功能監測同 abiraterone。",
+  caut:"貧血、血小板低下、高血壓、低血鉀；第一個月每週 CBC。",
+  guide:"BRCA mCRPC"+src("MAGNITUDE")+"；BRCA2（FDA）／BRCA1/2（EU）mHSPC"+src("AMPLITUDE")+src("fdaAkeega"),
+  nhi:"未列入健保給付規定（自費）；台灣許可證狀態請確認。",upd:"FDA 2025-12 核准 BRCA2 mCSPC；EC 2026-03 核准 BRCA1/2 mHSPC"},
+ {id:"tala",cls:"parp",name:"Talazoparib",brand:"Talzenna",type:"PARP 抑制劑",
+  dose:"0.5 mg PO QD ＋ enzalutamide 160 mg QD（同時使用）。",
+  adj:"CrCl 30–59：0.35 mg；15–29：0.25 mg。",
+  caut:"貧血最常見（約半數需輸血或減量），CBC 每月。",
+  guide:"HRR 突變一線 mCRPC（FDA 限 HRR；EMA 適應症不限 HRR）"+src("TALAPRO2")+src("fdaTala"),
+  nhi:"健保僅給付乳癌，攝護腺癌自費。"},
+ {id:"capi",cls:"target",name:"Capivasertib",brand:"Truqap",type:"AKT 抑制劑",
+  dose:"400 mg PO BID，每週服 4 天、停 3 天 ＋ abiraterone 1,000 mg QD ＋ prednisone 5 mg QD ＋ ADT。",
+  adj:"依仿單調整。",
+  caut:"高血糖（監測血糖／HbA1c）、腹瀉、皮疹。",
+  guide:"PTEN 缺失（IHC）mHSPC"+src("CAPI281")+src("fdaCapi"),
+  nhi:"健保 9.135 僅給付乳癌；攝護腺癌自費。",upd:"FDA 2026-06-12 核准 PTEN 缺失 mHSPC"},
+ {id:"lu",cls:"rlt",name:"177Lu-PSMA-617（lutetium Lu 177 vipivotide tetraxetan）",brand:"Pluvicto（鎦必妥）",type:"PSMA 放射配體治療",
+  dose:"7.4 GBq（200 mCi）IV q6w，最多 6 療程。",
+  adj:"中重度腎功能不全資料有限。",
+  caut:"口乾、噁心、疲倦、骨髓抑制（貧血、血小板低下）、腎毒性。需 PSMA PET 陽性；放射防護衛教。",
+  guide:"ARPI＋taxane 後"+src("VISION")+"；ARPI 後化療前"+src("PSMAfore")+"；PSMA 陽性 mHSPC＋ARPI"+src("PSMAddition")+src("fdaLu"),
+  nhi:"TFDA 114/1/23 核准（ARPI 及 taxane 後 mCRPC）；健保未給付。",ref:"tfdaLu",upd:"FDA 2026-07-31 擴大至 PSMA 陽性 mHSPC（併 ARPI）"},
+ {id:"ra",cls:"rlt",name:"Radium-223",brand:"Xofigo",type:"α 粒子骨靶向放射藥物",
+  dose:"55 kBq/kg IV q4w × 6 療程。",
+  adj:"首劑前 ANC ≥1.5×10⁹/L、PLT ≥100×10⁹/L、Hb ≥10 g/dL。",
+  caut:"不可與 abiraterone＋prednisone 同時使用（ERA 223）；EAU 建議併用骨保護劑，但健保規定不得合併 denosumab／bisphosphonate。",
+  guide:"有症狀骨轉移、無臟器轉移之 mCRPC"+src("ALSYMPCA")+src("auaApc","#30 Strong/B")+"；不可併 abiraterone"+src("ERA223"),
+  nhi:"9.68：有症狀骨轉移 ≥2 處、無臟器轉移，最多 6 療程；不得合併 abiraterone、enzalutamide、denosumab、bisphosphonate。",ref:"nhi968"},
+ {id:"pem",cls:"target",name:"Pembrolizumab",brand:"Keytruda",type:"PD-1 抑制劑",
+  dose:"200 mg IV q3w 或 400 mg IV q6w。",adj:"無需調整。",caut:"免疫相關不良反應（甲狀腺、肝炎、肺炎、結腸炎等）。",
+  guide:"MSI-H／dMMR／TMB-H mCRPC"+src("auaApc","#36 Moderate/C")+src("KN158")+"；未經生物標記篩選之合併試驗均失敗。",
+  nhi:"9.69 未給付攝護腺癌（自費）。",ref:"nhi969"},
+ {id:"deno",cls:"bone",name:"Denosumab",brand:"Xgeva（120 mg）／Prolia（60 mg）",type:"RANKL 單株抗體",
+  dose:"mCRPC 骨轉移預防 SRE：120 mg SC q4w；ADT 骨質流失：60 mg SC q6m。均補充鈣與維生素 D。",
+  adj:"CrCl <30 低血鈣風險高，密切監測。",caut:"低血鈣、ONJ（治療前牙科評估）；停藥後反彈性骨折風險。",
+  guide:"ADT 骨質流失高骨折風險者"+src("auaApc","#39")+src("HALT")+"；mCRPC 骨轉移預防 SRE"+src("auaApc","#40 Moderate/B"),nhi:"Xgeva 120 mg（5.5.4，113/10/1）：前列腺癌等併有蝕骨性骨轉移。Prolia 60 mg（5.6.1，115/7/1）：男性可用，需 T ≤−2.5 並有脊椎或髖部骨折（或 −2.5～−1.0 並有 ≥2 處）；單純 ADT 骨質流失無骨折者不給付。",ref:"nhi554",upd:"健保 113/10/1 擴大 Xgeva 5.5.4 適用癌別；115/7/1 修訂 5.6.1 骨鬆給付"},
+ {id:"zol",cls:"bone",name:"Zoledronic acid",brand:"Zometa",type:"Bisphosphonate",
+  dose:"mCRPC 骨轉移：4 mg IV q3–4w（輸注 ≥15 分鐘）。",
+  adj:"CrCl 50–60：3.5 mg；40–49：3.3 mg；30–39：3.0 mg；<30：不建議。",caut:"腎毒性、低血鈣、ONJ、急性期反應。",
+  guide:"mCRPC 骨轉移預防 SRE"+src("auaApc","#40 Moderate/B")+"；mHSPC 早期使用未延後 SRE"+src("calgb"),nhi:"Zometa 4 mg：惡性高血鈣，及多發性骨髓瘤、乳癌、前列腺癌骨轉移（條文細節請確認）。Aclasta 5 mg 骨鬆：同 5.6.1。",ref:"nhiZol"}
+];
+const DCLS = {all:"全部",adt:"ADT",arpi:"ARPI",chemo:"化療",parp:"PARP 抑制劑",target:"標靶／免疫",rlt:"放射性藥物",bone:"骨保護"};
+
+function renderDrugs(){
+  const bsa=calcBSA(); const w=num(S.wt);
+  const list = DRUGS.filter(d=>S.dflt==="all"||d.cls===S.dflt);
+  return list.map(d=>{
+    let calc="";
+    if(d.bsa && bsa){ calc=`<div class="row"><div class="k">本病人</div><div><b>${fmt(d.bsa*bsa,0)} mg</b>（${d.bsa} mg/m² × BSA ${fx(bsa,2)}）${d.bsa2?`；${d.bsa2} mg/m²：<b>${fmt(d.bsa2*bsa,0)} mg</b>`:""}</div></div>`; }
+    if(d.id==="ra" && w){ calc=`<div class="row"><div class="k">本病人</div><div><b>${fmt(55*w/1000,2)} MBq</b>（55 kBq/kg × ${w} kg）</div></div>`; }
+    return `<div class="card drug"><h3>${esc(d.name)} <span class="brand2">${esc(d.brand)}</span>${d.upd?upd(d.upd):""}</h3><div class="cb">
+      <div class="row"><div class="k">類別</div><div>${d.type}</div></div>
+      <div class="row"><div class="k">劑量</div><div>${d.dose}</div></div>${calc}
+      <div class="row"><div class="k">調整</div><div>${d.adj}</div></div>
+      <div class="row"><div class="k">注意</div><div>${d.caut}</div></div>
+      <div class="row"><div class="k">指引</div><div>${d.guide}</div></div>
+      <div class="row"><div class="k">健保</div><div>${d.nhi}${d.ref?src(d.ref):""}</div></div>
+    </div></div>`;
+  }).join("");
+}
+
+/* ================= 診斷流程 ================= */
+function dxCtx(){
+  const psa=num(S.psa), age=num(S.age), vol=num(S.vol);
+  const adj = psa===null? null : (S.ari? psa*2 : psa);
+  const psad = (adj!==null && vol)? adj/vol : null;
+  const ti=tIdx(S.ct);
+  const dre = S.ct===""? "na" : ti<=2? "normal" : ti<=5? "susp" : "adv";
+  const risk = !!(S.fhx||S.germ);
+  const pir = S.pirads===""? null : +S.pirads;
+  return {psa,adj,age,vol,psad,dre,risk,pir,lt10:S.le==="lt10"};
+}
+function stepCard(o){
+  const cls={go:"st-go",stop:"st-stop",wait:"st-wait",info:"st-info",bx:"st-bx"}[o.k||"info"];
+  return `<div class="step ${cls}"><div class="st-h"><span class="st-n">${o.n}</span><span class="st-t">${o.t}</span></div>
+    <div class="st-c">${o.c}</div>${o.x?`<div class="st-x">${o.x}</div>`:""}
+    ${o.why?`<details class="st-d"><summary>依據</summary><div class="cb small">${o.why}</div></details>`:""}</div>`;
+}
+function dxGate(c){
+  // 回傳 {gate:'need'|'monitor'|'repeat'|'proceed', ...}
+  if(c.adj===null && c.dre==="na") return {gate:"need"};
+  if(c.dre==="adv"||c.dre==="susp") return {gate:"proceed",why:"dre"};
+  if(c.adj===null) return {gate:"need"};
+  if(c.adj<3) return {gate:"monitor"};
+  if(S.uti) return {gate:"repeat",why:"uti"};
+  if(c.adj<=10 && !S.psaRep) return {gate:"repeat",why:"confirm"};
+  return {gate:"proceed",why:"psa"};
+}
+function renderDx(){
+  const c=dxCtx(), H=[]; let n=0;
+  const g=dxGate(c);
+  if(g.gate==="need"){ return `<div class="alert a-info">輸入 PSA 與 DRE 後顯示下一步。</div>`; }
+
+  // 0. 預期壽命
+  if(c.lt10){
+    H.push(stepCard({n:"!",k:"stop",t:"預期壽命 <10 年",
+      c:"一般不以早期偵測為目的進一步檢查；有症狀、DRE 明顯異常或 PSA 很高而可能需要治療時，做有限評估（可不先做 MRI）。",
+      why:`EAU：依預期壽命與體能狀態停止早期偵測（Strong）${src("eauDx","5.2.8")}；不考慮根治治療者，可不做 MRI、只做有限切片（Weak）${src("eauDx","5.5.8")}。AUA：依年齡、預期壽命、健康狀態個別化或停止篩檢 ${src("auaEd","#7 Conditional/B")}。`}));
+  }
+
+  // 1. PSA 解讀
+  const pTxt = c.adj===null? "—" : (S.ari? `${fmt(c.psa,2)} ×2 ＝ <b>${fmt(c.adj,2)}</b>（5-ARI 校正）` : `<b>${fmt(c.adj,2)}</b>`);
+  const dreTxt = {na:"未做／未填",normal:"正常",susp:`可疑（c${S.ct}）`,adv:`疑局部晚期（c${S.ct}）`}[c.dre];
+  let c1="", k1="info", x1="";
+  if(g.gate==="monitor"){
+    const thr = (c.age!==null && c.age>=60)? 2 : 1;
+    const atRisk = c.adj>thr || c.risk;
+    k1="stop";
+    c1=`PSA ${pTxt} ng/mL、DRE ${dreTxt}：<b>目前不需 MRI 或切片，繼續追蹤 PSA。</b>`;
+    x1 = c.age!==null && c.age>=75 && c.adj<3 ? `≥75 歲且 PSA <3：可考慮停止篩檢。${src("auaEd","討論")}` :
+      `建議間隔：${atRisk?"<b>約每 2 年</b>":"<b>可延長至 8 年</b>"}（EAU 依年齡與 PSA：${c.age!==null&&c.age>=60?"60 歲以上 PSA >2":"PSA >1"}${c.risk?"，或有家族史／帶因":""} 屬較高風險）`;
+    if(c.dre==="na") x1+=`<br>尚未做 DRE：可與 PSA 合併評估風險。${src("auaEd","#8 Conditional/C")}`;
+  }else if(g.gate==="repeat"){
+    k1="wait";
+    if(g.why==="uti"){
+      c1=`PSA ${pTxt} ng/mL，近期有 UTI、器械操作或尿滯留：<b>先待恢復後重驗 PSA</b>，再決定 MRI。`;
+      x1=`無症狀者不要因 PSA 升高經驗性給抗生素。${src("auaEd","Choosing Wisely 討論")}`;
+    }else{
+      c1=`PSA ${pTxt} ng/mL、DRE ${dreTxt}：<b>先重驗 PSA（約 4 週後，同一實驗室）</b>，確認升高再做 MRI。`;
+      x1=`重驗後勾選「PSA 已重驗確認升高」即顯示後續步驟。`;
+    }
+  }else{
+    k1="go";
+    const rs = g.why==="dre"? "DRE 異常" : "PSA 已確認升高";
+    c1=`PSA ${pTxt} ng/mL、DRE ${dreTxt}：<b>${rs}，進一步評估是否切片。</b>`;
+    if(g.why==="psa" && c.adj>10 && !S.psaRep) x1=`AUA 建議任何升高的 PSA 先重驗；EAU 僅對 3–10 ng/mL 建議先重驗，PSA >10 可同時安排 MRI。`;
+    if(c.dre==="na") x1+=(x1?"<br>":"")+`尚未做 DRE：建議補做，DRE 異常會改變後續（MRI 陰性仍需考慮切片）。${src("nccnEd")}`;
+  }
+  if(S.ari) x1+=(x1?"<br>":"")+`<span class="cau">服用 5-ARI：PSA 以 ×2 解讀（服用約 6 個月後才穩定；個人差異大）。</span>${src("auaEd","5-ARI 討論")}${src("eauDx","5.2.2")}`;
+  H.push(stepCard({n:++n,k:k1,t:"PSA／DRE 判讀",c:c1,x:x1,
+    why:`<ul class="tight">
+      <li>PSA 3–10 ng/mL 之無症狀者，先重驗再進一步檢查（EAU Weak）${src("eauDx","5.2.8")}；任何升高的 PSA 先重驗再做生物標記、影像或切片 ${src("auaEd","#3 Expert Opinion")}。</li>
+      <li>PSA ≥3 ng/mL 或明顯可疑 DRE：重驗 PSA、補做 DRE、排除良性原因，再做 mpMRI ${src("nccnEd")}。</li>
+      <li>不以 PSA velocity 單獨決定生物標記、影像或切片 ${src("auaEd","#9 Strong/B")}。</li>
+      <li>EAU 依初始 PSA 調整追蹤：40 歲 PSA >1、60 歲 PSA >2 → 每 2 年；非高風險者可延至 8 年（Weak）${src("eauDx","5.2.8")}。AUA：50–69 歲每 2–4 年 ${src("auaEd","#6 Strong/A")}。</li></ul>`}));
+
+  if(g.gate!=="proceed"){ if(S.prevBx) H.push(prevBxCard(++n)); return H.filter(Boolean).join(""); }
+
+  // 2. 切片前：MRI 或直接切片
+  const direct = c.dre==="adv" || c.lt10;
+  if(direct){
+    H.push(stepCard({n:++n,k:"bx",t:"切片前檢查",
+      c: c.dre==="adv"? `<b>DRE 明顯局部晚期：可不先做 MRI，直接做有限的系統性切片</b>，之後依高風險流程安排分期影像。`
+        : `預期壽命短：通常不再進一步檢查；若仍需確診（例如考慮治療），<b>可不先做 MRI，只做有限切片</b>。`,
+      x: (c.adj!==null&&c.adj>50)? `PSA >50 且排除感染等良性原因：若需盡快治療，可省略切片。${src("auaEd","#18 Expert Opinion")}` : "",
+      why:`EAU：DRE 明顯局部晚期或不考慮根治治療者，只做有限切片、不需 MRI（Weak）${src("eauDx","5.5.8")}。若仍考慮根治治療，MRI 可評估局部範圍並引導標靶 ${src("auaLoc","#5 Conditional/B")}。`}));
+  }else{
+    H.push(stepCard({n:++n,k:"go",t:"切片前檢查",
+      c:`<b>先做攝護腺 MRI（PI-RADS v2.1 判讀），再決定是否切片。</b>`,
+      x: (c.adj!==null&&c.adj>50)? `PSA >50 且排除感染等良性原因：若需盡快治療，可省略切片。${src("auaEd","#18 Expert Opinion")}` : "",
+      why:`<ul class="tight">
+        <li>懷疑局限性疾病者，切片前做 MRI（EAU Strong）${src("eauDx","5.5.8")}；初次切片前可用 MRI 提高 GG ≥2 偵測率 ${src("auaEd","#13 Conditional/A")}${upd("AUA/SUO 2026 修訂：#13 證據等級由 Grade B 升為 Grade A")}${src("auaEdAm")}；mpMRI（category 1）${src("nccnEd")}。</li>
+        <li>依 PI-RADS 報告 ${src("auaEd","#14 Moderate/C")}；MRI 結果宜在多專科會議討論並回饋病理（EAU Strong）${src("eauDx","5.5.8")}。</li>
+        <li><b>輔助工具</b>（PSA 3–20）：MRI、校準過的 risk calculator（ERSPC、PBCG 等）或血液／尿液生物標記（PHI、4Kscore、SelectMDx、Stockholm3 等）擇一協助決定 ${src("eauDx","5.2.8")}；生物標記僅在會改變切片決策時使用 ${src("auaEd","#17 Conditional/C")}；risk calculator ${src("auaEd","#10 Conditional/B")}；生物標記不可取代 mpMRI ${src("nccnEd")}。</li>
+        <li>台灣：PHI 部分醫院可檢測；健保給付狀態請以院內與健保署公告確認。</li></ul>`}));
+  }
+
+  // 3. MRI → 切片決策
+  if(S.prevBx) H.push(prevBxCard(++n));
+  if(c.pir===null){
+    if(!direct) H.push(stepCard({n:++n,k:"info",t:"MRI → 切片決策",c:`<span class="muted">輸入 PI-RADS（及 MRI 體積以計算 PSAD）後顯示。</span>`}));
+  }else{
+    H.push(mriDecision(c,++n));
+  }
+  // 4. MRI 局部分期所見
+  if(S.mr_epe==="y"||S.mr_svi==="y"||S.mr_n==="y"){
+    const L=[];
+    if(S.mr_epe==="y") L.push("疑 EPE");
+    if(S.mr_svi==="y") L.push("疑 SVI");
+    if(S.mr_n==="y") L.push("疑淋巴結轉移");
+    H.push(stepCard({n:++n,k:"info",t:"MRI 局部分期所見",c:`MRI ${L.join("、")}：確診後，手術神經保留、RT 範圍與 ADT 時長需納入 MRI 所見${S.mr_n==="y"?"；可疑淋巴結需分期影像確認":""}。`,
+      x:`正式風險分組與 AJCC cT 仍依 DRE${S.mr_n==="y"?"；cN 依影像判定，可在「分期・風險」將 N 改為 N1":""}。`,
+      why:`MRI 可用於評估病灶位置與範圍，並作為治療計畫依據 ${src("auaLoc","#5 Conditional/B")}；cT 依 DRE ${src("ajcc")}${src("eauRisk")}。`}));
+  }
+  H.push(`<div class="alert a-info">切片確診後：<button type="button" class="linkbtn" data-tab="risk">前往「分期・風險」</button>輸入 Gleason 與陽性針數。</div>`);
+  return H.filter(Boolean).join("");
+}
+function mriDecision(c,n){
+  const p=c.pir, d=c.psad, dT = d===null? "未知（需 MRI 體積）" : fx(d,3);
+  const fam = c.risk? "有家族史／帶因" : "無家族史";
+  const dreS = c.dre==="susp";
+  const prevNeg = S.prevBx==="neg";
+  let k="bx", t="", x="";
+  const ari = S.ari? `<br><span class="muted small">PSAD 以 5-ARI 校正後 PSA 計算；此切點未於 5-ARI 族群驗證。</span>` : "";
+  if(p<=2){
+    if(dreS){ t=`<b>MRI 陰性但 DRE 可疑：建議系統性切片。</b>`; }
+    else if(d===null){ k="info"; t=`MRI 陰性（PI-RADS ${p}）：<b>需 PSAD 判斷</b>——PSAD <0.20 且無家族史可省略切片；否則考慮系統性切片。`; }
+    else if(d<0.20 && !c.risk){ k="stop"; t=`<b>不切片，PSA 追蹤。</b>`; }
+    else { t=`<b>MRI 陰性但臨床懷疑度不低（${d>=0.20?"PSAD ≥0.20":fam}）：考慮系統性切片</b>，與病人討論。`; }
+    x=`PI-RADS ${p}、PSAD ${dT}、${fam}${dreS?"、DRE 可疑":""}${prevNeg?"、前次切片陰性":""}`;
+  }else if(p===3){
+    if(dreS || c.risk || d===null || d>=0.10){
+      if(d===null && !dreS && !c.risk){ k="info"; t=`PI-RADS 3：<b>需 PSAD 判斷</b>——PSAD <0.10 且無家族史可省略切片；否則標靶＋病灶周圍切片。`; }
+      else t=`<b>標靶切片＋病灶周圍取樣</b>（系統性切片可選擇加做）。`;
+    }else{ k="stop"; t=`<b>懷疑度很低（PSAD <0.10、無家族史）：不切片，PSA 追蹤。</b>`; }
+    x=`PI-RADS 3、PSAD ${dT}、${fam}${dreS?"、DRE 可疑":""}`;
+  }else{
+    t=`<b>標靶切片＋病灶周圍取樣</b>（系統性切片可選擇加做）。`;
+    x=`PI-RADS ${p}：不論 PSAD 皆切片。`;
+  }
+  x+=ari;
+  const why=`<ul class="tight">
+    <li>PI-RADS ≤2 且懷疑度低（PSAD <0.20、無家族史）→ 不切片、PSA 追蹤（Weak）；PI-RADS 3 且懷疑度很低（PSAD <0.10、無家族史）→ 不切片；其餘考慮標靶＋病灶周圍切片（Weak）；PI-RADS ≥4 → 標靶＋病灶周圍（Weak）${src("eauDx","5.5.8")}${upd("EAU 2026 以 PSAD 與家族史具體定義可省略切片的條件，PI-RADS ≥4 建議標靶＋病灶周圍取樣（舊版為標靶＋系統性）")}。PI-RADS × PSAD 對照 ${src("eauDx","Table 5.5")}。</li>
+    <li>AUA：可疑病灶（PI-RADS 3–5）做標靶切片（Moderate），可加系統性切片（Conditional）${src("auaEd","#15")}；MRI 陰性但 GG ≥2 風險高 → 系統性切片 ${src("auaEd","#16 Moderate/C")}；風險夠低時可暫不切片 ${src("auaEd","#11 Clinical Principle")}。</li>
+    <li>明顯可疑 DRE 不論 PSA 皆應考慮切片；MRI 陰性不能排除癌症 ${src("nccnEd")}。</li>
+    ${prevNeg?`<li>重複切片：MRI 無可疑病灶時可做系統性切片 ${src("auaEd","#31 Conditional/B")}；有可疑病灶做標靶 ± 系統性 ${src("auaEd","#32")}。</li>`:""}</ul>`;
+  const card = stepCard({n,k,t:"MRI → 切片決策",c:t,x,why});
+  const doBx = !(k==="stop") && !(k==="info");
+  return card + (doBx? bxMethodCard(p) : "");
+}
+function bxMethodCard(p){
+  const tgt = p!==null && p>=3;
+  return stepCard({n:"↳",k:"info",t:"切片方式",
+    c:`${tgt?"每個標靶病灶 ≥2 針（AUA）、3–5 針（EAU），加病灶周圍；":"系統性切片；"}<b>經會陰或經直腸皆可</b>，經會陰感染風險較低。`,
+    x:`經直腸：直腸 povidone-iodine 清潔＋依當地抗藥性選預防性抗生素（可依肛門拭子培養）。經會陰：皮膚消毒；研究顯示不常規給預防性抗生素時感染率仍低，依院內規範。`,
+    why:`<ul class="tight">
+      <li>每個標靶病灶 ≥2 針 ${src("auaEd","#34 Moderate/C")}；EAU：MRI 病灶至少 3–5 針 ${src("eauDx","5.5")}；標靶可用認知、融合軟體或 in-bore 導引（Weak）${src("eauDx","5.5.8")}。</li>
+      <li>經直腸或經會陰皆可 ${src("auaEd","#35 Conditional/B")}${upd("AUA/SUO 2026 修訂：#35 證據等級由 Grade C 升為 Grade B")}${src("auaEdAm")}。EAU 2026 整理：TRANSLATE RCT 經會陰 csPCa 偵測較高（60% vs 54%）、不良事件較少；PREVENT、PERFECT 未顯示明確差異；經會陰不常規給預防性抗生素之感染率低 ${src("eauDx","5.5")}。經會陰可降低敗血症風險與抗生素需求 ${src("nccnEd")}。</li>
+      <li>經直腸：povidone-iodine 直腸清潔降低感染（RR 0.50）；歐盟已停用 fluoroquinolone 作切片預防；替代為標靶性（依肛門拭子培養）、加強型或 fosfomycin、cephalosporin、aminoglycoside ${src("pilatz")}。</li>
+      <li>麻醉：經直腸用 periprostatic block；經會陰可用會陰／pudendal 神經阻斷 ${src("eauDx","5.5")}。</li></ul>`});
+}
+function prevBxCard(n){
+  const v=S.prevBx; if(!v||v==="none") return "";
+  const M={
+    neg:{t:"前次切片陰性",c:`<b>不因一次陰性切片停止追蹤；是否重切依整體風險，不以單一 PSA 切點決定。</b>`,
+      x:`未做過 MRI 者，重切前先做 MRI；用納入前次陰性切片的風險工具；生物標記僅在會改變決策時使用。持續追蹤者 2–4 年內（或依風險更早）再評估。`,
+      why:`${src("auaEd","#20 Strong/C")}${src("auaEd","#21 Strong/B")}${src("auaEd","#22 Clinical Principle")}${src("auaEd","#23 Strong/B")}${src("auaEd","#24–25")}${src("auaEd","#30 Strong/C")}；陰性切片後以 PSA、DRE 追蹤，無高品質 MRI 者做 mpMRI，高懷疑度時以融合切片 ${src("nccnEd")}。`},
+    asap:{t:"前次切片 ASAP",c:`<b>需進一步檢查，可包含重複切片</b>（建議先做 MRI，標靶＋涵蓋 ASAP 部位）。`,
+      x:`ASAP 後重複切片：癌症 31%、csPCa 12%（MRI 前時代之統合分析）。`,
+      why:`${src("auaEd","#28 Moderate/C")}${upd("AUA/SUO 2026 修訂：#28 由 Expert Opinion 改為 Moderate Recommendation（Grade C），並明列可包含重複切片")}${src("auaEdAm")}${src("eauDx","5.3")}`},
+    hgpin1:{t:"前次切片：單一針 HGPIN",c:`<b>不需立即重複切片</b>；依 PSA／MRI 常規追蹤。`,why:src("auaEd","#26 Moderate/C")+"；HGPIN 臨床意義未明 "+src("eauDx","5.3")},
+    hgpinM:{t:"前次切片：多灶 HGPIN",c:`<b>可進一步風險評估</b>（MRI、生物標記），依結果決定是否重切。`,why:src("auaEd","#27 Expert Opinion")},
+    aip:{t:"前次切片：AIP（非典型導管內增生）",c:`<b>需進一步檢查</b>（MRI ± 重複切片）。`,why:src("auaEd","#29 Expert Opinion")}
+  }[v];
+  return M? stepCard({n,k:"info",t:M.t,c:M.c,x:M.x,why:M.why}) : "";
+}
+function renderScreenRef(){
+  return `<details><summary>篩檢參考：起始年齡、間隔、停止、germline 檢測</summary><div class="cb small tscroll">
+  <table class="t"><tr><th></th><th>EAU 2026</th><th>AUA/SUO 2026</th><th>NCCN Early Detection v2.2026</th></tr>
+  <tr><td>一般風險</td><td>50 歲起（Strong）</td><td>45–50 歲可做基線 PSA（Conditional/B）；50–69 歲每 2–4 年（Strong/A）</td><td>45–75 歲</td></tr>
+  <tr><td>高風險</td><td>家族史、非洲裔 45 歲；BRCA2 帶因 40 歲</td><td>黑人、germline 變異、強家族史 40–45 歲（Strong/B）</td><td>黑人、germline 變異、家族史 40 歲</td></tr>
+  <tr><td>間隔</td><td>40 歲 PSA >1、60 歲 PSA >2 → 每 2 年；其餘可延至 8 年（Weak）</td><td>依 PSA、風險、預期壽命個別化（Conditional/B）</td><td>PSA <1 → 2–4 年；1–3 → 1–2 年</td></tr>
+  <tr><td>停止</td><td>依預期壽命與體能狀態（Strong）</td><td>≥75 歲且 PSA <3 可停止或拉長</td><td>>75 歲僅限非常健康者</td></tr></table>
+  <div class="note">${src("eauDx","5.2.8")}${src("auaEd","#4–7")}${src("nccnEd")}</div>
+  <p style="margin:8px 0 2px"><b>Germline 檢測</b>（需先遺傳諮詢）：多位家屬 <60 歲診斷攝護腺癌（Weak）；家族有高風險致病變異（Strong）；腫瘤檢測發現 BRCA 變異（Strong）。${src("eauDx","5.2.8")}</p>
+  <p style="margin:6px 0 0"><b>台灣</b>：目前無公費 PSA 篩檢；衛福部引用 USPSTF，建議 55–69 歲與醫師討論後決定、70 歲以上不建議。${src("mohwScr")}</p>
+  </div></details>`;
+}
+
+/* ================= 局限性治療 ================= */
+function aKey(a){
+  if(!a||a.g===null) return null;
+  if(/^Low/.test(a.g)) return "low";
+  if(/Favorable/.test(a.g)) return "fir";
+  if(/Unfavorable/.test(a.g)) return "uir";
+  if(/^High/.test(a.g)) return "high";
+  if(/^cN1/.test(a.g)) return "n1";
+  return "m1";
+}
+function abiCount(){
+  const psa=num(S.psa), g=GG(), f=[];
+  if(psa!==null&&psa>=40) f.push("PSA ≥40"); if(g!==null&&g>=4) f.push("GG4–5"); if(S.ct&&tIdx(S.ct)>=6) f.push("cT3–4");
+  return f;
+}
+const chkMark = b => b===null? '<span class="muted">?</span>' : b? '<span class="ok">✔</span>' : '<span class="ng">✘</span>';
+function renderLoc(){
+  const a=riskAUA(), e=riskEAU(), n=riskNCCN(), k=aKey(a), H=[];
+  if(k===null) return `<div class="alert a-info">輸入 PSA、Gleason、cT 後顯示（與「分期・風險」共用）。缺：${(a.miss||[]).join("、")}</div>`;
+  if(k==="m1") return `<div class="alert a-warn">已有遠處轉移（M1）：請見「晚期治療」。</div>`;
+  const lt10=S.le==="lt10", crib=S.l_crib, g=GG(), psad=calcPSAD();
+  H.push(`<div class="hl"><div class="kv"><div><div class="k">AUA/ASTRO</div>${tag(a.g,a.cls)}</div><div><div class="k">EAU</div>${e.g?tag(e.g,e.cls):"—"}</div><div><div class="k">NCCN</div>${n.g?tag(n.g,n.cls):"—"}</div></div>
+    <div class="note">以下選項依 AUA/ASTRO 分組排列，並列 EAU 建議；分組不一致時以採用的指引為準。${(k==="uir"&&/Favourable/.test(e.g||"")&&!crib)?`<br><span class="cau">EAU 屬 favourable intermediate：EAU 另可考慮選擇性 AS（GG2 低腫瘤量）${src("eau","Weak")}。</span>`:""}</div></div>`);
+  if(lt10){
+    H.push(optCard({cls:"pref",title:"預期壽命 <10 年：Watchful waiting",tags:src("auaLoc","#12 Strong/A")+src("eau","Strong"),
+      lead:"無症狀者觀察，出現症狀時再給緩和治療（通常為 ADT）。",
+      rows:[["高風險有症狀","局部症狀且預期壽命有限：可只用緩和性 ADT。"+src("auaLoc","#17 Expert Opinion")]]}));
+  }
+  const noFocal = ["high","n1"].includes(k);
+  if(lt10 && (k==="low"||k==="fir")){ return H.join("")+`<div class="alert a-info">AS、RP、RT 適用於預期壽命 >10 年者。${src("eau","Strong")}</div>`; }
+  if(lt10) H.push(`<div class="alert a-warn">以下為指引中預期壽命 >10 年者的標準選項；預期壽命 <10 年請個別評估。${src("auaLoc","#15")}</div>`);
+  // ---- Low ----
+  if(k==="low"){
+    H.push(optCard({cls:crib?"no":"pref",title:crib?"Active surveillance":"Active surveillance（首選）",tags:(crib?tag("cribriform／IDC：不適合","t-high"):"")+src("auaLoc","#11 Strong/A")+src("eau","Strong")+src("nccnI"),
+      lead:"PSA 至少每 6 個月、DRE 每年、MRI ± 切片每 2–3 年，直到預期壽命 <10 年。",
+      rows:asRows()}));
+    H.push(optCard({title:"RP 或 RT（不願 AS 或進展者）",tags:src("auaLoc","#9 Clinical Principle"),
+      lead:"RT：中度低分次（如 60 Gy／20 fx）、超低分次（SBRT）、LDR 或 HDR 近接治療皆為同等選項；不加 ADT、不照骨盆淋巴結。",
+      rows:[["RT 依據",src("auaLoc","#31 Strong/A")+src("auaLoc","#32 Conditional/B")+src("auaLoc","#33 Strong/B")+src("auaLoc","#34–35")],
+        ["RP","依 nomogram 決定是否 PLND。"+src("auaLoc","#22 Clinical Principle")]]}));
+  }
+  // ---- FIR ----
+  if(k==="fir"){
+    const el=eauAsGG2(psad);
+    H.push(optCard({cls:"pref",title:"AS、RP、RT 三者皆可（共享決策）",tags:src("auaLoc","#13 Strong/A"),
+      lead:"三種選擇並列討論；AS 適合低腫瘤量者。"}));
+    H.push(optCard({cls:(el.ok&&!crib)?"":"no",title:"Active surveillance（選擇性）",tags:src("eau","Weak：選擇性 GG2")+src("auaLoc","#13"),
+      lead: g===2? "EAU：GG2 須低腫瘤量才考慮 AS。" : "GG1 但因 PSA 10–20 或 cT2b–c 屬中風險：AS 需個別評估。",
+      rows:[["EAU 條件", g===2? el.html : "—"],["追蹤","同低風險：PSA ≥q6m、DRE 每年、MRI ± 切片每 2–3 年；改變治療依切片進展。"+src("eau","Strong／Weak")]].concat(crib?[["排除","cribriform 或 intraductal：不適合 AS（EAU Strong）。"]]:[])}));
+    H.push(optCard({title:"RT（不加 ADT 為原則）",tags:src("auaLoc","#35 Moderate/B")+src("nccnUpd")+upd("NCCN v2.2026：多數 FIR 接受 RT 不建議併用 ADT"),
+      lead:"劑量提升之中度低分次 EBRT、超低分次 SBRT、LDR 或 HDR 近接治療擇一；不常規照骨盆淋巴結。",
+      rows:[["指引差異",`EAU：中風險 EBRT 合併短期 ADT 4–6 個月（Strong）${src("eau","Strong")}；AUA／NCCN：FIR 不常規加 ADT。`],
+        ["依據",src("auaLoc","#31–34")+src("eau","超低分次 Weak（FIR）")]]}));
+    H.push(optCard({title:"RP ± 淋巴結廓清",tags:src("auaLoc","#13")+src("eau","Strong（預期壽命 >10 年）"),
+      rows:[["PLND","依 nomogram 決定；若做則做 extended PLND。"+src("auaLoc","#22–23")],["神經保留","腫瘤學上可行時保留。"+src("auaLoc","#20 Moderate/B")]]}));
+  }
+  // ---- UIR ----
+  if(k==="uir"){
+    H.push(optCard({cls:"pref",title:"RT ＋ 短期 ADT（4–6 個月）",tags:src("auaLoc","#36 Strong/A")+src("eau","Strong"),
+      lead:"劑量提升之中度低分次 EBRT，或 EBRT ＋ 近接治療 boost；ADT 可前導或同步開始。",
+      rows:[["依據",src("auaLoc","#38 Strong")+src("auaLoc","#42 Conditional/C")+src("auaLoc","#43")],["劑量","76–78 Gy，或 60 Gy／20 fx、70 Gy／28 fx。"+src("eau","Strong")]]}));
+    H.push(optCard({cls:"pref",title:"RP ＋ extended PLND（依 nomogram）",tags:src("auaLoc","#15 Strong/A")+src("eau","Strong"),
+      rows:[["PLND","nomogram 選擇；若做則 extended。"+src("auaLoc","#22–23")],["神經保留","依側別包膜外風險。"+src("eau","Strong")]]}));
+    H.push(optCard({cls:"no",title:"Active surveillance",rows:[["說明",(g===3?"GG3 不適合 AS（EAU）。":"UIR 一般不建議 AS。")+(crib?"cribriform／intraductal 亦排除 AS（EAU Strong）。":"")]]}));
+  }
+  // ---- High / locally advanced / cN1 ----
+  if(k==="high"||k==="n1"){
+    const f=abiCount(); const abiYes = k==="n1" || f.length>=2;
+    const loc = S.ct && tIdx(S.ct)>=6;
+    H.push(optCard({cls:"pref",title:k==="n1"?"RT（攝護腺＋骨盆）＋ 長期 ADT ＋ abiraterone 2 年":"RT ＋ 長期 ADT（18–36 個月）"+(abiYes?" ＋ abiraterone 2 年":""),
+      tags:(k==="n1"?src("eau","Strong（cN1）")+src("auaLoc","#44 Strong/B"):src("auaLoc","#41 Strong/A")+src("eau","Strong：2–3 年"))+(abiYes?upd("AUA/ASTRO 2026 新增 #44：高風險（≥2 項）或 cN1 接受 RT 時加 abiraterone 24 個月")+src("auaLoc","#44 Strong/B"):""),
+      lead: abiYes? "abiraterone 1,000 mg QD ＋ prednisone 5 mg QD，與 ADT、RT 同時使用 24 個月。" : "EBRT（中度低分次可）或 EBRT ＋ 近接 boost；可加骨盆淋巴結照射。",
+      rows:[["abiraterone 條件",`符合 ${f.length}／3 項（PSA ≥40、GG4–5、cT3–4）${f.length?"："+f.join("、"):""}${k==="n1"?"；cN1 不論項數皆適用":""} — ${abiYes?'<span class="ok">適用</span>':'<span class="muted">未達 ≥2 項</span>'}${src("STAMPEDEabiM0")}`],
+        ["骨盆淋巴結",k==="n1"?"照射攝護腺＋骨盆（EAU Strong）。":"可照骨盆淋巴結（IMRT 45–52 Gy）。"+src("auaLoc","#39 Conditional/B")+src("auaLoc","#40")],
+        ["ADT 長度",`AUA 18–36 個月 ${src("auaLoc","#41")}；EAU 2–3 年（局部晚期至少 2 年）${src("eau","Strong")}`],
+        ["健保", abiYes? nhiSelf("abiraterone 健保限 mCSPC／mCRPC，M0 高風險局限性未給付")+src("nhi949") : ""]]}));
+    if(k==="high"){
+      H.push(optCard({cls:loc?"":"pref",title:"RP ＋ extended PLND"+(loc?"（局部晚期：多模式治療之一部分）":""),
+        tags:src("auaLoc","#15 Strong/A")+src("eau",loc?"Weak：選擇性 cN0":"Strong：選擇性病人"),
+        rows:[["PLND","做則做 extended；術中勿以冰凍切片決定是否放棄 RP。"+src("eau","Strong")+src("auaLoc","#23–24")],
+          ["術後","病理高風險可能需術後 RT ± ADT（見「術後・復發」）。"]]}));
+    }else{
+      H.push(optCard({cls:"no",title:"RP（cN1）",rows:[["說明","EAU 僅建議選擇性 cN0 局部晚期做 RP；cN1 以 RT＋全身治療為主。"+src("eau","Weak")]]}));
+    }
+  }
+  // focal & general
+  H.push(optCard({cls:"no",title:"局部消融（focal／whole-gland）",rows:[["說明",noFocal?"高風險不建議（臨床試驗外）。"+src("auaLoc","#16 Expert Opinion")+src("eau","Strong"):"低／中風險仍屬試驗性，僅限試驗或登錄。"+src("auaLoc","#14 Expert Opinion")+upd("AUA/ASTRO 2026 修訂 #14；NCCN Insights v5.2026 對新診斷者採用 focal therapy 持保留")+src("nccnI")]]}));
+  H.push(`<div class="alert a-info">共同原則：germline 檢測依病人與腫瘤風險評估 ${src("auaLoc","#4")}；組織基因體檢測不常規使用，僅在會改變決策時 ${src("auaLoc","#2–3")}。分期影像見「分期・風險」。</div>`);
+  return H.join("");
+}
+function eauAsGG2(psad){
+  const psa=num(S.psa), ct=S.ct;
+  const c=[
+    {t:"PSA <10",ok:psa===null?null:psa<10},
+    {t:"≤cT2a",ok:ct?tIdx(ct)<=3:null},
+    {t:"PSAD 低（常用 <0.15）",ok:psad===null?null:psad<0.15},
+    {t:"pattern 4 <10%",ok:S.l_p4?true:null},
+    {t:"無 cribriform／intraductal",ok:!S.l_crib}
+  ];
+  const ok=c.every(x=>x.ok!==false);
+  return {ok, html:c.map(x=>chkMark(x.ok)+" "+x.t).join("　")};
+}
+function asRows(){
+  return [["EAU 細節",`有前置 MRI＋標靶切片者不需 confirmatory biopsy（Weak）；未做 MRI 者 confirmatory biopsy 前先 MRI（Strong）；PSADT <3 年 → MRI＋切片（Strong）；改變治療依切片進展而非 MRI／PSA／DRE（Weak）${src("eau","6.2.1.c")}${upd("EAU 2026 修訂 AS 建議（6.2.1.c）")}`],
+    ["AUA","以連續 PSA 與重複切片追蹤；MRI 可輔助但不取代定期切片。"+src("auaLoc","#18–19 Expert Opinion")],
+    ["排除","cribriform 或 intraductal histology（EAU Strong）。"]];
+}
+
+/* ================= 術後・復發 ================= */
+function renderPost(){
+  if(S.b_prim==="rt") return renderPostRT();
+  if(S.b_prim!=="rp") return `<div class="alert a-info">先選擇初始治療（RP 或 RT）。</div>`;
+  if(S.b_pet==="conv") return `<div class="alert a-warn">傳統影像已見轉移 → 屬 mHSPC，請見「晚期治療」。</div>`;
+  const H=[]; let n=0;
+  const pgg=S.b_pgg===""?null:+S.b_pgg, pn=S.b_pn, psa=num(S.b_psa), dt=num(S.psadt);
+  // 1. 病理與術後 PSA
+  if((S.b_stat===""||S.b_stat==="undet") && S.b_srt){
+    H.push(stepCard({n:++n,k:"stop",t:"已做救援 RT、PSA 測不到",c:`<b>定期追蹤 PSA 與病史</b>；再次上升時依 PSADT 評估（見「局部治療已用盡」）。`,
+      why:`無症狀者至少以病史與 PSA 追蹤（EAU Strong）${src("eau","追蹤")}；局部治療用盡後之 BCR 處置 ${src("auaApc","#8–9")}。`}));
+    return H.join("");
+  }
+  if(S.b_stat===""||S.b_stat==="undet"){
+    if(pn==="pN1"){
+      const nn=num(S.b_nn);
+      H.push(stepCard({n:++n,k:"go",t:"pN1、PSA 測不到",
+        c:`<b>三選一：輔助 ADT；輔助 ADT ＋ RT；或觀察</b>${nn!==null&&nn<=2?"（≤2 顆淋巴結，觀察為合理選項）":""}。`,
+        x:`若做術後 RT，應合併 ADT。`,
+        why:`EAU：pN1（extended LND 後）討論三種選擇；≤2 顆且 PSA 測不到可觀察（Weak）${src("eau","pN1")}；AUA：輔助治療或觀察 ${src("auaLoc","#26 Conditional/C")}；pN1 術後 RT 加 ADT ${src("auaStp","#16 Clinical Principle")}。`}));
+    }else{
+      const adv = pgg!==null&&pgg>=4 && (S.b_pt==="pT3a"||S.b_pt==="pT3b"||S.b_pt==="pT4");
+      H.push(stepCard({n:++n,k:adv?"go":"stop",t:"pN0、PSA 測不到",
+        c: adv? `<b>pGG${pgg} ＋ ${S.b_pt}${S.b_r==="r1"?"＋切緣陽性":""}：可考慮輔助 RT</b>，或密切追蹤 PSA、上升即早期救援 RT。`
+          : `<b>不常規做輔助 RT：追蹤 PSA，上升即早期救援 RT。</b>`,
+        x:`pN0 不給輔助 ADT。`,
+        why:`AUA：不常規建議輔助 RT ${src("auaLoc","#27 Strong/A")}；EAU：pN0 且 ISUP 4–5 ＋ pT3 ± 切緣陽性者可提供輔助 RT（Weak）；pN0 不給輔助 ADT（Strong）${src("eau")}。`}));
+    }
+    if(S.b_stat==="") H.push(`<div class="alert a-info">選擇術後 PSA 狀態（測不到／持續可測／BCR）以顯示後續處置。</div>`);
+    return H.join("");
+  }
+  const persist = S.b_stat==="persist";
+  // 2. PSA 狀態
+  const hiF=[]; if(psa!==null&&psa>=0.7) hiF.push("PSA ≥0.7"); if(pgg!==null&&pgg>=4) hiF.push("pGG4–5"); if(dt!==null&&dt<=6) hiF.push("PSADT ≤6 個月"); if(persist) hiF.push("術後 PSA 持續可測"); if(S.b_pt==="pT3b"||S.b_pt==="pT4") hiF.push("精囊侵犯"); if(S.b_pet==="pelvic") hiF.push("PET 骨盆淋巴結陽性");
+  const eauLow = (dt!==null&&dt>12) && (pgg!==null&&pgg<4) && !persist;
+  H.push(stepCard({n:++n,k:"info",t:persist?"術後 PSA 持續可測":"RP 後 BCR",
+    c: persist? `持續可測 PSA 屬高風險特徵；排除遠處轉移後，<b>救援 RT ＋ 荷爾蒙治療</b>。`
+      : `BCR（PSA ≥0.2 且再次確認）${psa!==null?`，目前 PSA ${fmt(psa,2)}`:""}${dt!==null?`、PSADT ${fmt(dt,1)} 個月`:""}。`,
+    x: (!persist && !S.b_srt)? `EAU BCR 風險：${dt===null||pgg===null?'<span class="muted">需 PSADT 與 pGG</span>':eauLow?'<b>低風險</b>（PSADT >12 個月且 pGG <4）→ 可只追蹤 PSA':'<b>高風險</b>（PSADT ≤12 個月或 pGG 4–5）'}${src("eauBcr")}` : "",
+    why:`BCR 定義：RP 後 PSA ≥0.2 ng/mL 且再次確認 ${src("auaStp","定義")}；EAU 低風險 BCR 追蹤即可（Weak）${src("eau","BCR")}；EAU BCR 風險分組 ${src("eauBcr")}。持續可測 PSA：PSMA PET（若影響決策，Weak）、救援 RT＋荷爾蒙治療（Weak）${src("eau","persistent PSA")}。`}));
+  // 3. 影像
+  H.push(stepCard({n:++n,k:"go",t:"影像",
+    c: S.b_srt? `<b>PSMA PET 再分期</b>（優先於傳統影像）。` : `<b>救援 RT 前做 PSMA PET</b>（結果會影響治療時）；PET 陰性不應因此延後攝護腺床 RT。`,
+    x:petTxt(),
+    why:`救援 RT 前做次世代分子 PET ${src("auaStp","#9 Moderate/C")}；PSMA PET 可取代或接續陰性傳統影像 ${src("auaStp","#8 Conditional/C")}；PET 陰性仍應做攝護腺床 RT ${src("auaStp","#12 Expert Opinion")}；EAU：結果會影響治療時才做（Weak）${src("eau","6.4.4.d")}${upd("EAU 2026 修訂 BCR 影像建議（6.4.4.d）")}。台灣 PSMA PET 目前自費 ${src("twPsma")}。`}));
+  if(S.b_pet==="conv"){ H.push(`<div class="alert a-warn">傳統影像已見轉移 → 屬 mHSPC，請見「晚期治療」。</div>`); return H.join(""); }
+  // 4. 治療
+  if(S.b_srt){ H.push(exhaustCard(++n,"RP ＋ 救援 RT 後")); return H.join(""); }
+  const adt = hiF.length>0;
+  const distOnly = S.b_pet==="distant";
+  H.push(stepCard({n:++n,k:"bx",t:"救援 RT",
+    c: distOnly? `PET 僅見遠處病灶（傳統影像陰性）：<b>可不做攝護腺床 RT</b>；寡轉移可考慮 SBRT MDT，全身治療角色未定，需討論。`
+      : `<b>早期救援 RT（攝護腺床 ≥64 Gy${S.b_pet==="pelvic"?"＋PET 陽性骨盆淋巴結":""}）${adt?"＋ ADT":""}</b>，越早（PSA 越低）效果越好，不必等 PSA 達某一切點。`,
+    x: distOnly? "" : (adt? `ADT 理由：${hiF.join("、")}。ADT 至少 4–6 個月；高風險可延長至 18–24 個月。` : `無高風險特徵：可只做 RT。`)+` 不建議加 docetaxel${S.b_pn==="pN0"?"；pN0 不在試驗外加強雄性素抑制（如加 ARPI）":""}${S.b_pn==="pN1"?"；pN1 術後 RT 應合併 ADT":""}。`+(eauLow?`<br>EAU 低風險 BCR：亦可選擇只追蹤 PSA（Weak）。`:""),
+    why:`早期救援 RT（兩次 PSA 上升即可；不等 PSA 切點；≥64 Gy）${src("eau","Strong")}；PSA ≤0.5 時提供 ${src("auaStp","#2 Moderate/B")}；高風險可於 PSA <0.2 ${src("auaStp","#3 Conditional/C")}。ADT：PSA ≥0.7、GG4–5、PSADT ≤6 個月、持續可測 PSA、精囊侵犯 ${src("auaStp","#13 Moderate/B")}；無高風險特徵可只做 RT ${src("auaStp","#14")}；ADT ≥4–6 個月 ${src("auaStp","#17")}、高風險 18–24 個月 ${src("auaStp","#18")}；EAU：SRT 加荷爾蒙治療（Weak）${src("eau")}。PET 陽性骨盆淋巴結納入照野 ${src("auaStp","#10")}；擴大淋巴結照野可考慮 ${src("auaStp","#19 Conditional/B")}；不加 docetaxel ${src("auaStp","#21 Strong/B")}。PET 僅遠處 ${src("auaStp","#30")}；SBRT MDT ${src("auaStp","#29 Conditional/C")}。`}));
+  return H.join("");
+}
+function petTxt(){
+  if(S.b_prim==="rt") return {"":"", none:"PSMA PET 未做。", neg:"PSMA PET 陰性：局部復發仍需切片評估。", local:"PSMA PET 僅攝護腺局部病灶：切片確認後評估局部救援。",
+    pelvic:"PSMA PET 骨盆淋巴結陽性。", distant:"PSMA PET 見遠處病灶（傳統影像陰性）。", conv:""}[S.b_pet||""];
+  return {"":"", none:"PSMA PET 未做。", neg:"PSMA PET 陰性：仍可做攝護腺床救援 RT。", local:"PSMA PET 僅局部（攝護腺床）病灶。",
+    pelvic:"PSMA PET 骨盆淋巴結陽性：RT 照野納入，並合併 ADT。", distant:"PSMA PET 見遠處病灶（傳統影像陰性）。", conv:""}[S.b_pet||""];
+}
+function exhaustCard(n,lbl){
+  const dt=num(S.psadt);
+  if(dt===null) return stepCard({n,k:"info",t:`${lbl}：局部治療已用盡`,c:`<span class="muted">輸入 PSADT（「計算器」可自動帶入）以判斷高／低風險。</span>`});
+  const hi = dt<=9;
+  return stepCard({n,k:hi?"bx":"stop",t:`${lbl}：局部治療已用盡（PSADT ${fmt(dt,1)} 個月）`,
+    c: hi? `<b>高風險 BCR（PSADT ≤9 個月）：ADT ＋ enzalutamide</b>（EMBARK）；反應好時可間歇治療。`
+      : `<b>低風險（PSADT >9 個月）：觀察，不常規開始 ADT</b>${dt>12?"（EAU：PSADT >12 個月不給 ADT）":""}。`,
+    x: hi? `enzalutamide 160 mg QD ＋ leuprolide（EMBARK 條件：RP 後 PSA ≥1、RT 後高於 nadir ≥2，傳統影像 M0）。${nhiSelf("enzalutamide 健保 9.54 不含非轉移去勢敏感 BCR")}${src("nhi954")}` : `定期 PSA；高轉移風險者定期影像（PSMA PET 優先）。`,
+    why:`AUA：PSADT ≤9 個月為高風險，提供 ADT＋enzalutamide；PSADT >9 個月觀察、不常規 ADT；反應良好可間歇 ${src("auaApc","#8–9")}${upd("AUA/SUO 2026 以 PSADT ≤9 個月定義 BCR 高風險並建議 ADT＋enzalutamide；EAU 2026 新增 EMBARK-like 病人 enzalutamide＋ADT（Strong）")}；EAU：EMBARK-like（傳統影像 M0、PSADT ≤9）enzalutamide＋ADT（Strong）；PSADT >12 個月 M0 不給 ADT（Strong）${src("eau","6.4.7")}。EMBARK：enzalutamide＋leuprolide MFS HR 0.42、8 年 OS HR 0.60；enzalutamide 單用 MFS HR 0.63 ${src("EMBARK")}。PSMA PET 優先 ${src("auaApc","#7")}。`});
+}
+function renderPostRT(){
+  if(S.b_pet==="conv") return `<div class="alert a-warn">傳統影像已見轉移 → 屬 mHSPC，請見「晚期治療」。</div>`;
+  const H=[]; let n=0; const mo=num(S.b_mo), g=GG(), dt=num(S.psadt);
+  const eauLow = mo!==null && g!==null ? (mo>18 && g<4) : null;
+  H.push(stepCard({n:++n,k:"info",t:"RT 後 BCR",
+    c:`Phoenix 定義：PSA 高於 nadir ≥2 ng/mL。`,
+    x:`EAU BCR 風險：${eauLow===null?'<span class="muted">需 RT 至 BCR 間隔（月）與診斷時 GG</span>':eauLow?'<b>低風險</b>（間隔 >18 個月且切片 GG <4）→ 可只追蹤 PSA':'<b>高風險</b>（間隔 ≤18 個月或切片 GG4–5）'}${src("eauBcr")}`,
+    why:`${src("auaStp","定義")}${src("eauBcr")}；EAU 低風險 BCR 追蹤（Weak）${src("eau")}。`}));
+  H.push(stepCard({n:++n,k:"go",t:"影像與切片",c:`<b>PSMA PET 分期</b>；若為局部救援候選人，<b>攝護腺切片確認局部復發</b>。`,x:petTxt(),
+    why:`PSMA PET ${src("auaStp","#8")}${src("auaApc","#7")}；局部救援前切片 ${src("auaStp","#23 Clinical Principle")}；骨盆 MRI 可評估局部 ${src("auaStp","#11")}。台灣 PSMA PET 自費 ${src("twPsma")}。`}));
+  if(S.b_pet==="conv"){ H.push(`<div class="alert a-warn">傳統影像已見轉移 → 屬 mHSPC，請見「晚期治療」。</div>`); return H.join(""); }
+  if(S.b_pet==="pelvic"){ H.push(stepCard({n:++n,k:"bx",t:"骨盆淋巴結復發",c:`<b>未曾照骨盆者：骨盆淋巴結救援 RT ＋ ADT。</b>救援淋巴結廓清效益不確定。`,why:src("auaStp","#27 Expert Opinion")+src("auaStp","#28 Conditional/C")})); return H.join(""); }
+  if(S.b_pet==="distant") H.push(stepCard({n:++n,k:"info",t:"PET 僅見遠處病灶（傳統影像陰性）",c:`寡轉移可考慮 SBRT MDT；全身治療角色未定，需討論。`,why:src("auaStp","#29 Conditional/C")+src("auaStp","#30 Expert Opinion")}));
+  if(S.b_bx==="pos" && S.b_fit!=="n"){
+    H.push(stepCard({n:++n,k:"bx",t:"切片證實局部復發",c:`<b>局部救援：救援 RP、近接治療、SBRT（有經驗中心）；HIFU、冷凍治療限試驗或前瞻性世代。</b>`,
+      why:`EAU：救援 RP、近接、SBRT（Strong）；HIFU／冷凍（Weak，試驗內）${src("eau")}；AUA：RP、冷凍、HIFU、再照射擇一，共享決策 ${src("auaStp","#24 Moderate/C")}。`}));
+  }else{
+    if(S.b_fit!=="n" && S.b_bx!=="neg") H.push(`<div class="alert a-info">若考慮局部救援：先做攝護腺切片確認局部復發（上方「切片」欄位）。不考慮或不適合者，依 PSADT 處置如下。</div>`);
+    H.push(exhaustCard(++n, S.b_fit==="n"?"不適合局部救援":"未做局部救援"));
+  }
+  return H.join("");
+}
+
+/* ================= 副作用・監測 ================= */
+function monRows(rows){ return `<table class="t mt"><tbody>${rows.filter(Boolean).map(r=>`<tr><td style="width:34%"><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`; }
+function renderMon(){
+  const H=[]; const adt=S.m_adt && S.m_adt!=="none"; const t=num(S.m_t);
+  const anyARPI = S.m_abi||S.m_enza||S.m_apa||S.m_daro;
+  if(!adt && !anyARPI && !S.m_parp && !S.m_bone){ return `<div class="alert a-info">勾選目前或即將使用的治療後顯示監測項目。</div>`; }
+  // A. 基線
+  if(adt){
+    H.push(stepCard({n:"A",k:"go",t:"ADT 基線（開始時）",
+      c:`PSA、testosterone、Hb、肌酸酐、ALP、肝功能、血脂、HbA1c；血壓、體重；${S.m_long?"<b>長期 ADT：DXA 骨密度＋骨折風險評估</b>；":""}心血管風險評估。`,
+      x:`${S.m_adt==="agonist"?"LHRH agonist 起始 flare：高骨轉移負荷或脊髓壓迫風險者，同時使用 bicalutamide ≤4 週或改用 GnRH antagonist。":""}${S.m_bone?"骨保護藥物開始前：牙科評估。":""}`,
+      why:`EAU：長期 ADT 開始時評估骨鬆風險並做 DXA（Strong）；長期 ADT 至少追蹤 Hb、肌酸酐、ALP、血脂、HbA1c（Strong）${src("eau","ADT 追蹤")}。AUA：討論 ADT 骨鬆風險、評估骨折風險 ${src("auaApc","#37 Clinical Principle")}。NCCN 2026 新增心血管風險評估原則 ${src("nccnUpd")}${upd("NCCN v2.2026 新增 ADT 前心血管風險評估頁")}。即將出現臨床併發症（脊髓壓迫、出口阻塞）時起始用 antagonist 或睪丸切除（EAU Strong）${src("eau")}；flare 阻斷 ${src("auaApc","#18")}。`}));
+  }
+  // B. 追蹤時程
+  const B=[];
+  if(adt||anyARPI) B.push(["PSA（± testosterone）",`每 3–6 個月 ${src("auaApc","#13、#20")}；EAU：M0 至少每 6 個月、M1 每 3–6 個月 ${src("eau","Strong")}`]);
+  if(adt) B.push(["Testosterone","與 PSA 一起定期測 "+src("eau","Strong")+"；判定 CRPC 前須確認 &lt;50 ng/dL "+src("auaApc","#25")]);
+  if(adt) B.push(["血脂、HbA1c／血糖","每年 "+src("eau","Strong")]);
+  if(adt&&S.m_long) B.push(["DXA","依骨折風險定期追蹤；EAU 以每年骨質流失 >5% 為抗骨吸收治療指標之一 "+src("eau","Strong")]);
+  if(S.m_abi) B.push(["Abiraterone：肝功能","ALT／AST／bilirubin：基線、每 2 週 × 3 個月，之後每月 "+src("zytigaPI")]);
+  if(S.m_abi) B.push(["Abiraterone：血壓、K、水腫","至少每月 "+src("zytigaPI")]);
+  if(S.m_parp) B.push(["PARPi：CBC","基線與每月（MDS／AML、貧血）"+src("parpPI")]);
+  if(S.m_bone==="deno120"||S.m_bone==="zol4") B.push(["骨保護（SRE 劑量）","每次給藥前 Ca；zoledronic acid 每次前肌酸酐；補充鈣與維生素 D "+src("eau","Strong")]);
+  if(S.m_bmets==="crpc") B.push(["影像","無 PSA 進展或新症狀時至少每年 "+src("auaApc","#26 Expert Opinion")]);
+  if(S.m_bmets==="hspc") B.push(["影像","考慮定期影像 "+src("auaApc","#13")+"；EAU：M1 每 3–6 個月回診並定期影像 "+src("eau","Strong")]);
+  if(B.length) H.push(`<div class="card"><h3>追蹤時程</h3><div class="cb" style="padding:4px 6px">${monRows(B)}</div></div>`);
+  // C. 依藥物
+  const C=[];
+  if(S.m_abi) C.push(["Abiraterone",`礦物皮質素過多（高血壓、低血鉀、水腫）——先控制血壓、補鉀；ALT／AST >5×ULN 或 bilirubin >3×ULN 先停藥；ALT >3×ULN 合併 bilirubin >2×ULN 永久停藥。停用或減少 prednisone、壓力狀況時注意腎上腺功能不全。糖尿病併用 TZD、repaglinide 注意低血糖。不與 radium-223 同時使用（ERA 223 骨折 28.6% vs 11.4%）。${src("zytigaPI")}`]);
+  if(S.m_enza) C.push(["Enzalutamide",`癲癇、跌倒與骨折、缺血性心臟病、PRES；強效 CYP3A4 誘導劑——檢查 warfarin、DOAC、statin、免疫抑制劑等交互作用。${src("xtandiPI")}`]);
+  if(S.m_apa) C.push(["Apalutamide",`皮疹 25–28%（3–4 級約 5–6%；注意 SJS／TEN）；甲狀腺功能低下約 8%（試驗每 4 個月驗 TSH，需要時補充甲狀腺素）；跌倒 16%、骨折 12%；發生癲癇永久停藥。${src("erleadaPI")}`]);
+  if(S.m_daro) C.push(["Darolutamide",`中樞神經副作用與交互作用較少；BCRP／OATP 受質，併用 rosuvastatin 等需注意。${src("nubeqaPI")}`]);
+  if(S.m_parp) C.push(["PARP 抑制劑",`貧血最常見；MDS／AML（持續血球低下需骨髓評估）；靜脈血栓、肺炎（pneumonitis）。${src("parpPI")}`]);
+  if(adt) C.push(["ADT 共通",`熱潮紅、性功能障礙、疲倦、肌肉量下降、體重與胰島素阻抗增加、骨質流失；QT 延長風險者評估心電圖與電解質。${src("adtPI")}`]);
+  if(C.length) H.push(`<div class="card"><h3>依藥物的重點副作用</h3><div class="cb" style="padding:4px 6px">${monRows(C)}</div></div>`);
+  // D. 骨骼
+  H.push(boneCard());
+  // E. 心血管代謝
+  if(adt){
+    H.push(stepCard({n:"E",k:"info",t:"心血管與代謝",
+      c:`戒菸、維持體重與飲食、限制飲酒；<b>12 週監督式有氧＋阻力運動</b>；每年篩檢糖尿病與高膽固醇血症。${S.m_dm?"<br><b>糖尿病：</b>ADT 可能惡化血糖控制，追蹤 HbA1c 並與新陳代謝科共同照護"+(S.m_abi?"；abiraterone 需併用 prednisone，且併用 TZD／repaglinide 有低血糖風險":"")+"。"+src("adtPI"):""}${S.m_cvd?"<br><b>已有心血管疾病：</b>與心臟科共同照護；GnRH antagonist 與 agonist 的心血管安全性差異尚未確立。":""}`,
+      why:`EAU：健康體重與飲食、戒菸、限酒、每年篩檢糖尿病與高膽固醇（Strong）；12 週監督式有氧＋阻力運動（Strong）${src("eau","ADT 副作用")}。HERO：relugolix 之 MACE 低於 leuprolide（次要分析）${src("HERO")}；PRONOUNCE（已有 ASCVD）：degarelix vs leuprolide 1 年 MACE 無差異，但提早終止、證據不足 ${src("PRONOUNCE")}。`}));
+  }
+  return H.join("");
+}
+function boneCard(){
+  const t=num(S.m_t), fx=S.m_fx, rf=S.m_rf, st=S.m_bmets, long=S.m_long;
+  const L=[], W=[];
+  let k="info", c="";
+  if(st==="crpc"){
+    k="bx";
+    c=`<b>mCRPC 合併骨轉移：denosumab 120 mg SC q4w 或 zoledronic acid 4 mg IV q3–4w（依腎功能調整），預防 SRE；補充鈣與維生素 D。</b>`;
+    W.push(`mCRPC 骨轉移使用骨保護藥物 ${src("auaApc","#40 Moderate/B")}；補充鈣、維生素 D 並監測血鈣（EAU Strong）${src("eau")}。`);
+    L.push(`Xgeva（denosumab 120 mg）：${nhiQ("5.5.4：前列腺癌等併有「蝕骨性骨轉移」——條文用語為蝕骨性，攝護腺癌多為成骨性，送審前確認")}${src("nhi554")}`);
+    L.push(`Zometa（zoledronic acid 4 mg）：${nhiQ("多發性骨髓瘤、乳癌、前列腺癌骨轉移，及惡性高血鈣（Ca >11 mg/dL）")}${src("nhiZol")}`);
+    L.push(`<span class="cau">合併 radium-223：健保 9.68 不得併用 denosumab／bisphosphonate；EAU 則建議 radium 期間使用骨保護。</span>${src("nhi968")}`);
+  }else{
+    const combo = st==="hspc" && (S.m_abi||S.m_enza||S.m_apa||S.m_daro);
+    const hiFx = (t!==null&&t<=-2.5) || fx || rf || combo;
+    if(st==="hspc") W.push(`mHSPC：SRE 劑量 zoledronic acid 未延後 SRE（CALGB 90202）${src("calgb")}；依骨折風險給骨鬆劑量。EAU：接受合併治療者應提供骨保護以避免骨折（Strong）${src("eau")}。`);
+    if(hiFx){
+      k="bx";
+      c=`<b>${combo&&!((t!==null&&t<=-2.5)||fx||rf)?"mHSPC 合併治療（ADT＋ARPI）：EAU 建議骨保護以避免骨折":"骨折高風險"+(t!==null&&t<=-2.5?`（T-score ${fmt(t,1)}）`:"")+(fx?"（曾有脆弱性骨折）":"")+(rf&&!(t!==null&&t<=-2.5)&&!fx?"（其他骨折危險因子）":"")}：抗骨吸收治療</b>——denosumab 60 mg SC q6m、alendronate 70 mg 每週、或 zoledronic acid 5 mg 每年，擇一；並補充鈣與維生素 D。`;
+      W.push(`長期 ADT 且 T-score <−2.5、或有額外臨床骨折危險因子、或每年骨質流失 >5%：給予抗骨吸收藥物（EAU Strong）${src("eau")}；骨折高風險者 bisphosphonate 或 denosumab ${src("auaApc","#39 Clinical Principle")}。HALT：denosumab 60 mg q6m 降低 ADT 病人新脊椎骨折 ${src("HALT")}。`);
+    }else if(long||S.m_adt){
+      k="stop";
+      c= t===null? `<b>長期 ADT：先做 DXA</b>；同時補充鈣與維生素 D、負重運動、戒菸。` : `目前未達藥物治療門檻（T-score ${fmt(t,1)}、無骨折）：<b>鈣、維生素 D、負重運動、戒菸</b>，定期追蹤 DXA。`;
+      W.push(`預防措施 ${src("auaApc","#38 Clinical Principle")}；長期 ADT 開始時 DXA（EAU Strong）${src("eau")}。`);
+    }else{
+      return "";
+    }
+    if(hiFx) L.push(`Prolia、alendronate、zoledronate（骨鬆劑量）：${fx&&t!==null&&t<=-2.5? nhiQ("5.6.1：男性可用；需 T ≤−2.5 並有脊椎或髖骨骨折（部分品項含遠端橈骨、近端肱骨），或 −2.5～−1.0 並有 ≥2 處上述骨折") : nhiSelf("5.6.1 需骨鬆合併脊椎／髖骨骨折；僅 ADT 骨質流失、無骨折者不符")}${src("nhi561")}`);
+  }
+  return stepCard({n:"D",k,t:"骨骼健康",c,x:L.join("<br>"),why:W.join("<br>")+`<br>開始骨保護前牙科評估；注意 ONJ、低血鈣；denosumab 停藥後反彈性骨折風險。`});
+}
+
+/* ================= 介面元件 ================= */
+function fld(f,label,type="number",attrs=""){
+  return `<label class="f"><span>${label}</span><input data-f="${f}" type="${type}" inputmode="decimal" ${attrs}></label>`;
+}
+function sel(f,label,opts,cls=""){
+  return `<label class="f ${cls}"><span>${label}</span><select data-f="${f}">${opts.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("")}</select></label>`;
+}
+function chk(f,label){ return `<label class="chk"><input type="checkbox" data-f="${f}"><span>${label}</span></label>`; }
+const optsT = [["","—"],["T1a","cT1a"],["T1b","cT1b"],["T1c","cT1c"],["T2a","cT2a"],["T2b","cT2b"],["T2c","cT2c"],["T3a","cT3a"],["T3b","cT3b"],["T4","cT4"]];
+const optsP = [["","—"],["3","3"],["4","4"],["5","5"]];
+const optsECOG = [["","—"],["0","0"],["1","1"],["2","2"],["3","3"],["4","4"]];
+const YN = [["","—"],["y","是"],["n","否"]];
+const optsDRE = [["","未做／未填"],["T1c","正常（不可觸及）"],["T2a","可疑結節 ≤半葉（cT2a）"],["T2b","可疑 >半葉、單葉（cT2b）"],["T2c","兩葉皆可疑（cT2c）"],["T3a","疑包膜外（cT3a）"],["T3b","疑侵犯精囊（cT3b）"],["T4","固定／侵犯鄰近構造（cT4）"]];
+const YN2 = [["","—"],["n","無"],["y","有／疑"]];
+function coreFields(){
+  return `<div class="grid">
+    ${fld("psa","PSA（ng/mL）")}
+    ${sel("p1","Gleason 主要 pattern",optsP)}
+    ${sel("p2","Gleason 次要 pattern",optsP)}
+    ${sel("ct","臨床 T（DRE）",optsT)}
+  </div>`;
+}
+
+const TABS = [
+  {id:"calc",t:"計算器"},
+  {id:"dx",t:"診斷流程"},
+  {id:"risk",t:"分期・風險"},
+  {id:"loc",t:"局部治療"},
+  {id:"adv",t:"晚期治療"},
+  {id:"mon",t:"監測"},
+  {id:"drug",t:"藥物"},
+  {id:"ref",t:"來源・版本"}
+];
+
+function buildPanels(){
+  const P={};
+  P.calc = `
+  <div class="card"><h2>攝護腺體積 ＋ PSA density</h2><div class="cb">
+    <div class="grid">${fld("vl","長徑（cm）")}${fld("vw","寬徑（cm）")}${fld("vh","高徑（cm）")}${fld("vol","或直接輸入體積（mL）")}${fld("psa","PSA（ng/mL）")}</div>
+    <div class="note">橢圓體公式：長 × 寬 × 高 × π/6（≈0.52）。輸入三徑會自動帶入體積。</div>
+  </div><div class="res" id="r-psad"></div></div>
+
+  <div class="card"><h2>PSA 動力學 <span class="sub">PSADT／PSAV</span></h2><div class="cb">
+    <div class="psaRow small muted"><div>日期</div><div>PSA（ng/mL）</div><div></div></div>
+    <div id="psaRows"></div>
+    <button class="btn" type="button" id="addRow">＋ 新增一筆</button>
+    <div class="note">PSADT＝ln2 ÷ 斜率（ln PSA 對時間線性迴歸）${src("mskDT")}。PSAV 為 PSA 對時間之線性迴歸斜率。</div>
+  </div><div class="res" id="r-kin"></div></div>
+
+  <div class="card"><h2>其他換算</h2><div class="cb">
+    <div class="grid">${fld("fpsa","free PSA（ng/mL）")}${fld("testo","Testosterone")}${sel("tunit","單位",[["ngdl","ng/dL"],["nmol","nmol/L"]])}</div>
+  </div><div class="res" id="r-misc"></div></div>`;
+
+  P.dx = `
+  <div class="card"><h2>輸入</h2><div class="cb">
+    <div class="grid">
+      ${fld("age","年齡")}${fld("psa","PSA（ng/mL）")}
+      ${sel("ct","DRE",optsDRE)}
+      ${fld("vol","攝護腺體積（mL，MRI）")}
+      ${sel("pirads","MRI PI-RADS（最高分）",[["","未做"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]])}
+    </div>
+    ${chk("psaRep","PSA 已重驗確認升高")}
+    <details style="margin-top:6px;border-top:0"><summary style="padding-left:0">其他條件（勾選後才影響結果）</summary><div style="padding:4px 0 0">
+      <div class="grid">
+        ${sel("le","預期壽命",[["","未評估"],["ge10","≥10 年"],["lt10","<10 年"]])}
+        ${sel("prevBx","前次切片",[["","無／初次"],["neg","陰性"],["asap","ASAP"],["hgpin1","單一針 HGPIN"],["hgpinM","多灶 HGPIN"],["aip","AIP"]])}
+        ${sel("mr_epe","MRI：EPE",YN2)}${sel("mr_svi","MRI：SVI",YN2)}${sel("mr_n","MRI：可疑淋巴結",YN2)}
+      </div>
+      ${chk("ari","服用 5-ARI（finasteride、dutasteride）≥6 個月")}
+      ${chk("uti","近 6 週內 UTI、導尿／器械操作或尿滯留")}
+      ${chk("fhx","一等親攝護腺癌家族史")}
+      ${chk("germ","已知 germline 帶因（BRCA2 等）")}
+    </div></details>
+    <div class="note">DRE 與「分期・風險」的臨床 T 共用；體積與「計算器」共用。</div>
+  </div></div>
+  <div class="card"><h2>下一步</h2><div class="cb" id="r-dx"></div>${renderScreenRef()}</div>`;
+
+  P.risk = `
+  <div class="card"><h2>輸入</h2><div class="cb">
+    ${coreFields()}
+    <div class="grid" style="margin-top:10px">
+      ${fld("pos","陽性針數")}${fld("tot","總針數")}${fld("g45","GG4–5 陽性針數（選填）")}${fld("age","年齡")}
+      ${sel("cn","N",[["N0","N0"],["NX","NX"],["N1","N1"]])}${sel("cm","M",[["M0","M0"],["M1a","M1a 非區域淋巴結"],["M1b","M1b 骨"],["M1c","M1c 其他"]])}
+      ${sel("basis","AJCC 依據",[["c","臨床（c）"],["p","病理（p，RP 後）"]])}
+      ${sel("mr_epe","MRI：EPE",YN2)}${sel("mr_svi","MRI：SVI",YN2)}
+    </div>
+    <div class="note">cT 依 DRE；MRI 所見另記（EAU／AUA）。同一 MRI 病灶多針標靶切片計為 1 針（AUA Table 3 註）。${src("eauRisk")}${src("auaLoc","Table 3")}</div>
+  </div></div>
+  <div class="card"><h2>風險分級 <span class="sub">五系統並列</span></h2><div id="r-risk"></div></div>
+  <div class="card"><h2>AJCC 8th 分期</h2><div id="r-ajcc"></div></div>
+  <div class="card"><h2>建議分期影像</h2><div class="cb" id="r-img"></div></div>`;
+
+  P.loc = `
+  <div class="card"><div class="cb"><div class="seg" id="locSeg">
+    <button type="button" data-loc="init">初始治療</button><button type="button" data-loc="post">術後・復發</button>
+  </div></div></div>
+  <div id="loc-init" class="locp">
+    <div class="card"><h2>輸入 <span class="sub">與「分期・風險」共用</span></h2><div class="cb">
+      ${coreFields()}
+      <div class="grid" style="margin-top:10px">${fld("pos","陽性針數")}${fld("tot","總針數")}${fld("age","年齡")}${fld("vol","攝護腺體積（mL）")}
+        ${sel("cn","N",[["N0","N0"],["NX","NX"],["N1","N1"]])}${sel("le","預期壽命",[["","未評估"],["ge10","≥10 年"],["lt10","<10 年"]])}</div>
+      ${chk("l_crib","切片有 cribriform 或 intraductal carcinoma")}${chk("l_p4","GG2 且 pattern 4 <10%")}
+    </div></div>
+    <div class="card"><h2>治療選項</h2><div class="cb" id="r-loc"></div></div>
+  </div>
+  <div id="loc-post" class="locp">
+    <div class="card"><h2>輸入</h2><div class="cb"><div class="grid">
+      ${sel("b_prim","初始治療",[["","—"],["rp","RP"],["rt","RT"]])}
+      ${fld("b_psa","目前 PSA（ng/mL）")}${fld("psadt","PSADT（月）")}
+      ${sel("b_pet","PSMA PET",[["","—"],["none","未做"],["neg","陰性"],["local","僅局部"],["pelvic","骨盆淋巴結"],["distant","遠處（傳統影像陰性）"],["conv","傳統影像已見轉移"]])}
+    </div>
+    <div class="sec" style="margin-top:12px">RP 後</div><div class="grid">
+      ${sel("b_pt","pT",[["","—"],["pT2","pT2"],["pT3a","pT3a"],["pT3b","pT3b"],["pT4","pT4"]])}
+      ${sel("b_r","切緣",[["","—"],["r0","陰性"],["r1","陽性"]])}
+      ${sel("b_pgg","病理 GG",[["","—"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]])}
+      ${sel("b_pn","pN",[["","—"],["pN0","pN0"],["pN1","pN1"],["pNx","pNx"]])}
+      ${fld("b_nn","陽性淋巴結數")}
+      ${sel("b_stat","術後 PSA",[["","—"],["undet","測不到"],["persist","持續可測"],["bcr","BCR（≥0.2 再確認）"]])}
+    </div>${chk("b_srt","已做過救援 RT")}
+    <div class="sec" style="margin-top:12px">RT 後</div><div class="grid">
+      ${fld("b_mo","RT 至 BCR 間隔（月）")}
+      ${sel("b_bx","局部切片",[["","—"],["none","未做"],["pos","陽性"],["neg","陰性"]])}
+      ${sel("b_fit","適合局部救援",YN)}
+    </div><div class="note">RT 後 EAU 風險分組使用診斷時切片 GG（「分期・風險」的 Gleason）。PSADT 與「計算器」共用。</div>
+    </div></div>
+    <div class="card"><h2>下一步</h2><div class="cb" id="r-post"></div></div>
+  </div>`;
+
+  P.adv = `
+  <div class="card"><div class="cb"><div class="seg" id="advSeg">
+    <button type="button" data-adv="mhspc">mHSPC</button><button type="button" data-adv="nmcrpc">nmCRPC</button><button type="button" data-adv="mcrpc">mCRPC</button>
+  </div><div class="note">名詞：mHSPC＝mCSPC；NCCN 2026 改稱 APMS（androgen pathway modulator–sensitive）${upd("NCCN 2026 以「APMS／ARPI」取代「CSPC／other hormonal agents」用語")}${src("ascoNccn")}</div></div></div>
+  <div id="adv-mhspc" class="advp">
+    <div class="card"><h2>mHSPC 輸入</h2><div class="cb"><div class="grid">
+      ${sel("h_time","轉移時序",[["","—"],["sync","同時性（de novo）"],["meta","異時性（曾局部治療）"]])}
+      ${sel("p1","Gleason 主要 pattern",optsP)}${sel("p2","Gleason 次要 pattern",optsP)}
+      ${fld("h_bone","骨轉移病灶數")}
+      ${sel("h_out","脊椎／骨盆以外有骨轉移",YN)}
+      ${sel("h_visc","臟器轉移（肝、肺等）",YN)}
+      ${sel("h_ecog","ECOG",optsECOG)}
+      ${sel("h_fit","適合 docetaxel",YN)}
+      ${sel("h_hrr","HRR 檢測",[["","—"],["unk","未檢測"],["none","無致病變異"],["brca2","BRCA2"],["brca1","BRCA1"],["hrr","其他 HRR"]])}
+      ${sel("h_pten","PTEN IHC",[["","—"],["unk","未檢測"],["def","缺失"],["no","正常"]])}
+      ${sel("h_psma","PSMA PET",[["","—"],["no","未做"],["pos","陽性"],["neg","陰性"]])}
+    </div>
+    ${chk("h_seiz","癲癇病史或跌倒高風險")}${chk("h_liver","肝功能不全（Child-Pugh B/C）")}
+    <div class="note">高／低轉移量依傳統影像（CT、骨掃描）定義；試驗未以 PSMA PET 分層。${src("auaApc","#11")}</div>
+    </div></div>
+    <div class="card"><h2>治療選項</h2><div class="cb" id="r-mhspc"></div></div>
+  </div>
+  <div id="adv-nmcrpc" class="advp">
+    <div class="card"><h2>nmCRPC 輸入</h2><div class="cb"><div class="grid">
+      ${fld("psadt","PSADT（月）")}
+      ${sel("n_castr","睪固酮 <50 ng/dL",YN)}
+      ${sel("n_ci","傳統影像無轉移",YN)}
+      ${sel("n_ecog","ECOG",optsECOG)}
+    </div><div class="note" id="n-psadtSrc"></div></div></div>
+    <div class="card"><h2>治療選項</h2><div class="cb" id="r-nmcrpc"></div></div>
+  </div>
+  <div id="adv-mcrpc" class="advp">
+    <div class="card"><h2>mCRPC 輸入</h2><div class="cb"><div class="grid">
+      ${sel("c_arpi","曾用 ARPI（任何階段）",[["","—"],["none","無"],["abi","abiraterone"],["enza","enzalutamide"],["apa","apalutamide"],["daro","darolutamide"]])}
+      ${sel("c_doc","曾用 docetaxel（任何階段）",YN)}
+      ${fld("c_doccyc","docetaxel 療程數")}
+      ${sel("c_hrr","HRR 檢測",[["","—"],["unk","未檢測"],["none","無致病變異"],["brca","BRCA1/2"],["atm","ATM"],["hrr","其他 HRR"]])}
+      ${sel("c_msi","MSI-H／dMMR／TMB-H",[["","—"],["unk","未檢測"],["n","否"],["y","是"]])}
+      ${sel("c_psma","PSMA PET",[["","—"],["no","未做"],["pos","陽性"],["neg","陰性"]])}
+      ${sel("c_sympbone","有症狀骨轉移",YN)}
+      ${sel("c_visc","臟器轉移",YN)}
+      ${sel("c_ecog","ECOG",optsECOG)}
+      ${sel("c_fit","適合化療",YN)}
+      ${sel("p1","Gleason 主要 pattern",optsP)}${sel("p2","Gleason 次要 pattern",optsP)}
+    </div>
+    ${chk("c_early","ADT 開始後 <12 個月即進展為 CRPC")}
+    ${chk("c_cabazi","已用過 cabazitaxel")}${chk("c_lu","已用過 177Lu-PSMA-617")}${chk("c_parp","已用過 PARP 抑制劑")}${chk("c_ra","已用過 radium-223")}
+    </div></div>
+    <div class="card"><h2>治療選項</h2><div class="cb" id="r-mcrpc"></div></div>
+  </div>`;
+
+  P.mon = `
+  <div class="card"><h2>目前／即將使用的治療</h2><div class="cb">
+    <div class="grid">
+      ${sel("m_adt","ADT",[["","—"],["agonist","LHRH agonist"],["antagonist","GnRH antagonist"],["orch","睪丸切除"],["none","無"]])}
+      ${sel("m_bone","骨保護藥物",[["","無／未定"],["deno120","denosumab 120 mg（SRE）"],["zol4","zoledronic acid 4 mg（SRE）"],["deno60","denosumab 60 mg（骨鬆）"],["bisph","bisphosphonate（骨鬆）"]])}
+      ${sel("m_bmets","骨轉移",[["","無／不明"],["hspc","有，荷爾蒙敏感"],["crpc","有，去勢抗性"]])}
+      ${fld("m_t","DXA 最低 T-score")}
+    </div>
+    ${chk("m_long","預計長期 ADT（≥1 年）")}
+    <div class="seg" style="margin:8px 0 2px">${[["m_abi","abiraterone"],["m_enza","enzalutamide"],["m_apa","apalutamide"],["m_daro","darolutamide"],["m_parp","PARP 抑制劑"]].map(x=>`<label class="chk" style="padding:2px 10px 2px 0"><input type="checkbox" data-f="${x[0]}"><span>${x[1]}</span></label>`).join("")}</div>
+    <details style="margin-top:4px;border-top:0"><summary style="padding-left:0">病人因素（勾選後才影響結果）</summary><div style="padding:4px 0 0">
+      ${chk("m_fx","曾有脆弱性骨折")}${chk("m_rf","其他骨折危險因子（長期類固醇、RA、低體重、吸菸、跌倒史等）")}
+      ${chk("m_cvd","已有心血管疾病")}${chk("m_dm","糖尿病")}
+    </div></details>
+  </div></div>
+  <div id="r-mon"></div>`;
+
+  P.drug = `
+  <div class="card"><h2>劑量試算</h2><div class="cb"><div class="grid">${fld("wt","體重（kg）")}${fld("ht","身高（cm）")}</div></div><div class="res" id="r-bsa"></div></div>
+  <div class="filters seg" id="dSeg">${Object.entries(DCLS).map(([k,v])=>`<button type="button" data-dc="${k}">${v}</button>`).join("")}</div>
+  <div id="r-drugs"></div>`;
+
+  P.ref = renderRefPanel();
+  return P;
+}
+
+function renderRefPanel(){
+  const groups = [
+    ["指引",["nccn","nccnI","nccnUpd","nccn326","ascoNccn","nccnEd","eau","eauRisk","eauP1","eauDx","auaLoc","auaApc","auaEd","auaEdAm","auaStp"]],
+    ["其他文獻與台灣",["pilatz","mohwScr","eauBcr","twPsma"]],
+    ["分級與分期",["damico","capra","ajcc","isup","catalona","pcwg3","mskDT"]],
+    ["健保（115.09.22 版給付規定）",["nhi","nhi551","nhi554","nhi561","nhiZol","nhi949","nhi954","nhi990","nhi994","nhi985","nhi9137","nhi968","nhi93","nhi969"]],
+    ["法規核准與仿單",["zytigaPI","erleadaPI","xtandiPI","nubeqaPI","parpPI","adtPI","fdaCapi","fdaLu","fdaAkeega","fdaPsmafore","fdaTala","tfdaLu"]],
+    ["主要試驗",["LATITUDE","STAMPEDEabi","TITAN","ARCHES","ENZAMET","ARANOTE","CHAARTED","PEACE1","ARASENS","STAMPEDEH","AMPLITUDE","CAPI281","PSMAddition","SPARTAN","PROSPER","ARAMIS","COU302","PREVAIL","TAX327","CARD","PROSELICA","VISION","PSMAfore","ALSYMPCA","ERA223","EMBARK","STAMPEDEabiM0","HALT","calgb","PRONOUNCE","PROfound","PROpel","MAGNITUDE","TALAPRO2","KN158","HERO"]]
+  ];
+  const list = groups.map(([h,ks])=>`<div class="sec">${h}</div><div class="card"><div class="cb small">${ks.map(k=>`<p style="margin:0 0 8px"><b>${esc(REF[k].t)}</b>　${esc(REF[k].f)}${REF[k].u?` <a href="${REF[k].u}" target="_blank" rel="noopener">連結</a>`:""}</p>`).join("")}</div></div>`).join("");
+  return `
+  <div class="card"><h2>版本</h2><div class="cb">
+    <div class="kv"><div><div class="k">版本</div>v${APP_VERSION}</div><div><div class="k">最後查證</div>${CHECKED}</div><div><div class="k">分期</div>AJCC 8th</div></div>
+    <div class="legend" style="margin-top:8px"><span>${upd("示例")} 2024 年後指引改版、FDA／EMA 新核准或已發表 phase 3 所帶來的改變</span><span>${src("eau","示例")} 點選看完整出處</span><span><abbr class="gl">ARPI</abbr> 點選看縮寫全稱</span></div>
+    <div class="note">指引強度標示：AUA＝Strong／Moderate／Conditional ＋ Evidence Grade A／B／C，或 Clinical Principle、Expert Opinion；EAU＝Strong／Weak；NCCN＝category 1、2A、2B。</div>
+  </div></div>
+  <div class="card"><h2>Changelog</h2><div class="cb small">
+    <p style="margin:0 0 6px"><b>v1.0（${CHECKED}）</b></p>
+    <ul class="tight"><li>全面測試：決策引擎約 20 萬組輸入組合模擬、320–1280 px 與深淺色瀏覽器實測、所有下拉選項、出處與縮寫彈窗、跨頁同步、清除全部。</li>
+    <li>修正：已做救援 RT 且 PSA 測不到時不再建議救援 RT；傳統影像已見轉移時術後・復發頁直接導向晚期治療；RT 後 BCR 的 PSMA PET 說明改為 RT 情境；mCRPC 不適合化療時 docetaxel、cabazitaxel 標為不適用；數值欄位不接受負值（T-score 除外）。</li></ul>
+    <p style="margin:8px 0 6px"><b>v0.4</b></p>
+    <ul class="tight"><li>新增「監測」：依使用的 ADT、ARPI、PARPi、骨保護藥物產生基線檢查、追蹤時程與重點副作用；骨骼健康決策（DXA、抗骨吸收門檻、SRE 劑量 vs 骨鬆劑量、健保 5.5.4／5.6.1）；心血管代謝（運動、年度篩檢、antagonist vs agonist 證據）。</li>
+    <li>藥物頁補齊 ADT 與骨保護藥物健保欄。</li></ul>
+    <p style="margin:8px 0 6px"><b>v0.3</b></p>
+    <ul class="tight"><li>新增「局部治療」：初始治療依 AUA/ASTRO 2026 分組列出 AS／RP／RT ± ADT 時長，並列 EAU 2026；高風險（≥2 項）或 cN1 之 abiraterone 2 年；EAU GG2 AS 條件檢核。</li>
+    <li>「術後・復發」：RP 後 pN0／pN1 輔助治療、持續可測 PSA、BCR（EAU 風險分組、PSMA PET、救援 RT ＋ ADT 適應與長度）、RT 後 BCR（局部切片與救援）、局部治療用盡後依 PSADT（EMBARK）。</li></ul>
+    <p style="margin:8px 0 6px"><b>v0.2</b></p>
+    <ul class="tight"><li>新增「診斷流程」：PSA／DRE 判讀（重驗、5-ARI、感染干擾）→ MRI 或直接切片 → PI-RADS × PSAD × 家族史決定是否切片 → 切片方式 → 前次切片陰性／ASAP／HGPIN／AIP 的處置；篩檢起始年齡與間隔參考（收合）。依 EAU 2026、AUA/SUO EDPC 2026、NCCN Early Detection v2.2026。</li>
+    <li>MRI 欄位（PI-RADS、EPE、SVI、淋巴結）與各頁共用；MRI 疑 T3 但 DRE ≤T2 時，「分期・風險」顯示提醒。</li>
+    <li>晚期治療選項卡精簡：只顯示治療組合、建議強度與健保狀態，證據、劑量、條件收進「詳細」。</li>
+    <li>手機版風險分組表改為卡片式。</li></ul>
+    <p style="margin:8px 0 6px"><b>v0.1</b></p>
+    <ul class="tight"><li>架構：單一 HTML、深淺色模式、跨頁共用輸入、不儲存任何資料。</li>
+    <li>計算器：攝護腺體積、PSA density、PSADT／PSAV（迴歸法＋健保 nmCRPC 計算條件檢核）、free/total PSA、5-ARI 校正、testosterone 換算。</li>
+    <li>分期・風險：NCCN（2026 刪除 very-low）、EAU 2026 五級、AUA/ASTRO 2026、D'Amico、CAPRA 並列；AJCC 8th stage group；分期影像建議。</li>
+    <li>晚期治療：mHSPC（CHAARTED／LATITUDE／健保高風險、三合一、雙藥、prostate RT、MDT、生物標記選項）、nmCRPC、mCRPC 依先前治療排序，每項並列指引與健保。</li>
+    <li>藥物：20 種藥物劑量、調整、注意事項、指引、健保；BSA 劑量試算。</li></ul>
+    <p style="margin:8px 0 4px"><b>後續規劃</b></p>
+    <ul class="tight"><li>持續依指引改版與健保公告更新。</li></ul>
+  </div></div>
+  ${list}`;
+}
+
+/* ================= 結果渲染 ================= */
+function renderCalc(){
+  const v=calcVolume();
+  if(v!==null){ S.vol=+v.toFixed(1); syncField("vol"); }
+  const d=calcPSAD(); const psa=num(S.psa);
+  let h="";
+  h+=`<div class="kv"><div><div class="k">體積</div><span class="big">${S.vol?fmt(S.vol,1):"—"}</span><span class="unit">mL</span></div>
+      <div><div class="k">PSA density</div><span class="big">${fx(d,3)}</span><span class="unit">ng/mL/cc</span> ${psadBand(d)}</div></div>`;
+  if(d!==null) h+=`<div class="note">PSAD ≥0.15 與 active surveillance 中升級風險相關，但 AUA 提醒為連續性風險、勿單一切點決策 ${src("auaLoc","Statement 1")}；EAU 依 PI-RADS × PSAD 決定是否切片（見「診斷流程」）${src("eauDx","Table 5.5")}。</div>`;
+  document.getElementById("r-psad").innerHTML=h;
+
+  // kinetics
+  const pts=parseRows(); const k=calcKinetics(pts); let kh="";
+  if(pts.length<2){ kh=`<span class="muted">輸入 ≥2 筆（建議 ≥3 筆）日期與 PSA。</span>`; }
+  else{
+    kh+=`<div class="kv"><div><div class="k">PSADT</div><span class="big">${k.falling?"—":fx(k.dt,1)}</span><span class="unit">月</span></div>
+      <div><div class="k">PSAV</div><span class="big">${fx(k.psav,2)}</span><span class="unit">ng/mL/年</span></div>
+      <div><div class="k">資料點／期間</div>${k.n} 點／${fx(k.spanMo,1)} 月</div></div>`;
+    if(k.falling) kh+=`<div class="alert a-info">PSA 下降或持平，無倍增時間。</div>`;
+    if(k.warn.length) kh+=`<div class="alert a-warn">${k.warn.join("；")}</div>`;
+    if(k.dt){
+      const dt=k.dt;
+      kh+=`<div class="note"><b>常用切點：</b><ul class="tight">
+        <li>${dt<=10?"✔":"—"} ≤10 個月：nmCRPC 高轉移風險（ARPI 適應症）${src("auaApc","#22")}</li>
+        <li>${dt<=9?"✔":"—"} ≤9 個月：局部治療用盡後 BCR 高風險（AUA 2026 新定義）${upd("AUA/SUO 2026 以 PSADT ≤9 個月定義 BCR 高風險，並建議 ADT＋enzalutamide")}${src("auaApc","#8–9")}</li>
+        <li>${dt<=12?"✔":"—"} ≤12 個月：RP 後 EAU BCR high-risk（PSADT ≤1 年或 pGG4–5）${src("eau")}</li></ul></div>`;
+      const key=fx(dt,1)+"|"+k.nhiOk; if(S._kin!==key){ S._kin=key; S.psadt=+dt.toFixed(1); S.psadtNhi=k.nhiOk; syncField("psadt"); }
+    }
+    if(k.nhi){
+      kh+=`<details><summary>健保 nmCRPC PSADT 計算條件檢核</summary><div class="cb small"><ul class="tight">${k.nhi.map(c=>`<li>${c.ok===null?"□":c.ok?'<span class="ok">✔</span>':'<span class="ng">✘</span>'} ${c.t}</li>`).join("")}</ul>${src("nhi990")}</div></details>`;
+    }
+  }
+  document.getElementById("r-kin").innerHTML=kh;
+
+  // misc
+  let mh=`<div class="kv">`;
+  const f=num(S.fpsa);
+  if(psa!==null && f!==null && psa>0){ const r=f/psa*100; mh+=`<div><div class="k">free/total PSA</div><span class="big">${fx(r,1)}</span><span class="unit">%</span> ${r<10?tag("<10%：癌症機率較高","t-high"):r>25?tag(">25%：機率較低","t-low"):tag("10–25%","t-mid")}</div>`; }
+  else mh+=`<div><div class="k">free/total PSA</div><span class="muted">需 PSA 與 free PSA</span></div>`;
+  if(psa!==null) mh+=`<div><div class="k">5-ARI 校正 PSA（×2）</div><span class="big">${fmt(psa*2,2)}</span><span class="unit">ng/mL</span></div>`;
+  const t=testoConv();
+  if(t) mh+=`<div><div class="k">Testosterone</div><span class="big">${fmt(t.ngdl,1)}</span><span class="unit">ng/dL</span>　<span class="big" style="font-size:16px">${fx(t.nmol,2)}</span><span class="unit">nmol/L</span> ${t.ngdl<20?tag("<20：深度去勢","t-low"):t.ngdl<50?tag("<50：達去勢","t-low"):tag("≥50：未達去勢","t-high")}</div>`;
+  mh+=`</div><div class="note">free/total PSA 主要用於總 PSA 4–10 ng/mL ${src("catalona")}。服用 finasteride／dutasteride ≥6 個月，PSA 約降一半，判讀時乘以 2。去勢標準 <50 ng/dL（1.7 nmol/L）；換算 1 nmol/L＝28.84 ng/dL ${src("auaApc","Table 3")}${src("eau")}。</div>`;
+  document.getElementById("r-misc").innerHTML=mh;
+}
+
+function riskRow(sys,r,ref){
+  if(!r||r.g===null) return `<tr><td><b>${sys}</b></td><td colspan="2"><span class="muted">缺：${(r&&r.miss||[]).join("、")}</span></td><td>${ref}</td></tr>`;
+  return `<tr><td><b>${sys}</b></td><td>${tag(r.g,r.cls)}</td><td class="small">${r.why.join("；")}${r.note?`<div class="cau small" style="font-weight:400;margin-top:3px">${r.note}</div>`:""}</td><td>${ref}</td></tr>`;
+}
+function renderRisk(){
+  const g=GG(), pct=pctCores();
+  let h=`<div class="cb" style="padding-bottom:4px"><div class="kv">
+    <div><div class="k">Gleason／Grade Group</div><b>${g?`${S.p1}+${S.p2}=${gleasonSum()}／GG${g}`:"—"}</b></div>
+    <div><div class="k">陽性針數比例</div><b>${pct===null?"—":fmt(pct,0)+"%"}</b></div></div></div>`;
+  const n=riskNCCN(), e=riskEAU(), a=riskAUA(), d=riskDamico(), c=capra();
+  h+=`<div class="tscroll"><table class="t rt"><thead><tr><th style="width:96px">系統</th><th style="width:150px">分組</th><th>判定依據</th><th style="width:120px">出處</th></tr></thead><tbody>
+    ${riskRow("NCCN",n,src("nccn")+upd("NCCN 2026（v1.2026 起）刪除 very-low-risk 組")+src("nccnI"))}
+    ${riskRow("EAU",e,src("eauRisk")+upd("EAU 2025 起中風險分為 favourable／unfavourable；2026 為五級並不再以 cT2b／cT2c 分組"))}
+    ${riskRow("AUA/ASTRO",a,src("auaLoc","Table 3"))}
+    ${riskRow("D'Amico",d,src("damico"))}
+    ${c.score===null?`<tr><td><b>CAPRA</b></td><td colspan="2"><span class="muted">${c.na?"":"缺："}${c.miss.join("、")}</span></td><td>${src("capra")}</td></tr>`:`<tr><td><b>CAPRA</b></td><td>${tag(c.score+" 分","t-info")} ${tag(c.g,c.cls)}</td><td class="small">${c.parts.join("、")}${c.note?`<div class="cau small" style="font-weight:400">${c.note}</div>`:""}</td><td>${src("capra")}</td></tr>`}
+  </tbody></table></div>`;
+  // disagreement
+  const groups=[n,e,a,d].filter(x=>x&&x.g).map(x=>x.cls);
+  if(groups.length>=3 && new Set(groups).size>1) h+=`<div class="cb"><div class="alert a-warn">各系統分組不一致：治療建議請依所採用指引之分組；不同指引的分組與其治療建議是配套的。</div></div>`;
+  const mrT3 = (S.mr_epe==="y"||S.mr_svi==="y") && S.ct && tIdx(S.ct)<tIdx("T3a");
+  if(mrT3) h+=`<div class="cb"><div class="alert a-warn">MRI 疑 ${S.mr_svi==="y"?"SVI（≈T3b）":"EPE（≈T3a）"}，但 DRE 為 c${S.ct}：上表分組與 AJCC 依 DRE；實際風險可能被低估，治療計畫（神經保留、RT 範圍、ADT 時長）與分期影像請納入 MRI 所見。${src("auaLoc","#5 Conditional/B")}${src("ajcc")}</div></div>`;
+  h+=`<details><summary>分組定義對照</summary><div class="cb small tscroll"><table class="t">
+   <tr><th></th><th>NCCN 2026</th><th>EAU 2026</th><th>AUA/ASTRO 2026</th></tr>
+   <tr><td>Low</td><td>cT1–T2a 且 GG1 且 PSA <10</td><td>GG1 且 PSA <10 且 cT1–2</td><td>PSA <10 且 GG1 且 cT1–T2a</td></tr>
+   <tr><td>FIR</td><td>1 項 IRF 且 GG1–2 且陽性針 <50%</td><td>GG2＋PSA <10；或 GG1＋PSA 10–20</td><td>GG1＋(PSA 10–<20 或 cT2b–c)＋<50%；或 GG2＋PSA <10＋cT1–2a＋<50%</td></tr>
+   <tr><td>UIR</td><td>2–3 項 IRF、或 GG3、或陽性針 ≥50%</td><td>GG2＋PSA 10–20；或 GG3</td><td>GG1＋PSA 10–<20＋cT2b–c；GG2＋(PSA 10–<20／cT2b–c／≥50%)；GG3＋PSA <20</td></tr>
+   <tr><td>High</td><td>恰 1 項：cT3a、GG4–5、PSA >20</td><td>GG4–5 或 PSA >20</td><td>PSA ≥20 或 GG4–5 或 cT3</td></tr>
+   <tr><td>Very high／局部晚期</td><td>cT3b–T4、primary pattern 5、≥2 項高風險特徵、>4 針 GG4–5</td><td>Locally advanced：cT3–4 或 cN+</td><td>—（cN1 見 Statement 44）</td></tr>
+   </table><div class="note">IRF（NCCN）：cT2b–c、GG2–3、PSA 10–20。</div></div></details>`;
+  document.getElementById("r-risk").innerHTML=h;
+
+  // AJCC
+  const s=ajcc();
+  let ah = s.st? `<div class="cb"><div class="stage">Stage ${s.st}</div><div class="small">${s.why.join("；")}</div><div class="note">${src("ajcc")} 臨床 T 依 DRE；MRI 所見不改變 cT。</div></div>` : `<div class="cb"><span class="muted">缺：${s.miss.join("、")}</span></div>`;
+  ah+=`<details><summary>AJCC 8th 定義</summary><div class="cb small tscroll"><table class="t">
+   <tr><th>Stage</th><th>T</th><th>N／M</th><th>PSA</th><th>GG</th></tr>
+   <tr><td>I</td><td>cT1a–c、cT2a；pT2</td><td>N0M0</td><td>&lt;10</td><td>1</td></tr>
+   <tr><td>IIA</td><td>cT1a–c、cT2a；pT2<br>cT2b–c</td><td>N0M0</td><td>10–&lt;20<br>&lt;20</td><td>1</td></tr>
+   <tr><td>IIB</td><td>T1–2</td><td>N0M0</td><td>&lt;20</td><td>2</td></tr>
+   <tr><td>IIC</td><td>T1–2</td><td>N0M0</td><td>&lt;20</td><td>3–4</td></tr>
+   <tr><td>IIIA</td><td>T1–2</td><td>N0M0</td><td>≥20</td><td>1–4</td></tr>
+   <tr><td>IIIB</td><td>T3–4</td><td>N0M0</td><td>任何</td><td>1–4</td></tr>
+   <tr><td>IIIC</td><td>任何 T</td><td>N0M0</td><td>任何</td><td>5</td></tr>
+   <tr><td>IVA</td><td>任何 T</td><td>N1M0</td><td>任何</td><td>任何</td></tr>
+   <tr><td>IVB</td><td>任何 T</td><td>任何 N、M1</td><td>任何</td><td>任何</td></tr></table>
+   <p style="margin:8px 0 2px"><b>T</b>：cT1a 偶發 ≤5% 切除組織；cT1b >5%；cT1c 切片發現；cT2a ≤半葉；cT2b >半葉、未及兩葉；cT2c 兩葉；cT3a 包膜外侵犯；cT3b 侵犯精囊；cT4 固定或侵犯精囊以外鄰近構造。pT2 不再細分。</p>
+   <p style="margin:0"><b>M</b>：M1a 非區域淋巴結；M1b 骨；M1c 其他部位（多處以最高分類計）。</p></div></details>`;
+  document.getElementById("r-ajcc").innerHTML=ah;
+
+  // imaging
+  let ih="";
+  if(S.cm && S.cm!=="M0") ih=`已知轉移：依晚期治療流程評估轉移量（傳統影像）及基因檢測。${src("auaApc","#10–11")}`;
+  else if(a.g===null) ih=`<span class="muted">輸入 PSA、Gleason、cT 後顯示。</span>`;
+  else if(/^Low|Favorable/.test(a.g)) ih=`<b>不建議常規轉移分期影像</b>（PSMA PET、CT／MRI、骨掃描）於無症狀之低風險／FIR。${src("auaLoc","#6 Expert Opinion")}<div class="note">攝護腺 MRI 可用於任何風險組，評估病灶位置與範圍、引導切片或治療計畫。${src("auaLoc","#5 Conditional/B")}</div>`;
+  else ih=`<b>建議分期</b>：PSMA PET，或骨掃描＋腹骨盆 CT／MRI。${src("auaLoc","#7 Strong/B")}${upd("AUA/ASTRO 2026 將 PSMA PET 列為 UIR／高風險之初始分期選項之一")}<br>傳統影像陰性者可再做 PSMA PET。${src("auaLoc","#8 Expert Opinion")}<br>EAU：高風險局限性／局部晚期，可取得時以 PSMA PET 分期。${src("eauP1")}<div class="note">注意：多數治療試驗以傳統影像定義 M0／M1；PSMA PET 造成分期遷移。</div>`;
+  document.getElementById("r-img").innerHTML=ih;
+}
+
+function renderLocTab(){
+  document.querySelectorAll("#locSeg button").forEach(b=>b.classList.toggle("on",b.dataset.loc===S.loc));
+  document.querySelectorAll(".locp").forEach(p=>p.style.display = p.id==="loc-"+S.loc? "block":"none");
+  if(S.loc==="init") document.getElementById("r-loc").innerHTML=renderLoc();
+  else document.getElementById("r-post").innerHTML=renderPost();
+}
+function renderAdv(){
+  document.querySelectorAll("#advSeg button").forEach(b=>b.classList.toggle("on",b.dataset.adv===S.adv));
+  document.querySelectorAll(".advp").forEach(p=>p.style.display = p.id==="adv-"+S.adv? "block":"none");
+  if(S.adv==="mhspc") document.getElementById("r-mhspc").innerHTML=renderMHSPC();
+  if(S.adv==="nmcrpc"){ document.getElementById("r-nmcrpc").innerHTML=renderNMCRPC();
+    document.getElementById("n-psadtSrc").innerHTML = S.psadtNhi===null? "PSADT 可手動輸入，或於「計算器」輸入 PSA 序列自動帶入。" : `PSADT 由計算器帶入；健保計算條件：${S.psadtNhi?'<span class="ok">符合</span>':'<span class="ng">未全部符合</span>'}`; }
+  if(S.adv==="mcrpc") document.getElementById("r-mcrpc").innerHTML=renderMCRPC();
+}
+function renderDrugTab(){
+  const b=calcBSA();
+  document.getElementById("r-bsa").innerHTML = b? `<div class="kv"><div><div class="k">BSA（Mosteller）</div><span class="big">${fx(b,2)}</span><span class="unit">m²</span></div>
+    <div><div class="k">Docetaxel 75 mg/m²</div><b>${fmt(75*b,0)} mg</b></div><div><div class="k">Cabazitaxel 20／25 mg/m²</div><b>${fmt(20*b,0)}／${fmt(25*b,0)} mg</b></div>
+    <div><div class="k">Radium-223 55 kBq/kg</div><b>${fmt(55*num(S.wt)/1000,2)} MBq</b></div></div><div class="note">BSA＝√(身高 cm × 體重 kg ÷ 3600)。實際劑量依院內化療處方規範與藥師覆核。</div>` : `<span class="muted">輸入體重與身高計算 BSA 與體重劑量。</span>`;
+  document.querySelectorAll("#dSeg button").forEach(x=>x.classList.toggle("on",x.dataset.dc===S.dflt));
+  document.getElementById("r-drugs").innerHTML=renderDrugs();
+}
+function renderStrip(){
+  const g=GG(); const pct=pctCores(); const c=[];
+  if(num(S.psa)!==null) c.push(`<span class="chip">PSA <b>${fmt(num(S.psa),2)}</b></span>`);
+  if(g) c.push(`<span class="chip">Gleason <b>${S.p1}+${S.p2}</b>／GG<b>${g}</b></span>`);
+  if(S.ct) c.push(`<span class="chip">c<b>${S.ct}</b></span>`);
+  if(S.cn!=="N0"||S.cm!=="M0") c.push(`<span class="chip"><b>${S.cn} ${S.cm}</b></span>`);
+  if(pct!==null) c.push(`<span class="chip">陽性針 <b>${S.pos}/${S.tot}</b></span>`);
+  if(S.pirads) c.push(`<span class="chip">PI-RADS <b>${S.pirads}</b></span>`);
+  if(S.ari) c.push(`<span class="chip"><b>5-ARI</b></span>`);
+  if(S.prevBx&&S.prevBx!=="none") c.push(`<span class="chip">前次切片 <b>${{neg:"陰性",asap:"ASAP",hgpin1:"HGPIN",hgpinM:"多灶 HGPIN",aip:"AIP"}[S.prevBx]}</b></span>`);
+  if(S.vol) c.push(`<span class="chip">體積 <b>${fmt(S.vol,1)}</b> mL</span>`);
+  if(num(S.age)!==null) c.push(`<span class="chip">年齡 <b>${S.age}</b></span>`);
+  if(num(S.psadt)!==null) c.push(`<span class="chip">PSADT <b>${fmt(num(S.psadt),1)}</b> 月</span>`);
+  document.getElementById("strip").innerHTML = `<span class="lbl">病人摘要</span>${c.length?c.join(""):'<span class="muted">尚未輸入</span>'}<button class="linkbtn" id="clearAll" type="button">清除全部</button>`;
+}
+
+/* ================= 縮寫標記 ================= */
+const GL_KEYS = Object.keys(GLOSS).sort((a,b)=>b.length-a.length);
+const GL_RE = new RegExp("(^|[^A-Za-z0-9\\-])("+GL_KEYS.map(k=>k.replace(/[-]/g,"\\-")).join("|")+")(?![A-Za-z0-9\\-])","g");
+function markGloss(root){
+  root.querySelectorAll(".card").forEach(card=>{
+    const seen=new Set(card.querySelectorAll("abbr.gl").length?[...card.querySelectorAll("abbr.gl")].map(a=>a.textContent):[]);
+    const walker=document.createTreeWalker(card,NodeFilter.SHOW_TEXT,{acceptNode(n){
+      const p=n.parentElement; if(!p) return NodeFilter.FILTER_REJECT;
+      if(p.closest("button,abbr,select,option,input,script,style,.src,.upd,a,h1")) return NodeFilter.FILTER_REJECT;
+      return GL_RE.test(n.nodeValue)? (GL_RE.lastIndex=0, NodeFilter.FILTER_ACCEPT) : (GL_RE.lastIndex=0, NodeFilter.FILTER_REJECT);
+    }});
+    const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+    for(const n of nodes){
+      const txt=n.nodeValue; let last=0, m, frag=document.createDocumentFragment(), changed=false; GL_RE.lastIndex=0;
+      while((m=GL_RE.exec(txt))){
+        const key=m[2], st=m.index+m[1].length;
+        if(seen.has(key)) continue;
+        seen.add(key); changed=true;
+        frag.appendChild(document.createTextNode(txt.slice(last,st)));
+        const a=document.createElement("abbr"); a.className="gl"; a.textContent=key; a.dataset.gl=key; frag.appendChild(a);
+        last=st+key.length;
+      }
+      if(changed){ frag.appendChild(document.createTextNode(txt.slice(last))); n.parentNode.replaceChild(frag,n); }
+    }
+  });
+}
+
+/* ================= 輸入同步 ================= */
+const BOOL_F = new Set(["m_long","m_abi","m_enza","m_apa","m_daro","m_parp","m_cvd","m_dm","m_fx","m_rf","l_crib","l_p4","b_srt","fhx","germ","ari","uti","psaRep","h_seiz","h_liver","c_early","c_cabazi","c_lu","c_parp","c_ra"]);
+const STR_F = new Set(["m_adt","m_bone","m_bmets","b_prim","b_pt","b_r","b_pgg","b_pn","b_stat","b_pet","b_bx","b_fit","le","prevBx","pirads","mr_epe","mr_svi","mr_n","ct","cn","cm","basis","tunit","h_time","h_out","h_visc","h_ecog","h_fit","h_hrr","h_pten","h_psma","n_castr","n_ci","n_ecog","c_arpi","c_doc","c_hrr","c_msi","c_psma","c_sympbone","c_visc","c_ecog","c_fit"]);
+const INT_F = new Set(["p1","p2"]);
+function readField(el){
+  const f=el.dataset.f;
+  if(BOOL_F.has(f)) return el.checked;
+  if(STR_F.has(f)) return el.value;
+  if(INT_F.has(f)) return el.value===""?null:+el.value;
+  const v = el.value===""?null:num(el.value);
+  if(v!==null && v<0 && f!=="m_t") return null; // 只有 T-score 可為負值
+  return v;
+}
+function syncField(f){
+  document.querySelectorAll(`[data-f="${f}"]`).forEach(el=>{
+    if(el===document.activeElement) return;
+    const v=S[f];
+    if(el.type==="checkbox") el.checked=!!v; else el.value = (v===null||v===undefined)? "" : String(v);
+  });
+}
+function syncAll(){ Object.keys(S).forEach(syncField); }
+function renderPSARows(){
+  document.getElementById("psaRows").innerHTML = PSA_ROWS.map((r,i)=>`<div class="psaRow"><input type="date" data-pr="${i}" data-k="d" value="${esc(r.d)}"><input type="number" inputmode="decimal" step="any" data-pr="${i}" data-k="v" value="${esc(r.v)}" placeholder="PSA"><button class="x" type="button" data-rm="${i}" aria-label="刪除">×</button></div>`).join("");
+}
+function renderAll(){
+  renderStrip();
+  renderCalc(); document.getElementById("r-dx").innerHTML=renderDx(); renderRisk(); renderLocTab(); renderAdv(); document.getElementById("r-mon").innerHTML=renderMon(); renderDrugTab();
+  markGloss(document.getElementById("panels"));
+}
+
+/* ================= 彈出說明 ================= */
+function showOv(html){ document.getElementById("ovBox").innerHTML=html+`<div style="margin-top:12px;text-align:right"><button class="btn pri" type="button" id="ovClose">關閉</button></div>`; document.getElementById("ov").classList.add("on"); }
+function hideOv(){ document.getElementById("ov").classList.remove("on"); }
+
+/* ================= 初始化 ================= */
+function init(){
+  document.getElementById("ver").textContent="v"+APP_VERSION;
+  document.getElementById("ver2").textContent=APP_VERSION;
+  document.getElementById("checked").textContent=CHECKED;
+  const P=buildPanels();
+  document.getElementById("tabs").innerHTML=TABS.map((t,i)=>`<button type="button" data-tab="${t.id}" class="${i===0?"on":""}">${t.t}</button>`).join("");
+  document.getElementById("panels").innerHTML=TABS.map((t,i)=>`<section class="panel ${i===0?"on":""}" id="p-${t.id}">${P[t.id]}</section>`).join("");
+  renderPSARows();
+  syncAll(); renderAll();
+
+  document.addEventListener("input",onInput); document.addEventListener("change",onInput);
+  document.addEventListener("click",e=>{
+    const t=e.target;
+    const tab=t.closest("[data-tab]");
+    if(tab){ document.querySelectorAll("nav [data-tab]").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab.dataset.tab));
+      document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+tab.dataset.tab)); window.scrollTo({top:0}); return; }
+    const lc=t.closest("[data-loc]"); if(lc){ S.loc=lc.dataset.loc; renderLocTab(); markGloss(document.getElementById("p-loc")); return; }
+    const adv=t.closest("[data-adv]"); if(adv){ S.adv=adv.dataset.adv; renderAdv(); markGloss(document.getElementById("p-adv")); return; }
+    const dc=t.closest("[data-dc]"); if(dc){ S.dflt=dc.dataset.dc; renderDrugTab(); markGloss(document.getElementById("p-drug")); return; }
+    const r=t.closest("[data-ref]"); if(r){ const x=REF[r.dataset.ref]; if(x) showOv(`<h4>${esc(x.t)}</h4><p>${esc(x.f)}</p>${x.u?`<p><a href="${x.u}" target="_blank" rel="noopener">開啟原始出處</a></p>`:""}`); return; }
+    const u=t.closest("[data-upd]"); if(u){ showOv(`<h4><span class="upd">更新</span> 變更內容</h4><p>${esc(u.dataset.upd)}</p>`); return; }
+    const g=t.closest("abbr.gl"); if(g){ showOv(`<h4>${esc(g.dataset.gl||g.textContent)}</h4><p>${esc(GLOSS[g.dataset.gl||g.textContent]||"")}</p>`); return; }
+    if(t.id==="ovClose"||t.id==="ov"){ hideOv(); return; }
+    if(t.id==="addRow"){ PSA_ROWS.push({d:"",v:""}); renderPSARows(); return; }
+    const rm=t.closest("[data-rm]"); if(rm){ PSA_ROWS.splice(+rm.dataset.rm,1); if(PSA_ROWS.length<2) PSA_ROWS.push({d:"",v:""}); renderPSARows(); renderAll(); return; }
+    if(t.id==="clearAll"){ S=JSON.parse(JSON.stringify(S0)); PSA_ROWS=[{d:"",v:""},{d:"",v:""},{d:"",v:""}]; renderPSARows(); syncAll(); renderAll(); return; }
+    if(t.id==="themeBtn"){ const root=document.documentElement; const cur=root.dataset.theme||"auto"; const nx=cur==="auto"?"light":cur==="light"?"dark":"auto";
+      if(nx==="auto") delete root.dataset.theme; else root.dataset.theme=nx; t.textContent={auto:"自動",light:"淺色",dark:"深色"}[nx]; return; }
+  });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") hideOv(); });
+}
+function onInput(e){
+  const el=e.target;
+  if(el.dataset.pr!==undefined){ if(e.type==="change" && PSA_ROWS[+el.dataset.pr][el.dataset.k]===el.value) return; PSA_ROWS[+el.dataset.pr][el.dataset.k]=el.value; renderStrip(); renderCalc(); if(S.adv==="nmcrpc") renderAdv(); markGloss(document.getElementById("panels")); return; }
+  if(!el.dataset.f) return;
+  const f=el.dataset.f; const nv=readField(el);
+  if(e.type==="change" && el.tagName==="INPUT" && el.type!=="checkbox" && nv===S[f]) return; // 已由 input 事件處理，避免重繪吃掉下一次點擊
+  S[f]=nv;
+  if(f==="psadt" && e.type==="input") S.psadtNhi=null;
+  if(f==="vol"){ S.vl=S.vw=S.vh=null; syncField("vl");syncField("vw");syncField("vh"); }
+  syncField(f);
+  renderAll();
+}
+if(typeof document!=="undefined" && typeof window!=="undefined" && !window.__TEST__){
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
+}
+</script>
+</body>
+</html>
