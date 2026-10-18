@@ -183,12 +183,12 @@ footer{color:var(--muted);font-size:12px;padding:10px 0 calc(28px + env(safe-are
 <script>
 "use strict";
 /* ================= 基本設定 ================= */
-const APP_VERSION = "1.4";
+const APP_VERSION = "1.5";
 const CHECKED = "2026-10-18";
 
 /* ================= 出處 ================= */
 const REF = {
-  nccn:{t:"NCCN v1.2027",f:"NCCN Clinical Practice Guidelines in Oncology: Prostate Cancer, Version 1.2027（2026-10-18 於 nccn.org 確認為現行版）。v1.2027 修訂內容無公開摘要；NCCN 全文需登入，本工具之 NCCN 內容依公開資料整理（與 v1.2027 的差異請確認）：NCCN Guidelines Insights v5.2026（JNCCN 2026;24(5)）、Prostate Cancer v3.2026（JNCCN 2025;23(11)）、v1–2.2026 更新摘要與 2026 年會報導。使用前請至 nccn.org 核對。",u:"https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1459"},
+  nccn:{t:"NCCN v1.2027",f:"NCCN Clinical Practice Guidelines in Oncology: Prostate Cancer, Version 1.2027（2026-10-12）。2026-10-18 依全文核對：風險分組 PROS-2、初始治療 PROS-3–7、ADT 原則 PROS-G、RT 原則 PROS-J、BCR2 PROS-12、mCSPC PROS-14–15、nmCRPC PROS-16、mCRPC PROS-18、AS PROS-F、存活照護 PROS-B。早期版本公開資料：NCCN Guidelines Insights v5.2026（JNCCN 2026;24(5)）、Prostate Cancer v3.2026（JNCCN 2025;23(11)）、v1–2.2026 更新摘要與 2026 年會報導。使用前請至 nccn.org 核對。",u:"https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1459"},
   nccnI:{t:"NCCN Insights v5.2026",f:"Spratt DE, Srinivas S, Adra N, et al. NCCN Guidelines® Insights: Prostate Cancer, Version 5.2026. J Natl Compr Canc Netw 2026;24(5). doi:10.6004/jnccn.2026.0023。重點：刪除 very-low-risk 組、更新 active surveillance 原則、新診斷者不建議 focal therapy 作為初始治療。",u:"https://jnccn.org/view/journals/jnccn/24/5/article-p140.xml"},
   nccnUpd:{t:"NCCN v1–2.2026 更新摘要",f:"NCCN Prostate Cancer v1.2026：刪除 very-low-risk group。v2.2026（2025-09-15）：多數 FIR 接受 RT 不建議併用 ADT；新增心血管風險評估頁；新增 FDA 核可 PET tracer 表。"},
   nccn326:{t:"NCCN v3.2026（JNCCN）",f:"Prostate Cancer, Version 3.2026, NCCN Clinical Practice Guidelines in Oncology. J Natl Compr Canc Netw 2025;23(11)。mCSPC 依同時性／異時性與轉移負荷決定強化程度及 prostate-directed／metastasis-directed therapy。"},
@@ -202,7 +202,6 @@ const REF = {
   esmoAdv:{t:"ESMO 2026（晚期）",f:"Fizazi K, et al. Advanced and metastatic prostate cancer: ESMO Clinical Practice Guideline for diagnosis, treatment and follow-up. Ann Oncol 2026（線上 2026-02-10）. doi:10.1016/j.annonc.2026.01.015。177Lu-PSMA-617：曾用 ARPI、未用 taxane、不適合立即使用 docetaxel 之 PSMA 陽性 mCRPC 建議使用 [I, B；ESMO-MCBS 3；FDA 核准、EMA 未核准此情境]；docetaxel＋ARPI 後、≥1 處 PSMA 陽性且無 PSMA 陰性病灶 [I, A；MCBS 5]。",u:"https://www.annalsofoncology.org/article/S0923-7534(26)00042-6/fulltext"},
   esmoLoc:{t:"ESMO 2025（局部）",f:"Walz J, et al. Local and locoregional prostate cancer: ESMO Clinical Practice Guideline for diagnosis, treatment and follow-up. Ann Oncol（線上 2025-12-18）. doi:10.1016/j.annonc.2025.12.009。不良中風險（如 ISUP GG3）接受根治性 RT 時應合併 4–6 個月 ADT [I, A]；是否加 ADT 及時長需考量健康狀態 [II, A]；有利中風險建議 RP 或 RT [I, B]，未另建議加 ADT。",u:"https://www.annalsofoncology.org/article/S0923-7534(25)06330-6/fulltext"},
   ascoCrpc:{t:"ASCO 2026.1.4（mCRPC）",f:"Taplin ME, et al. Systemic Therapy in Patients With Metastatic Castration-Resistant Prostate Cancer: ASCO Living Guideline, Version 2026.1.4. J Clin Oncol（2026-08-06）. doi:10.1200/JCO-26-01898；文獻至 2025-08-01。Rec 1.2.2.1（ADT＋ARPI 後、未用 taxane）：docetaxel、radium-223，或 177Lu-PSMA-617（PSMA PET 陽性），不論 HRR 狀態（Strong；證據 Moderate）。Rec 1.4.1（ARPI＋docetaxel 後）：PSMA 陽性 177Lu-PSMA-617、PSMA 陰性 radium-223，或 cabazitaxel（Strong；Moderate）。",u:"https://doi.org/10.1200/JCO-26-01898"},
-  bjuiLu:{t:"BJUI 2026 指引比較",f:"Al-Khanaty A, Chen D, Walbaum J, et al. Guideline of guidelines: lutetium-177 PSMA radioligand therapy in advanced prostate cancer. BJU Int 2026（線上 2026-04-14）. doi:10.1111/bju.70283。比較 EAU 2025、AUA/SUO 2023、NCCN v1.2025、CUA 2024、ASCO 2025、ESMO 2020：各指引皆支持 ARPI＋taxane 後使用；NCCN v1.2025 與 EAU 提及延伸至未化療族群（EAU 較保守）；mHSPC 皆未建議。",u:"https://doi.org/10.1111/bju.70283"},
   eauDx:{t:"EAU 2026 Ch.5",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer 2026, Chapter 5 Diagnostic Evaluation：5.2.8 Recommendations for individual early detection and germline testing；5.3 病理（ASAP、HGPIN）；5.5 Biopsy strategy；5.5.8 Recommendations on MRI imaging in biopsy indication and strategy；Table 5.5 PI-RADS × PSA density。",u:"https://uroweb.org/guidelines/prostate-cancer/chapter/diagnostic-evaluation"},
   auaEd:{t:"AUA/SUO EDPC 2026",f:"Wei JT, Barocas D, Carlsson S, et al. Early Detection of Prostate Cancer: AUA/SUO Guideline (2023; amended 2026，AUA 理事會 2026-02 通過，文獻至 2024-12)。Statement 1–35（篩檢、初次切片、重複切片、切片技術）。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/early-detection-of-prostate-cancer-guidelines"},
   auaEdAm:{t:"AUA EDPC 2026 修訂摘要",f:"AUA/SUO Early Detection of Prostate Cancer 2026 Amendment Summary：#13 MRI 於初次切片前 Grade B→A；#28 ASAP 由 Expert Opinion 改為 Moderate/C（明列可含重複切片）；#35 經直腸或經會陰 Grade C→B；Table 6 生物標記更新。",u:"https://www.auanet.org/documents/Guidelines/PDF/2026%20Guidelines/EDPC%20Guideline%202026%20-%20Amendment%20Summary.pdf"},
@@ -474,11 +473,11 @@ function riskNCCN(){
   if(S.cm && S.cm!=="M0") return {g:"轉移性（M1）",cls:"t-high",why:["任何 M1"]};
   if(S.cn==="N1") return {g:"Regional（N1）",cls:"t-high",why:["任何 T、N1、M0"]};
   const miss=needBasics(); if(miss.length) return {g:null,miss};
-  const hf=[]; if(ct==="T3a") hf.push("cT3a"); if(g>=4) hf.push("GG4–5"); if(psa>20) hf.push("PSA >20");
-  const vh=[]; if(ct==="T3b"||ct==="T4") vh.push("cT3b–T4"); if(S.p1===5) vh.push("primary Gleason pattern 5");
-  if(hf.length>=2) vh.push("2–3 項高風險特徵（"+hf.join("、")+"）"); if(g45!==null && g45>4) vh.push(">4 針 GG4–5");
-  if(vh.length) return {g:"Very high",cls:"t-high",why:vh};
-  if(hf.length===1) return {g:"High",cls:"t-high",why:["恰 1 項高風險特徵："+hf[0]]};
+  const t34 = tIdx(ct)>=tIdx("T3a");
+  const hf=[]; if(t34) hf.push("cT3–T4"); if(g>=4) hf.push("GG4–5"); if(psa>20) hf.push("PSA >20");
+  const vh=[]; if(t34) vh.push("cT3–T4"); if(g>=4) vh.push("GG4–5"); if(psa>=40) vh.push("PSA ≥40");
+  if(vh.length>=2) return {g:"Very high",cls:"t-high",why:["≥2 項："+vh.join("、")]};
+  if(hf.length) return {g:"High",cls:"t-high",why:["高風險特徵："+hf.join("、")+"（未達 very high：cT3–T4、GG4–5、PSA ≥40 中 ≥2 項）"]};
   const irf=[]; if(ct==="T2b"||ct==="T2c") irf.push("cT2b–c"); if(g===2||g===3) irf.push("GG"+g); if(psa>=10&&psa<=20) irf.push("PSA 10–20");
   if(irf.length){
     const why2=["IRF："+irf.join("、")+"（"+irf.length+" 項）"];
@@ -631,10 +630,11 @@ function renderMHSPC(){
     const pref = sync && d.highVol===true && fit;
     let nhiAbi = nhiTripAbi(d,ecog,sync), nhiDaro = nhiTripDaro(d,ecog);
     H.push(optCard({cls:pref?"pref":"",title:"三合一：ADT ＋ docetaxel ＋ ARPI",
-      tags:(pref?tag("最適族群","t-info"):"")+src("auaApc","#16 Strong")+src("eau","Strong")+src("nccn"),
+      tags:(pref?tag("最適族群","t-info"):"")+src("auaApc","#16 Strong")+src("eau","Strong")+src("nccn","高轉移量 category 1"),
       lead:"ADT ＋ docetaxel 75 mg/m² q3w × 6 ＋（abiraterone＋prednisone 或 darolutamide，二擇一），三者同時使用。",
       rows:[["適用","可耐受化療、無重大共病之 de novo（同時性）轉移；高轉移量受益最明確。異時性轉移之證據不足。"+src("auaApc","#16")],
         ["證據",`PEACE-1：ADT＋docetaxel 族群加 abiraterone，OS HR 0.75 ${src("PEACE1")}；ARASENS：darolutamide，OS HR 0.68 ${src("ARASENS")}。兩試驗多為 de novo。`],
+        ["NCCN",`高轉移量：abiraterone 或 darolutamide 加 docetaxel 為 preferred（category 1）；同時性低轉移量：other recommended（2B）；異時性低轉移量：未列。${src("nccn","PROS-15")}`],
         ["健保",`darolutamide ＋ docetaxel：${nhiDaro} ${src("nhi994")}<br>abiraterone ＋ docetaxel：${nhiAbi} ${src("nhi949")}`],
         ["提醒", meta?'<span class="cau">異時性轉移：AUA 指出三合一角色尚未確立。</span>':(sync&&d.highVol===false?"低轉移量：三合一證據較弱，可考慮雙藥＋prostate RT。":"")]]}));
   }else{
@@ -651,19 +651,21 @@ function renderMHSPC(){
         <li>enzalutamide 160 mg QD — ARCHES OS HR 0.66 ${src("ARCHES")}；ENZAMET OS HR 0.67 ${src("ENZAMET")}</li>
         <li>darolutamide 600 mg BID — ARANOTE rPFS HR 0.54 ${src("ARANOTE")} ${upd("AUA/SUO 2026 首次將 darolutamide 雙藥納入 mHSPC 強建議（#15）")}</li></ul>`],
       ["選藥",drugChoiceHints()],
+      ["NCCN",`abiraterone、apalutamide、enzalutamide 於三種情境皆為 preferred（category 1）；darolutamide 雙藥列為 other recommended（低轉移量 2B）——與 AUA #15（Strong）不同。${src("nccn","PROS-15")}`],
       ["健保",nhiDoublet(d,ecog,sync)]]}));
 
   // Prostate RT
   if(sync && d.highVol===false){
-    H.push(optCard({cls:"pref",title:"加做 prostate EBRT（低轉移量、同時性）",tags:src("auaApc","#17 Conditional/C")+src("eau","Strong")+src("nccn"),
+    H.push(optCard({cls:"pref",title:"加做 prostate EBRT（低轉移量、同時性）",tags:src("auaApc","#17 Conditional/C")+src("eau","Strong")+src("nccn","other recommended"),
       lead:"ADT（± ARPI）同時加上攝護腺局部放射治療。",
       rows:[["證據",`STAMPEDE arm H：低轉移量 OS HR 0.68 ${src("STAMPEDEH")}；PEACE-1：低轉移量＋abiraterone 時 rPFS 改善、嚴重泌尿道事件減少，OS 無差異 ${src("PEACE1")}。`],
         ["常用劑量","36 Gy／6 fx（每週 1 次）或 55 Gy／20 fx（STAMPEDE）。"],
+        ["低轉移量定義","本工具依 CHAARTED；NCCN 對此項之 OS 效益以傳統影像「僅非區域淋巴結」或「骨轉移 <4 處且無臟器轉移」定義（STAMPEDE 分析），並指 ≤5 處骨轉移證據最強。"+src("nccn","PROS-15A、PROS-J")],
         ["不建議","高轉移量不建議（STAMPEDE 無效益）；RP 用於 M1 仍屬試驗性。"+src("auaApc","#17")]]}));
   }
   // MDT
   if(meta && d.visc!==true && d.bone!==null && d.bone<=5){
-    H.push(optCard({title:"異時性寡轉移：MDT（SBRT）",tags:upd("NCCN 2026 將 MDT 納入異時性寡轉移 APMS 疾病之治療選項")+src("ascoNccn")+src("auaApc","MDT 討論"),
+    H.push(optCard({title:"異時性寡轉移：MDT（SBRT）",tags:upd("NCCN 2026 將 MDT 納入異時性寡轉移 APMS 疾病之治療選項")+src("ascoNccn")+src("nccn","PROS-13、PROS-15")+src("auaApc","MDT 討論"),
       rows:[["說明","對 PSMA PET 或傳統影像可見之少數病灶做 SBRT；可與全身治療合併或作為延後 ADT 的選項。"],
         ["證據等級","phase II（STOMP、ORIOLE）顯示延後 ADT／進展；尚無 OS 效益之 phase 3 證據。"+src("auaApc")],
         ["寡轉移","本工具以「無臟器轉移且骨病灶 ≤5」提示，定義各試驗不一。"]]}));
@@ -672,20 +674,21 @@ function renderMHSPC(){
   const bio=[];
   if(S.h_hrr==="brca2"||S.h_hrr==="brca1"||S.h_hrr==="hrr"){
     const isB=S.h_hrr!=="hrr";
-    bio.push(optCard({cls:isB?"pref":"",title:"HRR／BRCA 突變：ADT ＋ niraparib ＋ abiraterone ＋ prednisone",
-      tags:upd("FDA 2025-12 核准（BRCA2 mCSPC）；EC 2026-03 核准（BRCA1/2 mHSPC）")+src("auaApc","#19 Expert Opinion")+src("fdaAkeega"),
+    bio.push(optCard({cls:S.h_hrr==="brca2"?"pref":"",title:"HRR／BRCA 突變：ADT ＋ niraparib ＋ abiraterone ＋ prednisone",
+      tags:upd("FDA 2025-12 核准（BRCA2 mCSPC）；EC 2026-03 核准（BRCA1/2 mHSPC）")+src("auaApc","#19 Expert Opinion")+src("nccn","BRCA2：高轉移量 2A、低轉移量 2B")+src("fdaAkeega"),
       lead:"niraparib/abiraterone 固定劑量錠（Akeega）200/1,000 mg QD ＋ prednisone 5 mg QD ＋ ADT，同時使用。",
       rows:[["證據",`AMPLITUDE：rPFS HR 0.63（HRR）、0.52（BRCA）；非 BRCA 之 HRR 效益不確定 ${src("AMPLITUDE")}`],
         ["適用", isB?(S.h_hrr==="brca2"?"BRCA2：FDA 核准範圍":"BRCA1：EU 核准範圍；FDA 僅 BRCA2"):'<span class="cau">非 BRCA 之 HRR 變異：AUA 指出不應外推效益</span>'],
         ["健保",nhiSelf("niraparib/abiraterone 未列入健保給付規定（9.85 攝護腺癌僅 olaparib）")+src("nhi985")],
-        ["比較","與 docetaxel 三合一無直接比較；高轉移量需個別討論。"]]}));
+        ["比較","與 docetaxel 三合一無直接比較；高轉移量需個別討論。"],
+        ["NCCN","僅列 BRCA2；可在三合一的 docetaxel 結束後或 prostate EBRT 後使用；試驗 78% 為高轉移量，低轉移量（尤其異時性）效益不明且毒性增加，需告知。"+src("nccn","PROS-15、PROS-15A")]]}));
   }
   if(S.h_pten==="def"){
     bio.push(optCard({title:"PTEN 缺失（IHC）：ADT ＋ capivasertib ＋ abiraterone ＋ prednisone",
       tags:upd("FDA 2026-06-12 核准；PTEN 缺失之第一個標靶治療")+src("fdaCapi"),
       lead:"capivasertib 400 mg BID（每週服 4 天、停 3 天）＋ abiraterone 1,000 mg QD ＋ prednisone 5 mg QD ＋ ADT，同時使用。",
       rows:[["證據",`CAPItello-281：rPFS 風險降低 19%、中位數多 7.5 個月；OS 未成熟 ${src("CAPI281")}`],
-        ["指引","EAU 2026 已討論（rPFS 改善、尚無 OS）；AUA/SUO 2026 文獻截止前未納入。"+src("eau")],
+        ["指引","NCCN v1.2027：僅高轉移量之極少數病人（very select patients only，category 2B），委員會意見分歧（rPFS 效益有限、無 OS、毒性、未與三合一比較）"+src("nccn","PROS-15、PROS-15A")+"；EAU 2026 已討論（rPFS 改善、尚無 OS）"+src("eau")+"；AUA/SUO 2026 文獻截止前未納入。"],
         ["副作用","高血糖、腹瀉、皮疹——需監測血糖。"],
         ["健保",nhiSelf("健保 9.135 capivasertib 僅給付乳癌")]]}));
   }
@@ -694,16 +697,17 @@ function renderMHSPC(){
       tags:upd("FDA 2026-07-31 核准 Pluvicto＋ARPI 用於 PSMA 陽性 mHSPC")+src("fdaLu"),
       lead:"ADT ＋ ARPI 持續，同時加上 177Lu-PSMA-617 7.4 GBq q6w × 6 療程。",
       rows:[["證據",`PSMAddition：rPFS 改善；OS 未成熟 ${src("PSMAddition")}`],
-        ["指引","EAU 2026 年會時仍未列為標準治療；AUA/SUO 2026 未納入。屬最新 FDA 適應症。"],
+        ["指引","NCCN v1.2027：useful in certain circumstances（高轉移量 2A、低轉移量 2B）；傳統影像 mCSPC 且 ≥1 處 PSMA 陽性；部分委員主張等更成熟追蹤（無 OS、急性毒性、晚期毒性未明）"+src("nccn","PROS-15、PROS-15A")+"。EAU 2026 年會時仍未列為標準治療；AUA/SUO 2026 未納入。"],
         ["台灣",nhiSelf("TFDA 適應症僅 mCRPC（ARPI＋taxane 後）；健保未給付")+src("tfdaLu")]]}));
   }
   if(bio.length){ H.push(`<div class="sec">依生物標記之選項</div>`); H.push(...bio); }
   if(S.h_hrr===""||S.h_hrr==="unk"){
-    H.push(`<div class="alert a-info">建議所有轉移病人做 germline 檢測，並做 somatic（腫瘤）檢測：HRR（BRCA1/2 等）、MSI-H/dMMR、TMB；PTEN IHC 可作為 capivasertib 適用評估。${src("auaApc","#4 Clinical Principle")}${src("eau")}</div>`);
+    H.push(`<div class="alert a-info">建議所有轉移病人做 germline 檢測，並做 somatic（腫瘤）檢測：HRR（BRCA1/2 等）、MSI-H/dMMR、TMB；PTEN IHC 可作為 capivasertib 適用評估。${src("auaApc","#4 Clinical Principle")}${src("eau")}${src("nccn","PROS-C：轉移性做 MGPT（HRRm、MSI/dMMR、TMB）")}</div>`);
   }
   // Not recommended
   H.push(optCard({cls:"no",title:"一般不建議",rows:[["ADT 單用","除非無法耐受任何加強治療。"+src("auaApc","#15")],
     ["ADT＋docetaxel（不含 ARPI）","僅在無法取得或不能使用 ARPI 時。"+src("auaApc","docetaxel 討論")],
+    ["NCCN","ADT 單用不建議，除非有合併治療之明確禁忌；若單用可考慮間歇 ADT。"+src("nccn","PROS-14")],
     ["兩種 ARPI 併用","無證據（如 abiraterone＋enzalutamide）。"]]}));
   return H.join("");
 }
@@ -754,7 +758,7 @@ function renderNMCRPC(){
         ["選藥","三者無直接比較；darolutamide 中樞神經副作用與交互作用較少；apalutamide 注意皮疹、甲狀腺低下；enzalutamide 注意疲倦、跌倒、癲癇。"],
         ["健保",`${nhiE}；${nhiDT}；需 3 個月內影像證明無遠端轉移；每 3 個月再申請（有 PSA progression 時附影像；無 progression 則每 6 個月附影像），影像證實轉移即停藥。三藥及 abiraterone 終生限一種。${src("nhi990")}${src("nhi994")}${src("nhi954")}`]]}));
   }else{
-    H.push(optCard({cls:"pref",title:`PSADT ${fmt(dt,1)} 個月（>10）：持續 ADT、觀察`,tags:src("auaApc","#23 Clinical Principle"),
+    H.push(optCard({cls:"pref",title:`PSADT ${fmt(dt,1)} 個月（>10）：持續 ADT、觀察`,tags:src("auaApc","#23 Clinical Principle")+src("nccn","PROS-16：monitoring preferred"),
       rows:[["追蹤","PSA 每 3–6 個月，計算 PSADT；傳統影像或 PSMA PET 每 6–12 個月。"+src("auaApc","#20–21")],
         ["健保","ARPI 不符 nmCRPC 給付（需 PSADT ≤10 個月）。"]]}));
   }
@@ -803,7 +807,7 @@ function renderMCRPC(){
       cards.push(optCard({cls:"no",title:"HRR／BRCA：PARPi ＋ ARPI 一線合併（已用過 PARPi）",tags:tag("不重複推薦","t-gray"),
         rows:[["理由",`已用過 PARPi；一線 PARPi＋ARPI 試驗排除曾用 PARPi 者（如 TALAPRO-2）${src("TALAPRO2")}，PARPi 惡化後再用 PARPi 無證據。ARPI 單藥照上方選項。`]]}));
     }else if(anyHRR){
-      cards.push(optCard({cls:brca?"pref":"",title:"HRR／BRCA：PARPi ＋ ARPI 一線合併",tags:src("eau","Strong（BRCA／HRR）")+src("auaApc","#35 Conditional/C")+src("nccn"),
+      cards.push(optCard({cls:brca?"pref":"",title:"HRR／BRCA：PARPi ＋ ARPI 一線合併",tags:src("eau","Strong（BRCA／HRR）")+src("auaApc","#35 Conditional/C")+src("nccn","category 1（BRCA 三種；其他 HRR 限 talazoparib＋enzalutamide）"),
         lead:"以下三種組合擇一（兩藥同時使用）：",
         rows:[["選項",`<ul class="tight">
           <li>olaparib 300 mg BID ＋ abiraterone 1,000 mg QD ＋ prednisone 5 mg BID — PROpel rPFS HR 0.66 ${src("PROpel")}（FDA：限 BRCA）</li>
@@ -819,7 +823,7 @@ function renderMCRPC(){
 
   // Docetaxel
   if(!doc){
-    cards.push(optCard({cls:!fit?"no":(arpi||visc||symp)?"pref":"",title:"Docetaxel ＋ prednisone"+(!fit?"（不適合化療）":""),tags:(arpi?src("auaApc","#28 Strong/B"):"")+src("eau","Strong")+src("nccn","category 1"),
+    cards.push(optCard({cls:!fit?"no":(arpi||visc||symp)?"pref":"",title:"Docetaxel ＋ prednisone"+(!fit?"（不適合化療）":""),tags:(arpi?src("auaApc","#28 Strong/B"):"")+src("eau","Strong")+src("nccn",arpi?"category 1，preferred":"category 1，other recommended"),
       lead:"docetaxel 75 mg/m² IV q3w ＋ prednisone 5 mg BID（同時使用），最多 10 療程。",
       rows:[["證據",`TAX327 OS HR 0.76 ${src("TAX327")}`],["適用", fit?"可耐受化療者；臟器轉移、症狀明顯、快速進展者優先考慮。":'<span class="ng">勾選為不適合化療</span>'],
         ["健保",nhiOK("依許可證適應症（荷爾蒙治療失敗之轉移性前列腺癌）")+src("nhi93")]]}));
@@ -830,7 +834,7 @@ function renderMCRPC(){
   if(doc && !S.c_cabazi){
     const r=[]; if(cyc!==null&&cyc<3) r.push("docetaxel 需 ≥3 療程"); if(!arpi) r.push("需曾用新型荷爾蒙藥品後惡化"); if(ecog!==null&&ecog>1) r.push("ECOG 需 ≤1");
     const nhi = r.length? nhiNG(r.join("；")) : (cyc===null||ecog===null? nhiQ("需 docetaxel ≥3 療程、ARPI 後惡化、ECOG ≤1") : nhiOK("docetaxel ≥3 療程、ARPI 後惡化、ECOG ≤1；上限 7 療程"));
-    cards.push(optCard({cls:!fit?"no":arpi?"pref":"",title:"Cabazitaxel ＋ prednisone"+(!fit?"（不適合化療）":""),tags:src("auaApc",arpi?"#33 Strong/B":"#32 Conditional/B")+src("eau","Strong")+src("nccn"),
+    cards.push(optCard({cls:!fit?"no":arpi?"pref":"",title:"Cabazitaxel ＋ prednisone"+(!fit?"（不適合化療）":""),tags:src("auaApc",arpi?"#33 Strong/B":"#32 Conditional/B")+src("eau","Strong")+(arpi?src("nccn","category 1，preferred"):""),
       lead:"cabazitaxel 20 mg/m² IV q3w（體能好可 25 mg/m²）＋ prednisone 10 mg QD，同時使用；建議預防性 G-CSF。",
       rows:[["證據",`CARD：rPFS HR 0.54、OS HR 0.64 ${src("CARD")}；20 vs 25 mg/m² 不劣 ${src("PROSELICA")}`],
         ["健保",nhi+" "+upd("健保 115/8/1 新增 cabazitaxel（Cabazred）給付")+src("nhi9137")+'<br><span class="muted small">不得與新型荷爾蒙藥品或 olaparib 併用。</span>']]}));
@@ -845,12 +849,12 @@ function renderMCRPC(){
             ["補充","ESMO 2026 [I, A；MCBS 5] "+src("esmoAdv")+"；ASCO 2026.1.4 Rec 1.4.1（Strong／Moderate）"+src("ascoCrpc")+"。各指引方向一致。"],
             ["台灣","TFDA 核准適應症內；"+nhiSelf("健保未給付")+src("tfdaLu")]]}));
       }else{
-        cards.push(optCard({title:"177Lu-PSMA-617（ARPI 後、化療前）",tags:upd("FDA 2025-03 擴大至化療前（PSMAfore）")+tag("指引不一致","t-mid")+src("auaApc","#31 Strong/B")+src("eau","Weak（不適合 docetaxel）")+src("fdaPsmafore"),
-          lead: fit? "指引說法不一，分列如下；docetaxel 為各指引共同建議的化療前選項。" : "不適合化療：AUA #31（Strong）、EAU（Weak）、ESMO（I, B）皆支持；NCCN 類別請確認。",
+        cards.push(optCard({title:"177Lu-PSMA-617（ARPI 後、化療前）",tags:upd("FDA 2025-03 擴大至化療前（PSMAfore）")+tag("指引不一致","t-mid")+src("auaApc","#31 Strong/B")+src("eau","Weak（不適合 docetaxel）")+src("nccn","2A")+src("fdaPsmafore"),
+          lead: fit? "指引說法不一，分列如下；docetaxel 為各指引共同建議的化療前選項。" : "不適合化療：AUA #31（Strong）、EAU（Weak）、NCCN（2A，適合延後 taxane）、ESMO（I, B）皆支持。",
           rows:[["劑量","177Lu-PSMA-617 7.4 GBq IV q6w × 最多 6 療程；ADT 持續。"],
             ["證據",`PSMAfore rPFS HR 0.41；OS 因交叉無差異 ${src("PSMAfore")}`],
             ["各指引",`<ul class="tight">
-              <li><b>NCCN v1.2027</b>：此情境之類別需登入全文，<span class="cau">請確認</span>；BJUI 2026 綜述指 v1.2025 已納入未化療族群 ${src("nccn")}${src("bjuiLu")}</li>
+              <li><b>NCCN v1.2027</b>：ARPI 後、化療前為 useful in certain circumstances（2A），限適合延後 taxane 者；≥1 處 PSMA 陽性且無主要 PSMA 陰性轉移 ${src("nccn","PROS-18、PROS-18A")}</li>
               <li><b>EAU 2026</b>：限不適合 docetaxel 者，且 PSMA 攝取高於肝臟 ${src("eau","6.7.14 Weak")}${src("eauP2")}</li>
               <li><b>AUA/SUO 2026</b> #31：ARPI 後、PSMA PET 陽性即應提供，不論是否用過 docetaxel ${src("auaApc","#31 Strong/B")}</li>
               <li><b>補充 ESMO 2026</b>：限不適合立即使用 docetaxel 者 ${src("esmoAdv","I, B；MCBS 3")}</li>
@@ -869,7 +873,8 @@ function renderMCRPC(){
       rows:[["證據",`PROfound cohort A（BRCA1/2、ATM）OS HR 0.69 ${src("PROfound")}`],
         ["適用", brca?'<span class="ok">BRCA1/2：效益最明確</span>':atm?"ATM：cohort A 內，但效益弱於 BRCA":'<span class="cau">其他 HRR：效益不確定</span>'],
         ["健保", brca? nhiOK("BRCA1/2、新型荷爾蒙藥物後惡化")+src("nhi985") : nhiNG("健保限 BRCA1/2")+src("nhi985")],
-        ["替代","無法取得 PARPi 時可考慮含鉑化療（AUA #34）。"]]}));
+        ["替代","無法取得 PARPi 時可考慮含鉑化療（AUA #34）。"],
+        ["NCCN","BRCA1/2：olaparib 或 rucaparib（category 1）；其他 HRR：olaparib（2A）；ARPI 後不再列 PARPi＋ARPI 組合。"+src("nccn","PROS-18")+upd("NCCN v1.2027：ARPI 後 BRCA 改以 olaparib、rucaparib 為 preferred，移除 niraparib/abiraterone 與 talazoparib/enzalutamide")]]}));
   }
   // Radium
   if(!S.c_ra){
@@ -879,14 +884,15 @@ function renderMCRPC(){
         lead:"radium-223 55 kBq/kg IV q4w × 6 療程。",
         rows:[["條件","有症狀骨轉移、無臟器轉移、淋巴結 <3 cm。"+src("auaApc","#30")],["證據",`ALSYMPCA OS HR 0.70 ${src("ALSYMPCA")}`],
           ["禁忌",`不可與 abiraterone＋prednisone 同時使用（ERA 223 骨折與死亡增加）${src("ERA223")}`],
-          ["健保",nhiOK("骨轉移 ≥2 處且有症狀（需常規止痛藥）、無臟器轉移；最多 6 療程")+'<br><span class="cau">健保規定不得合併 abiraterone、enzalutamide、denosumab 或 bisphosphonate——與 EAU 建議 radium 期間使用骨保護劑不同。</span>'+src("nhi968")]]}));
+          ["NCCN",`有症狀、以骨為主之轉移 category 1，須同時使用 denosumab 或 zoledronic acid；有臟器轉移不用${!arpi?"；ARPI 前另列 radium-223＋enzalutamide（category 1，合併骨保護）":""}。${src("nccn","PROS-18、PROS-18A")}`],
+          ["健保",nhiOK("骨轉移 ≥2 處且有症狀（需常規止痛藥）、無臟器轉移；最多 6 療程")+'<br><span class="cau">健保規定不得合併 abiraterone、enzalutamide、denosumab 或 bisphosphonate——與 EAU、NCCN 建議 radium 期間使用骨保護劑不同。</span>'+src("nhi968")]]}));
     }else if(S.c_sympbone==="n" && !visc){
       // nothing
     }
   }
   // Pembro
   if(S.c_msi==="y"){
-    cards.push(optCard({title:"Pembrolizumab（MSI-H／dMMR／TMB-H）",tags:src("auaApc","#36 Moderate/C")+src("nccn"),
+    cards.push(optCard({title:"Pembrolizumab（MSI-H／dMMR／TMB-H）",tags:src("auaApc","#36 Moderate/C")+src("nccn","MSI-H/dMMR 2B"),
       lead:"pembrolizumab 200 mg IV q3w 或 400 mg q6w。",
       rows:[["證據",src("KN158")+" 不分癌別適應症；攝護腺癌 MSI-H 約 3–5%。"],["另做","MSI-H／dMMR 應做 Lynch syndrome germline 檢測。"],
         ["健保",nhiSelf("9.69 未給付攝護腺癌")+src("nhi969")]]}));
@@ -1241,7 +1247,7 @@ function renderLoc(){
   if(lt10) H.push(`<div class="alert a-warn">以下為指引中預期壽命 >10 年者的標準選項；預期壽命 <10 年請個別評估。${src("auaLoc","#15")}</div>`);
   // ---- Low ----
   if(k==="low"){
-    H.push(optCard({cls:crib?"no":"pref",title:crib?"Active surveillance":"Active surveillance（首選）",tags:(crib?tag("cribriform／IDC：不適合","t-high"):"")+src("auaLoc","#11 Strong/A")+src("eau","Strong")+src("nccnI"),
+    H.push(optCard({cls:crib?"no":"pref",title:crib?"Active surveillance":"Active surveillance（首選）",tags:(crib?tag("cribriform／IDC：不適合","t-high"):"")+src("auaLoc","#11 Strong/A")+src("eau","Strong")+src("nccn","PROS-3：strongly preferred"),
       lead:"PSA 至少每 6 個月、DRE 每年、MRI ± 切片每 2–3 年，直到預期壽命 <10 年。",
       rows:asRows()}));
     H.push(optCard({title:"RP 或 RT（不願 AS 或進展者）",tags:src("auaLoc","#9 Clinical Principle"),
@@ -1256,11 +1262,12 @@ function renderLoc(){
       lead:"三種選擇並列討論；AS 適合低腫瘤量者。"}));
     H.push(optCard({cls:(el.ok&&!crib)?"":"no",title:"Active surveillance（選擇性）",tags:src("eau","Weak：選擇性 GG2")+src("auaLoc","#13"),
       lead: g===2? "EAU：GG2 須低腫瘤量才考慮 AS。" : "GG1 但因 PSA 10–20 或 cT2b–c 屬中風險：AS 需個別評估。",
-      rows:[["EAU 條件", g===2? el.html : "—"],["追蹤","同低風險：PSA ≥q6m、DRE 每年、MRI ± 切片每 2–3 年；改變治療依切片進展。"+src("eau","Strong／Weak")]].concat(crib?[["排除","cribriform 或 intraductal：不適合 AS（EAU Strong）。"]]:[])}));
+      rows:[["EAU 條件", g===2? el.html : "—"],["追蹤","同低風險：PSA ≥q6m、DRE 每年、MRI ± 切片每 2–3 年；改變治療依切片進展。"+src("eau","Strong／Weak")],
+        ["NCCN","FIR 許多人可 AS（尤其 GG1 或非 cribriform GG2），屬「合理」選項；cribriform 或 intraductal 之 AS 安全性未確立。"+src("nccn","PROS-4、PROS-F")+upd("NCCN v1.2027：FIR 之 AS 由 preferred 改為 reasonable")]].concat(crib?[["排除","cribriform 或 intraductal：不適合 AS（EAU Strong）。"]]:[])}));
     H.push(optCard({title:"RT（不加 ADT 為原則）",tags:src("auaLoc","#35 Moderate/B")+src("nccnUpd")+upd("NCCN v2.2026：多數 FIR 接受 RT 不建議併用 ADT"),
       lead:"劑量提升之中度低分次 EBRT、超低分次 SBRT、LDR 或 HDR 近接治療擇一；不常規照骨盆淋巴結。",
       rows:[["各指引",`<ul class="tight">
-          <li><b>NCCN</b>：v2.2026 起多數 FIR 接受 RT 不建議併用 ADT（v1.2027 是否變動請確認）${src("nccnUpd")}</li>
+          <li><b>NCCN v1.2027</b>：多數 FIR 不建議併用 ADT；其他風險評估提示侵襲性較高時可考慮短期 ADT 4–6 個月 ${src("nccn","PROS-4、PROS-G")}</li>
           <li><b>EAU 2026</b>：中風險 IMRT/VMAT＋IGRT 合併短期 ADT 4–6 個月（Strong），未區分 FIR／UIR；FIR 另列 LDR 近接（Strong）、超低分次／SBRT（Weak），未併 ADT ${src("eau","6.3.2.f")}</li>
           <li><b>AUA/ASTRO 2026</b>：FIR 不常規加 ADT ${src("auaLoc","#35 Moderate/B")}</li>
           <li><b>補充 ESMO 2025</b>：不良中風險（如 GG3）RT 應合併 4–6 個月 ADT [I, A]；FIR 建議 RP 或 RT [I, B]，未另建議加 ADT ${src("esmoLoc")}</li>
@@ -1271,9 +1278,15 @@ function renderLoc(){
   }
   // ---- UIR ----
   if(k==="uir"){
-    H.push(optCard({cls:"pref",title:"RT ＋ 短期 ADT（4–6 個月）",tags:src("auaLoc","#36 Strong/A")+src("eau","Strong"),
-      lead:"劑量提升之中度低分次 EBRT，或 EBRT ＋ 近接治療 boost；ADT 可前導或同步開始。",
-      rows:[["依據",src("auaLoc","#38 Strong")+src("auaLoc","#42 Conditional/C")+src("auaLoc","#43")],["劑量","76–78 Gy，或 60 Gy／20 fx、70 Gy／28 fx。"+src("eau","Strong")]]}));
+    H.push(optCard({cls:"pref",title:"RT ＋ 短期 ADT（4–6 個月）",tags:tag("指引不一致","t-mid")+src("auaLoc","#36 Strong/A")+src("eau","Strong")+src("nccn","PROS-5：RT ± ADT"),
+      lead:"劑量提升之中度低分次 EBRT，或 EBRT ＋ 近接治療 boost；是否加 ADT 各指引強度不同，分列如下。",
+      rows:[["各指引",`<ul class="tight">
+          <li><b>NCCN v1.2027</b>：ST-ADT 4–6 個月「可考慮」（PROS-5 標示 RT ± ADT）；是否加 ADT 參考 GG1 陽性針數與 pattern 4 比例；若給，同步＋輔助優於前導＋同步 ${src("nccn","PROS-5、PROS-G、PROS-J")}</li>
+          <li><b>EAU 2026</b>：中風險 IMRT/VMAT＋IGRT 合併短期 ADT 4–6 個月（Strong）${src("eau","6.3.2.f")}</li>
+          <li><b>AUA/ASTRO 2026</b>：UIR 接受 RT 應合併短期 ADT ${src("auaLoc","#36 Strong/A")}</li>
+          <li><b>補充 ESMO 2025</b>：不良中風險（如 GG3）RT 應合併 4–6 個月 ADT [I, A] ${src("esmoLoc")}</li>
+          <li><b>補充 TUA</b>：未取得現行版，<span class="cau">請確認</span></li></ul>`],
+        ["依據",src("auaLoc","#38 Strong")+src("auaLoc","#42 Conditional/C")+src("auaLoc","#43")],["劑量","76–78 Gy，或 60 Gy／20 fx、70 Gy／28 fx。"+src("eau","Strong")]]}));
     H.push(optCard({cls:"pref",title:"RP ＋ extended PLND（依 nomogram）",tags:src("auaLoc","#15 Strong/A")+src("eau","Strong"),
       rows:[["PLND","nomogram 選擇；若做則 extended。"+src("auaLoc","#22–23")],["神經保留","依側別包膜外風險。"+src("eau","Strong")]]}));
     H.push(optCard({cls:"no",title:"Active surveillance",rows:[["說明",(g===3?"GG3 不適合 AS（EAU）。":"UIR 一般不建議 AS。")+(crib?"cribriform／intraductal 亦排除 AS（EAU Strong）。":"")]]}));
@@ -1283,11 +1296,17 @@ function renderLoc(){
     const f=abiCount(); const abiYes = k==="n1" || f.length>=2;
     const loc = S.ct && tIdx(S.ct)>=6;
     H.push(optCard({cls:"pref",title:k==="n1"?"RT（攝護腺＋骨盆）＋ 長期 ADT ＋ abiraterone 2 年":"RT ＋ 長期 ADT（18–36 個月）"+(abiYes?" ＋ abiraterone 2 年":""),
-      tags:(k==="n1"?src("eau","Strong（cN1）")+src("auaLoc","#44 Strong/B"):src("auaLoc","#41 Strong/A")+src("eau","Strong：2–3 年"))+(abiYes?upd("AUA/ASTRO 2026 新增 #44：高風險（≥2 項）或 cN1 接受 RT 時加 abiraterone 24 個月")+src("auaLoc","#44 Strong/B"):""),
+      tags:(k==="high"&&abiYes?tag("指引不一致","t-mid"):"")+(k==="n1"?src("eau","Strong（cN1）")+src("auaLoc","#44 Strong/B"):src("auaLoc","#41 Strong/A")+src("eau","Strong：2–3 年"))+(abiYes?upd("AUA/ASTRO 2026 新增 #44：高風險（≥2 項）或 cN1 接受 RT 時加 abiraterone 24 個月")+src("auaLoc","#44 Strong/B"):""),
       lead: abiYes? "abiraterone 1,000 mg QD ＋ prednisone 5 mg QD，與 ADT、RT 同時使用 24 個月。" : "EBRT（中度低分次可）或 EBRT ＋ 近接 boost；可加骨盆淋巴結照射。",
       rows:[["abiraterone 條件",`符合 ${f.length}／3 項（PSA ≥40、GG4–5、cT3–4）${f.length?"："+f.join("、"):""}${k==="n1"?"；cN1 不論項數皆適用":""} — ${abiYes?'<span class="ok">適用</span>':'<span class="muted">未達 ≥2 項</span>'}${src("STAMPEDEabiM0")}`],
         ["骨盆淋巴結",k==="n1"?"照射攝護腺＋骨盆（EAU Strong）。":"可照骨盆淋巴結（IMRT 45–52 Gy）。"+src("auaLoc","#39 Conditional/B")+src("auaLoc","#40")],
-        ["ADT 長度",`AUA 18–36 個月 ${src("auaLoc","#41")}；EAU 2–3 年（局部晚期至少 2 年）${src("eau","Strong")}`],
+        ["ADT 長度",`AUA 18–36 個月 ${src("auaLoc","#41")}；EAU 2–3 年（局部晚期至少 2 年）${src("eau","Strong")}；NCCN：高風險 12–36 個月（category 1）、極高風險 18–36 個月 ${src("nccn","PROS-6、PROS-J")}`],
+        ["abiraterone 各指引", k==="n1"? `cN1：AUA #44、EAU（Strong）與 NCCN（RT＋ADT 24 個月＋abiraterone，preferred ${src("nccn","PROS-7")}）一致。` : `<ul class="tight">
+          <li><b>NCCN v1.2027</b>：限極高風險中「最高端」之少數病人（如 T4、明顯 T3、PSA 極高）；以現代分期之效益不確定，應非常選擇性使用 ${src("nccn","PROS-6、PROS-G、PROS-J")}</li>
+          <li><b>EAU 2026</b>：cT3–4、Gleason ≥8、PSA ≥40 中 ≥2 項者 RT＋長期 ADT＋abiraterone 2 年（Strong）${src("eau","Strong")}</li>
+          <li><b>AUA/ASTRO 2026</b>：≥2 項高風險因子接受 RT 時加 abiraterone 24 個月 ${src("auaLoc","#44 Strong/B")}</li>
+          <li><b>補充 ESMO 2025</b>：極高風險／cN1 RT＋長期 ADT（約 3 年）＋abiraterone 2 年（EMA／FDA 未核准此用途）${src("esmoLoc")}</li>
+          <li><b>補充 TUA</b>：未取得現行版，<span class="cau">請確認</span></li></ul>`],
         ["健保", abiYes? nhiSelf("abiraterone 健保限 mCSPC／mCRPC，M0 高風險局限性未給付")+src("nhi949") : ""]]}));
     if(k==="high"){
       H.push(optCard({cls:loc?"":"pref",title:"RP ＋ extended PLND"+(loc?"（局部晚期：多模式治療之一部分）":""),
@@ -1318,6 +1337,7 @@ function eauAsGG2(psad){
 function asRows(){
   return [["EAU 細節",`有前置 MRI＋標靶切片者不需 confirmatory biopsy（Weak）；未做 MRI 者 confirmatory biopsy 前先 MRI（Strong）；PSADT <3 年 → MRI＋切片（Strong）；改變治療依切片進展而非 MRI／PSA／DRE（Weak）${src("eau","6.2.1.c")}${upd("EAU 2026 修訂 AS 建議（6.2.1.c）")}`],
     ["AUA","以連續 PSA 與重複切片追蹤；MRI 可輔助但不取代定期切片。"+src("auaLoc","#18–19 Expert Opinion")],
+    ["NCCN",`低風險多數病人強烈偏好 AS；切片與 DRE 不密於每 12 個月，多數每 2–5 年切片；低風險與 FIR 不建議 PSMA PET。GG ≥3、cribriform、intraductal 強烈建議治療；GG1→GG2 或 pattern 4 增加時重新評估；PSA、PSAD 或 MRI 變化不足以單獨停止 AS ${src("nccn","PROS-3、PROS-F")}${upd("NCCN v1.2027：低風險 AS 改為 strongly preferred；AS 切片間隔由每 1–3 年改為每 2–5 年")}`],
     ["排除","cribriform 或 intraductal histology（EAU Strong）。"]];
 }
 
@@ -1375,7 +1395,7 @@ function renderPost(){
     c: distOnly? `PET 僅見遠處病灶（傳統影像陰性）：<b>可不做攝護腺床 RT</b>；寡轉移可考慮 SBRT MDT，全身治療角色未定，需討論。`
       : `<b>早期救援 RT（攝護腺床 ≥64 Gy${S.b_pet==="pelvic"?"＋PET 陽性骨盆淋巴結":""}）${adt?"＋ ADT":""}</b>，越早（PSA 越低）效果越好，不必等 PSA 達某一切點。`,
     x: distOnly? "" : (adt? `ADT 理由：${hiF.join("、")}。ADT 至少 4–6 個月；高風險可延長至 18–24 個月。` : `無高風險特徵：可只做 RT。`)+` 不建議加 docetaxel${S.b_pn==="pN0"?"；pN0 不在試驗外加強雄性素抑制（如加 ARPI）":""}${S.b_pn==="pN1"?"；pN1 術後 RT 應合併 ADT":""}。`+(eauLow?`<br>EAU 低風險 BCR：亦可選擇只追蹤 PSA（Weak）。`:""),
-    why:`早期救援 RT（兩次 PSA 上升即可；不等 PSA 切點；≥64 Gy）${src("eau","Strong")}；PSA ≤0.5 時提供 ${src("auaStp","#2 Moderate/B")}；高風險可於 PSA <0.2 ${src("auaStp","#3 Conditional/C")}。ADT：PSA ≥0.7、GG4–5、PSADT ≤6 個月、持續可測 PSA、精囊侵犯 ${src("auaStp","#13 Moderate/B")}；無高風險特徵可只做 RT ${src("auaStp","#14")}；ADT ≥4–6 個月 ${src("auaStp","#17")}、高風險 18–24 個月 ${src("auaStp","#18")}；EAU：SRT 加荷爾蒙治療（Weak）${src("eau")}。PET 陽性骨盆淋巴結納入照野 ${src("auaStp","#10")}；擴大淋巴結照野可考慮 ${src("auaStp","#19 Conditional/B")}；不加 docetaxel ${src("auaStp","#21 Strong/B")}。PET 僅遠處 ${src("auaStp","#30")}；SBRT MDT ${src("auaStp","#29 Conditional/C")}。`}));
+    why:`早期救援 RT（兩次 PSA 上升即可；不等 PSA 切點；≥64 Gy）${src("eau","Strong")}；PSA ≤0.5 時提供 ${src("auaStp","#2 Moderate/B")}；高風險可於 PSA <0.2 ${src("auaStp","#3 Conditional/C")}。ADT：PSA ≥0.7、GG4–5、PSADT ≤6 個月、持續可測 PSA、精囊侵犯 ${src("auaStp","#13 Moderate/B")}；無高風險特徵可只做 RT ${src("auaStp","#14")}；ADT ≥4–6 個月 ${src("auaStp","#17")}、高風險 18–24 個月 ${src("auaStp","#18")}；EAU：SRT 加荷爾蒙治療（Weak）${src("eau")}；NCCN：ADT 的 OS 效益主要見於救援 RT 前 PSA >0.5 者，依 PSA、病人偏好與風險工具個別化，一般用短期，淋巴結侵犯可偏好長期；加 ARPI 未改善 MFS／OS ${src("nccn","PROS-G、PROS-J")}。PET 陽性骨盆淋巴結納入照野 ${src("auaStp","#10")}；擴大淋巴結照野可考慮 ${src("auaStp","#19 Conditional/B")}；不加 docetaxel ${src("auaStp","#21 Strong/B")}。PET 僅遠處 ${src("auaStp","#30")}；SBRT MDT ${src("auaStp","#29 Conditional/C")}。`}));
   return H.join("");
 }
 function petTxt(){
@@ -1392,7 +1412,7 @@ function exhaustCard(n,lbl){
     c: hi? `<b>高風險 BCR（PSADT ≤9 個月）：ADT ＋ enzalutamide</b>（EMBARK）；反應好時可間歇治療。`
       : `<b>低風險（PSADT >9 個月）：觀察，不常規開始 ADT</b>${dt>12?"（EAU：PSADT >12 個月不給 ADT）":""}。`,
     x: hi? `enzalutamide 160 mg QD ＋ leuprolide（EMBARK 條件：RP 後 PSA ≥1、RT 後高於 nadir ≥2，傳統影像 M0）。${nhiSelf("enzalutamide 健保 9.54 不含非轉移去勢敏感 BCR")}${src("nhi954")}` : `定期 PSA；高轉移風險者定期影像（PSMA PET 優先）。`,
-    why:`AUA：PSADT ≤9 個月為高風險，提供 ADT＋enzalutamide；PSADT >9 個月觀察、不常規 ADT；反應良好可間歇 ${src("auaApc","#8–9")}${upd("AUA/SUO 2026 以 PSADT ≤9 個月定義 BCR 高風險並建議 ADT＋enzalutamide；EAU 2026 新增 EMBARK-like 病人 enzalutamide＋ADT（Strong）")}；EAU：EMBARK-like（傳統影像 M0、PSADT ≤9）enzalutamide＋ADT（Strong）；PSADT >12 個月 M0 不給 ADT（Strong）${src("eau","6.4.7")}。EMBARK：enzalutamide＋leuprolide MFS HR 0.42、8 年 OS HR 0.60；enzalutamide 單用 MFS HR 0.63 ${src("EMBARK")}。PSMA PET 優先 ${src("auaApc","#7")}。`});
+    why:`AUA：PSADT ≤9 個月為高風險，提供 ADT＋enzalutamide；PSADT >9 個月觀察、不常規 ADT；反應良好可間歇 ${src("auaApc","#8–9")}${upd("AUA/SUO 2026 以 PSADT ≤9 個月定義 BCR 高風險並建議 ADT＋enzalutamide；EAU 2026 新增 EMBARK-like 病人 enzalutamide＋ADT（Strong）")}；EAU：EMBARK-like（傳統影像 M0、PSADT ≤9）enzalutamide＋ADT（Strong）；PSADT >12 個月 M0 不給 ADT（Strong）${src("eau","6.4.7")}；NCCN：高風險 BCR2 以 enzalutamide＋leuprolide（category 1）、ADT 或 enzalutamide 單用，RP 後另可 apalutamide＋ADT（2B）；低風險以觀察為 preferred ${src("nccn","PROS-12")}。EMBARK：enzalutamide＋leuprolide MFS HR 0.42、8 年 OS HR 0.60；enzalutamide 單用 MFS HR 0.63 ${src("EMBARK")}。PSMA PET 優先 ${src("auaApc","#7")}。`});
 }
 function renderPostRT(){
   if(S.b_pet==="conv") return `<div class="alert a-warn">傳統影像已見轉移 → 屬 mHSPC，請見「晚期治療」。</div>`;
@@ -1435,7 +1455,7 @@ function renderMon(){
   // B. 追蹤時程
   const B=[];
   if(adt||anyARPI) B.push(["PSA（± testosterone）",`每 3–6 個月 ${src("auaApc","#13、#20")}；EAU：M0 至少每 6 個月、M1 每 3–6 個月 ${src("eau","Strong")}`]);
-  if(adt) B.push(["Testosterone","與 PSA 一起定期測 "+src("eau","Strong")+"；判定 CRPC 前須確認 &lt;50 ng/dL "+src("auaApc","#25")]);
+  if(adt) B.push(["Testosterone","與 PSA 一起定期測 "+src("eau","Strong")+"；判定 CRPC 前須確認 &lt;50 ng/dL "+src("auaApc","#25")+"；NCCN：LHRH 首劑後 12 週測，之後 PSA 上升時測；RT 合併 ADT 者停藥後每 3–6 個月測至恢復 "+src("nccn","PROS-G、PROS-8")]);
   if(adt) B.push(["血脂、HbA1c／血糖","每年 "+src("eau","Strong")]);
   if(adt&&S.m_long) B.push(["DXA","依骨折風險定期追蹤；EAU 以每年骨質流失 >5% 為抗骨吸收治療指標之一 "+src("eau","Strong")]);
   if(S.m_abi) B.push(["Abiraterone：肝功能","ALT／AST／bilirubin：基線、每 2 週 × 3 個月，之後每月 "+src("zytigaPI")]);
@@ -1479,7 +1499,7 @@ function boneCard(nx){
   }else{
     const combo = st==="hspc" && (S.m_abi||S.m_enza||S.m_apa||S.m_daro);
     const hiFx = (t!==null&&t<=-2.5) || fx || rf || combo;
-    if(st==="hspc") W.push(`mHSPC：SRE 劑量 zoledronic acid 未延後 SRE（CALGB 90202）${src("calgb")}；依骨折風險給骨鬆劑量。EAU：接受合併治療者應提供骨保護以避免骨折（Strong）${src("eau")}。`);
+    if(st==="hspc") W.push(`mHSPC：SRE 劑量 zoledronic acid 未延後 SRE（CALGB 90202）${src("calgb")}；依骨折風險給骨鬆劑量（NCCN：依 FRAX 判定骨折風險升高時給抗骨吸收治療 ${src("nccn","PROS-14")}）。EAU：接受合併治療者應提供骨保護以避免骨折（Strong）${src("eau")}。`);
     if(hiFx){
       k="bx";
       c=`<b>${combo&&!((t!==null&&t<=-2.5)||fx||rf)?"mHSPC 合併治療（ADT＋ARPI）：EAU 建議骨保護以避免骨折":"骨折高風險"+(t!==null&&t<=-2.5?`（T-score ${fmt(t,1)}）`:"")+(fx?"（曾有脆弱性骨折）":"")+(rf&&!(t!==null&&t<=-2.5)&&!fx?"（其他骨折危險因子）":"")}：抗骨吸收治療</b>——denosumab 60 mg SC q6m、alendronate 70 mg 每週、或 zoledronic acid 5 mg 每年，擇一；並補充鈣與維生素 D。`;
@@ -1487,7 +1507,7 @@ function boneCard(nx){
     }else if(long||adtOn){
       k="stop";
       c= t===null? (long? `<b>長期 ADT：先做 DXA</b>；同時補充鈣與維生素 D、負重運動、戒菸。` : `<b>ADT：評估骨折風險</b>，預計長期 ADT 時做 DXA；補充鈣與維生素 D、負重運動、戒菸。`) : `目前未達藥物治療門檻（T-score ${fmt(t,1)}、無骨折）：<b>鈣、維生素 D、負重運動、戒菸</b>，定期追蹤 DXA。`;
-      W.push(`預防措施 ${src("auaApc","#38 Clinical Principle")}；長期 ADT 開始時 DXA（EAU Strong）${src("eau")}。`);
+      W.push(`預防措施 ${src("auaApc","#38 Clinical Principle")}；長期 ADT 開始時 DXA（EAU Strong）${src("eau")}；NCCN：以 FRAX 估骨折風險時，LHRH 類 ADT 視為次發性骨鬆（勾選 YES）${src("nccn","PROS-B")}。`);
     }else if(boneOP){
       k="info";
       c=`<b>使用骨鬆劑量骨保護藥物（${S.m_bone==="deno60"?"denosumab 60 mg SC q6m":"bisphosphonate"}）</b>：同時補充鈣與維生素 D、負重運動、戒菸；依骨折風險定期追蹤 DXA。`;
@@ -1631,7 +1651,7 @@ function buildPanels(){
   P.adv = `
   <div class="card"><div class="cb"><div class="seg" id="advSeg">
     <button type="button" data-adv="mhspc">mHSPC</button><button type="button" data-adv="nmcrpc">nmCRPC</button><button type="button" data-adv="mcrpc">mCRPC</button>
-  </div><div class="note">名詞：mHSPC＝mCSPC；NCCN 2026 改稱 APMS（androgen pathway modulator–sensitive）${upd("NCCN 2026 以「APMS／ARPI」取代「CSPC／other hormonal agents」用語")}${src("ascoNccn")}</div></div></div>
+  </div><div class="note">名詞：mHSPC＝mCSPC；NCCN v1.2027 用 mCSPC／nmCRPC／mCRPC，並註記 PCWG4 提議改稱 APMN/S（去勢敏感）與 APMR（去勢抗性）${src("nccn","PROS-13")}${upd("NCCN 2026 以「APMS／ARPI」取代「CSPC／other hormonal agents」用語")}${src("ascoNccn")}</div></div></div>
   <div id="adv-mhspc" class="advp">
     <div class="card"><h2>mHSPC 輸入</h2><div class="cb"><div class="grid">
       ${sel("h_time","轉移時序",[["","—"],["sync","同時性（de novo）"],["meta","異時性（曾局部治療）"]])}
@@ -1708,7 +1728,7 @@ function buildPanels(){
 function renderRefPanel(){
   const groups = [
     ["指引",["nccn","nccnI","nccnUpd","nccn326","ascoNccn","nccnEd","eau","eauRisk","eauP1","eauDx","auaLoc","auaApc","auaEd","auaEdAm","auaStp","eauP2"]],
-    ["補充來源（NCCN／EAU／AUA 衝突時；ESMO → ASCO → TUA）",["esmoAdv","esmoLoc","ascoCrpc","bjuiLu"]],
+    ["補充來源（NCCN／EAU／AUA 衝突時；ESMO → ASCO → TUA）",["esmoAdv","esmoLoc","ascoCrpc"]],
     ["其他文獻與台灣",["pilatz","mohwScr","eauBcr","twPsma"]],
     ["分級與分期",["damico","capra","ajcc","isup","catalona","pcwg3","mskDT"]],
     ["健保（115.09.22 版給付規定）",["nhi","nhi551","nhi554","nhi561","nhiZol","nhi949","nhi954","nhi990","nhi994","nhi985","nhi9137","nhi968","nhi93","nhi969"]],
@@ -1723,7 +1743,15 @@ function renderRefPanel(){
     <div class="note">指引強度標示：AUA＝Strong／Moderate／Conditional ＋ Evidence Grade A／B／C，或 Clinical Principle、Expert Opinion；EAU＝Strong／Weak；NCCN＝category 1、2A、2B。</div>
   </div></div>
   <div class="card"><h2>Changelog</h2><div class="cb small">
-    <p style="margin:0 0 6px"><b>v1.4（${CHECKED}）</b></p>
+    <p style="margin:0 0 6px"><b>v1.5（${CHECKED}）</b></p>
+    <ul class="tight"><li>依 NCCN v1.2027（2026-10-12）全文核對所有 NCCN 內容：
+      <ul class="tight"><li>風險分組：very high 改為 cT3–T4、GG4–5、PSA ≥40 中 ≥2 項；high 為任一高風險特徵且未達 very high。</li>
+      <li>局部治療：低風險 AS strongly preferred、AS 切片每 2–5 年；FIR 之 AS 為 reasonable；UIR 之 ST-ADT 為「可考慮」，改為逐條列出各指引；極高風險加 abiraterone 限最高端少數病人，與 AUA／EAU 不同，逐條列出；高風險 LT-ADT 12–36 個月。</li>
+      <li>mCSPC：依 NCCN 三種情境（異時性低轉移量、同時性低轉移量、高轉移量）標示三合一、雙藥、darolutamide、prostate EBRT、niraparib/abiraterone（僅 BRCA2）、capivasertib、177Lu-PSMA＋ARPI 之類別。</li>
+      <li>mCRPC：化療前 177Lu-PSMA 為 2A（適合延後 taxane 者）；ARPI 後 BRCA 以 olaparib、rucaparib 為 category 1；radium-223 合併骨保護、ARPI 前 radium-223＋enzalutamide（category 1）；pembrolizumab 2B。</li>
+      <li>BCR、救援 RT ADT、nmCRPC、監測（testosterone 時程、FRAX）加入 NCCN 說法。</li></ul></li>
+    <li>完整測試：全模組組合模擬、320／390／768／1280 px 深淺色、全部選項、跨頁同步、清除全部、主題切換；風險組合模擬新增 NCCN 分組定義比對。</li></ul>
+    <p style="margin:8px 0 6px"><b>v1.4（2026-10-18）</b></p>
     <ul class="tight"><li>更正 v1.3：nccn.org 確認現行版為 NCCN v1.2027；EAU 2026 線上版原文確認化療前 177Lu-PSMA-617 限不適合 docetaxel 者（Weak），恢復此標示；FIR 放療之 EAU 條文改依 2026 原文（中風險合併短期 ADT，Strong；未區分 FIR／UIR）。移除 EAU 2025 Pocket 出處。</li>
     <li>外觀改用臨床 App 樣式規範 v0.6：配色 token（淺色／深色）、IBM Plex／Noto Sans TC 字型堆疊（不載入外部字型）、頁首改淺底深字、選取分頁為 accent 底線、免責聲明 warn 底、出處標籤等寬框線、「更新」綠色；步驟卡取消彩色左色條（立即處置 danger 底、等待 warn 底）；數值輸入與結果用等寬字。排版與臨床內容未變（快照比對除 changelog 外相同）。</li></ul>
     <p style="margin:8px 0 6px"><b>v1.3（2026-10-18）</b></p>
@@ -1837,13 +1865,13 @@ function renderRisk(){
   const mrT3 = (S.mr_epe==="y"||S.mr_svi==="y") && S.ct && tIdx(S.ct)<tIdx("T3a");
   if(mrT3) h+=`<div class="cb"><div class="alert a-warn">MRI 疑 ${S.mr_svi==="y"?"SVI（≈T3b）":"EPE（≈T3a）"}，但 DRE 為 c${S.ct}：上表分組與 AJCC 依 DRE；實際風險可能被低估，治療計畫（神經保留、RT 範圍、ADT 時長）與分期影像請納入 MRI 所見。${src("auaLoc","#5 Conditional/B")}${src("ajcc")}</div></div>`;
   h+=`<details><summary>分組定義對照</summary><div class="cb small tscroll"><table class="t">
-   <tr><th></th><th>NCCN 2026</th><th>EAU 2026</th><th>AUA/ASTRO 2026</th></tr>
+   <tr><th></th><th>NCCN v1.2027</th><th>EAU 2026</th><th>AUA/ASTRO 2026</th></tr>
    <tr><td>Low</td><td>cT1–T2a 且 GG1 且 PSA <10</td><td>GG1 且 PSA <10 且 cT1–2</td><td>PSA <10 且 GG1 且 cT1–T2a</td></tr>
    <tr><td>FIR</td><td>1 項 IRF 且 GG1–2 且陽性針 <50%</td><td>GG2＋PSA <10；或 GG1＋PSA 10–20</td><td>GG1＋(PSA 10–<20 或 cT2b–c)＋<50%；或 GG2＋PSA <10＋cT1–2a＋<50%</td></tr>
    <tr><td>UIR</td><td>2–3 項 IRF、或 GG3、或陽性針 ≥50%</td><td>GG2＋PSA 10–20；或 GG3</td><td>GG1＋PSA 10–<20＋cT2b–c；GG2＋(PSA 10–<20／cT2b–c／≥50%)；GG3＋PSA <20</td></tr>
-   <tr><td>High</td><td>恰 1 項：cT3a、GG4–5、PSA >20</td><td>GG4–5 或 PSA >20</td><td>PSA ≥20 或 GG4–5 或 cT3</td></tr>
-   <tr><td>Very high／局部晚期</td><td>cT3b–T4、primary pattern 5、≥2 項高風險特徵、>4 針 GG4–5</td><td>Locally advanced：cT3–4 或 cN+</td><td>—（cN1 見 Statement 44）</td></tr>
-   </table><div class="note">IRF（NCCN）：cT2b–c、GG2–3、PSA 10–20。</div></div></details>`;
+   <tr><td>High</td><td>≥1 項：cT3–T4、GG4–5、PSA >20（未達 VHR）</td><td>GG4–5 或 PSA >20</td><td>PSA ≥20 或 GG4–5 或 cT3</td></tr>
+   <tr><td>Very high／局部晚期</td><td>≥2 項：cT3–T4、GG4–5、PSA ≥40</td><td>Locally advanced：cT3–4 或 cN+</td><td>—（cN1 見 Statement 44）</td></tr>
+   </table><div class="note">IRF（NCCN）：cT2b–c、GG2–3、PSA 10–20。NCCN v1.2027 PROS-2 之 VHR 為三項中 ≥2 項（舊版之 cT3b、primary pattern 5、>4 針 GG4–5 已不列入）；同組內預後仍有差異，可依 Grade Group、cribriform、陽性針數或其他風險工具採相鄰組別之建議。${src("nccn","PROS-2")}</div></div></details>`;
   document.getElementById("r-risk").innerHTML=h;
 
   // AJCC

@@ -55,7 +55,7 @@ if(MODS.includes("risk")){
   const AJ=["I","IIA","IIB","IIC","IIIA","IIIB","IIIC"];
   const SYS={NCCN:()=>RANK(A.riskNCCN().g),EAU:()=>RANK(A.riskEAU().g),AUA:()=>RANK(A.riskAUA().g),DAmico:()=>RANK(A.riskDamico().g),
     CAPRA:()=>{const c=A.capra(); return c.score;}, AJCC:()=>{const a=A.ajcc(); return a.st?AJ.indexOf(a.st):null;}};
-  const PSA=[0.5,4,9.9,10,15,19.9,20,20.1,30,100], CT=["T1c","T2a","T2b","T2c","T3a","T3b","T4"];
+  const PSA=[0.5,4,9.9,10,15,19.9,20,20.1,30,39.9,40,100], CT=["T1c","T2a","T2b","T2c","T3a","T3b","T4"];
   const GL=[[3,3],[3,4],[4,3],[4,4],[3,5],[5,3],[4,5],[5,4],[5,5]]; const PT=[[1,12],[5,12],[6,12],[10,12]];
   const gg=(p,s)=>{const t=p+s; return t<=6?1:t===7?(p===3?2:3):t===8?4:5;};
   const val=o=>{ set(o); const v={}; for(const [k,f] of Object.entries(SYS)) v[k]=f(); return v; };
@@ -73,7 +73,13 @@ if(MODS.includes("risk")){
     const ic=CT.indexOf(ct); if(ic<CT.length-1) mono("cT",v,val({...o,ct:CT[ic+1]}),o);
     const it=PT.findIndex(x=>x[0]===pos); if(it<PT.length-1) mono("陽性針比例",v,val({...o,pos:PT[it+1][0],tot:PT[it+1][1]}),o);
     // 單調：GG（CAPRA 依 primary／secondary pattern 計分、NCCN 的 primary pattern 5 屬 very high，兩者依定義不單調，排除）
-    for(const [q1,q2] of GL) if(gg(q1,q2)>gg(p1,p2)){ const w=val({...o,p1:q1,p2:q2}); mono("GG",v,w,o,(p1===5||q1===5)?["CAPRA","NCCN"]:["CAPRA"]); }
+    for(const [q1,q2] of GL) if(gg(q1,q2)>gg(p1,p2)){ const w=val({...o,p1:q1,p2:q2}); mono("GG",v,w,o,["CAPRA"]); }
+    // NCCN v1.2027 PROS-2：VHR＝cT3–T4、GG4–5、PSA ≥40 中 ≥2 項；High＝cT3–T4、GG4–5、PSA >20 任一且非 VHR
+    { const G=gg(p1,p2), t34=CT.indexOf(ct)>=4, nv=(t34?1:0)+(G>=4?1:0)+(psa>=40?1:0), hi=t34||G>=4||psa>20;
+      set(o); const ng=(A.riskNCCN().g||"").replace(/（暫定）/,"");
+      const exp = nv>=2? "Very high" : hi? "High" : null;
+      if(exp && ng!==exp) fail("risk",o,`NCCN 應為 ${exp}，實得 ${ng}`);
+      if(!exp && /^(High|Very high)/.test(ng)) fail("risk",o,`NCCN 不應為 ${ng}`); }
   }
   // N1／M1：局限性系統不可給 Low／Intermediate
   for(const [cn,cm] of [["N1","M0"],["N0","M1a"],["N1","M1c"]]){ set({psa:4,ct:"T1c",p1:3,p2:3,pos:1,tot:12,age:60,cn,cm}); n++;
