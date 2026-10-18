@@ -114,6 +114,8 @@ if(MODS.includes("mcrpc")) for(let i=0;i<N;i++){
 if(MODS.includes("mon")) for(let i=0;i<Math.min(N,1500);i++){
   const o=randState(["mon","drug"]); const R=tryRun("mon",o); if(!R) continue; const t=txt(R["r-mon"]);
   if(!t) fail("mon",o,"監測頁空白（無內容也無提示）");
+  { const L=[...R["r-mon"].matchAll(/class="st-n">([^<]*)</g)].map(m=>m[1]).join(""); if(L!=="ABCDEFGH".slice(0,L.length)) fail("mon",o,"步驟字母不連續："+L); }
+  if(o.m_adt&&o.m_adt!=="none"&&!o.m_long&&/長期 ADT：先做 DXA/.test(t)) fail("mon",o,"未勾長期 ADT 卻顯示「長期 ADT：先做 DXA」");
   if((!o.m_adt||o.m_adt==="none") && !o.m_long && /長期 ADT：先做 DXA/.test(t)) fail("mon",o,"未用 ADT 卻顯示「長期 ADT：先做 DXA」");
 }
 
