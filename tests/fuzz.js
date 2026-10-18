@@ -96,6 +96,7 @@ if(MODS.includes("nmcrpc")) for(let i=0;i<N;i++){
   if(arpi&&obs) fail("nmcrpc",o,"「ADT＋ARPI」與「觀察」同時為首選");
   if(o.n_castr==="n" && arpi) fail("nmcrpc",o,"睪固酮未達去勢（非 CRPC）仍以 ADT＋ARPI 為首選");
   if(o.n_ci==="n" && arpi) fail("nmcrpc",o,"傳統影像已見轉移（屬 mCRPC）仍以 nmCRPC 的 ADT＋ARPI 為首選");
+  if((o.n_castr==="n"||o.n_ci==="n") && cards(h).length) fail("nmcrpc",o,"前提不符（未去勢或已見轉移）仍顯示治療卡");
   const dt=A.S.psadt; if(dt!=null){ if(dt<=10&&obs) fail("nmcrpc",o,"PSADT ≤10 卻建議觀察"); if(dt>10&&arpi) fail("nmcrpc",o,"PSADT >10 卻建議 ARPI"); }
 }
 
@@ -113,6 +114,7 @@ if(MODS.includes("mcrpc")) for(let i=0;i<N;i++){
 if(MODS.includes("mon")) for(let i=0;i<Math.min(N,1500);i++){
   const o=randState(["mon","drug"]); const R=tryRun("mon",o); if(!R) continue; const t=txt(R["r-mon"]);
   if(!t) fail("mon",o,"監測頁空白（無內容也無提示）");
+  if((!o.m_adt||o.m_adt==="none") && !o.m_long && /長期 ADT：先做 DXA/.test(t)) fail("mon",o,"未用 ADT 卻顯示「長期 ADT：先做 DXA」");
 }
 
 // 輸出

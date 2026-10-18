@@ -24,14 +24,14 @@
     --bg:#0f141a; --panel:#171e26; --panel2:#1c242e; --ink:#e6ebf1; --ink2:#b3bfcc; --ink3:#8a98a8;
     --line:#2a3542; --line2:#222c37; --pri:#7fb2ec; --pri2:#0f2b4a; --priSoft:#1b2e45;
     --ok:#5cc792; --okSoft:#163326; --warn:#f0b35b; --warnSoft:#3a2a12; --bad:#ff8a80; --badSoft:#3d1a18;
-    --upd:#4fd1bf; --updSoft:#123530; --gray:#a3b0be; --graySoft:#232d38; --shadow:none;
+    --upd:#4fd1bf; --updSoft:#123530; --gray:#a3b0be; --graySoft:#232d38; --shadow:none; --onPri:#0f2b4a;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0f141a; --panel:#171e26; --panel2:#1c242e; --ink:#e6ebf1; --ink2:#b3bfcc; --ink3:#8a98a8;
   --line:#2a3542; --line2:#222c37; --pri:#7fb2ec; --pri2:#0f2b4a; --priSoft:#1b2e45;
   --ok:#5cc792; --okSoft:#163326; --warn:#f0b35b; --warnSoft:#3a2a12; --bad:#ff8a80; --badSoft:#3d1a18;
-  --upd:#4fd1bf; --updSoft:#123530; --gray:#a3b0be; --graySoft:#232d38; --shadow:none;
+  --upd:#4fd1bf; --updSoft:#123530; --gray:#a3b0be; --graySoft:#232d38; --shadow:none; --onPri:#0f2b4a;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -39,13 +39,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font
 button,input,select{font:inherit;color:inherit}
 a{color:var(--pri)}
 .wrap{max-width:920px;margin:0 auto;padding:0 14px}
-header.top{background:var(--pri2);color:#fff;position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top)}
+header.top{background:var(--pri2);color:var(--onHead);position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top)}
 header.top .wrap{display:flex;align-items:center;gap:10px;min-height:54px}
 .brand{flex:1;min-width:0}
 .brand h1{margin:0;font-size:17px;font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand small{display:block;font-size:11.5px;opacity:.75;letter-spacing:.03em}
-.ver{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:2px 7px}
-.themeBtn{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer}
+.ver{font-family:var(--mono);font-size:12px;background:var(--onHeadA1);border:1px solid var(--onHeadA2);border-radius:6px;padding:2px 7px}
+.themeBtn{background:transparent;border:1px solid var(--onHeadA3);color:var(--onHead);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer}
 nav.tabs{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:calc(54px + env(safe-area-inset-top));z-index:19}
 nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 nav.tabs .wrap::-webkit-scrollbar{display:none}
@@ -75,7 +75,7 @@ main{padding:12px 0 40px}
 .chk input{margin-top:4px;width:16px;height:16px;flex:0 0 auto}
 .seg{display:flex;flex-wrap:wrap;gap:6px}
 .seg button{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;color:var(--ink2)}
-.seg button.on{background:var(--pri);border-color:var(--pri);color:#fff;font-weight:600}
+.seg button.on{background:var(--pri);border-color:var(--pri);color:var(--onPri);font-weight:600}
 :root[data-theme="dark"] .seg button.on{color:#0f141a}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button.on{color:#0f141a}}
 .res{background:var(--panel2);border-top:1px solid var(--line2);padding:12px 14px}
@@ -124,7 +124,7 @@ details .cb{padding-top:2px}
 .a-info{background:var(--priSoft);color:var(--ink)}
 .a-bad{background:var(--badSoft);color:var(--ink)}
 .btn{border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:6px 12px;cursor:pointer;font-size:13.5px}
-.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:var(--onPri)}
 .psaRow{display:grid;grid-template-columns:1fr 1fr 34px;gap:8px;margin-bottom:6px;align-items:center}
 .psaRow input{border:1px solid var(--line);background:var(--panel2);border-radius:7px;padding:7px 8px;min-height:38px;width:100%}
 .x{border:1px solid var(--line);background:var(--panel2);border-radius:7px;height:38px;cursor:pointer;color:var(--ink3)}
@@ -132,7 +132,7 @@ details .cb{padding-top:2px}
 .drug h3 .brand2{font-weight:400;color:var(--ink3);font-size:13px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink2)}
 footer{color:var(--ink3);font-size:12px;padding:10px 0 calc(28px + env(safe-area-inset-bottom));border-top:1px solid var(--line);margin-top:10px}
-#ov{position:fixed;inset:0;background:rgba(10,15,22,.45);display:none;z-index:50;align-items:flex-end;justify-content:center}
+#ov{position:fixed;inset:0;background:var(--scrim);display:none;z-index:50;align-items:flex-end;justify-content:center}
 #ov.on{display:flex}
 #ovBox{background:var(--panel);color:var(--ink);width:100%;max-width:640px;border-radius:14px 14px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));max-height:70vh;overflow:auto;box-shadow:0 -6px 24px rgba(0,0,0,.2)}
 #ovBox h4{margin:0 0 6px;font-size:15px}
@@ -180,8 +180,8 @@ footer{color:var(--ink3);font-size:12px;padding:10px 0 calc(28px + env(safe-area
 <script>
 "use strict";
 /* ================= 基本設定 ================= */
-const APP_VERSION = "1.0";
-const CHECKED = "2026-10-17";
+const APP_VERSION = "1.1";
+const CHECKED = "2026-10-18";
 
 /* ================= 出處 ================= */
 const REF = {
@@ -727,7 +727,8 @@ function renderNMCRPC(){
   const H=[]; const dt=num(S.psadt); const ecog=S.n_ecog===""?null:+S.n_ecog;
   H.push(defBoxCRPC());
   if(S.n_castr==="n"){ H.push(`<div class="alert a-bad">睪固酮未達去勢濃度（<50 ng/dL）即不能診斷 CRPC：先確認 ADT 遵從性與劑型，必要時改用 GnRH antagonist 或睪丸切除。${src("auaApc","Table 3")}</div>`); }
-  if(S.n_ci==="n"){ H.push(`<div class="alert a-warn">傳統影像（CT／MRI／骨掃描）已見轉移 → 屬 mCRPC，請切換至 mCRPC。</div>`); }
+  if(S.n_ci==="n"){ H.push(`<div class="alert a-warn">傳統影像（CT／MRI／骨掃描）已見轉移 → 屬 mCRPC，nmCRPC 的治療與健保條件不適用，請切換至 mCRPC。</div>`); }
+  if(S.n_castr==="n"||S.n_ci==="n"){ H.push(`<div class="alert a-info">${S.n_castr==="n"?"確認睪固酮達去勢濃度後":"切換至 mCRPC 後"}再顯示治療選項。</div>`); return H.join(""); }
   if(dt===null){ H.push(`<div class="alert a-info">請輸入 PSADT（可用「計算器」的 PSA 動力學自動帶入）。</div>`); return H.join(""); }
   if(dt<=10){
     const nhiDT = S.psadtNhi===true? nhiOK("PSADT 計算符合健保 4 項條件") : S.psadtNhi===false? nhiNG("PSADT 計算未符合健保條件（見計算器檢核）") : nhiQ("PSADT 需依健保規定之線性迴歸條件計算");
@@ -783,7 +784,10 @@ function renderMCRPC(){
       lead:"abiraterone 1,000 mg QD ＋ prednisone 5 mg BID（同時使用），或 enzalutamide 160 mg QD。",
       rows:[["證據",`COU-AA-302 OS HR 0.81 ${src("COU302")}；PREVAIL OS HR 0.71 ${src("PREVAIL")}`],
         ["健保",nhi+src("nhi949")+src("nhi954")+'<br><span class="muted small">化療前用過者，化療失敗後不得再申請同一藥；新型荷爾蒙藥品終生限一種。</span>']]}));
-    if(anyHRR){
+    if(anyHRR && S.c_parp){
+      cards.push(optCard({cls:"no",title:"HRR／BRCA：PARPi ＋ ARPI 一線合併（已用過 PARPi）",tags:tag("不重複推薦","t-gray"),
+        rows:[["理由",`已用過 PARPi；一線 PARPi＋ARPI 試驗排除曾用 PARPi 者（如 TALAPRO-2）${src("TALAPRO2")}，PARPi 惡化後再用 PARPi 無證據。ARPI 單藥照上方選項。`]]}));
+    }else if(anyHRR){
       cards.push(optCard({cls:brca?"pref":"",title:"HRR／BRCA：PARPi ＋ ARPI 一線合併",tags:src("eau","Strong（BRCA／HRR）")+src("auaApc","#35 Conditional/C")+src("nccn"),
         lead:"以下三種組合擇一（兩藥同時使用）：",
         rows:[["選項",`<ul class="tight">
@@ -1391,6 +1395,7 @@ function renderMon(){
   const H=[]; const adt=S.m_adt && S.m_adt!=="none"; const t=num(S.m_t);
   const anyARPI = S.m_abi||S.m_enza||S.m_apa||S.m_daro;
   if(!adt && !anyARPI && !S.m_parp && !S.m_bone){ return `<div class="alert a-info">勾選目前或即將使用的治療後顯示監測項目。</div>`; }
+  if(!adt && !anyARPI && !S.m_parp) H.push(`<div class="alert a-info">只選了骨保護藥物：下方只顯示骨骼相關監測；病人若正接受 ADT 或 ARPI，請一併選擇。</div>`);
   // A. 基線
   if(adt){
     H.push(stepCard({n:"A",k:"go",t:"ADT 基線（開始時）",
@@ -1432,6 +1437,7 @@ function renderMon(){
 }
 function boneCard(){
   const t=num(S.m_t), fx=S.m_fx, rf=S.m_rf, st=S.m_bmets, long=S.m_long;
+  const adtOn=S.m_adt && S.m_adt!=="none", boneOP=S.m_bone==="deno60"||S.m_bone==="bisph";
   const L=[], W=[];
   let k="info", c="";
   if(st==="crpc"){
@@ -1449,14 +1455,18 @@ function boneCard(){
       k="bx";
       c=`<b>${combo&&!((t!==null&&t<=-2.5)||fx||rf)?"mHSPC 合併治療（ADT＋ARPI）：EAU 建議骨保護以避免骨折":"骨折高風險"+(t!==null&&t<=-2.5?`（T-score ${fmt(t,1)}）`:"")+(fx?"（曾有脆弱性骨折）":"")+(rf&&!(t!==null&&t<=-2.5)&&!fx?"（其他骨折危險因子）":"")}：抗骨吸收治療</b>——denosumab 60 mg SC q6m、alendronate 70 mg 每週、或 zoledronic acid 5 mg 每年，擇一；並補充鈣與維生素 D。`;
       W.push(`長期 ADT 且 T-score <−2.5、或有額外臨床骨折危險因子、或每年骨質流失 >5%：給予抗骨吸收藥物（EAU Strong）${src("eau")}；骨折高風險者 bisphosphonate 或 denosumab ${src("auaApc","#39 Clinical Principle")}。HALT：denosumab 60 mg q6m 降低 ADT 病人新脊椎骨折 ${src("HALT")}。`);
-    }else if(long||S.m_adt){
+    }else if(long||adtOn){
       k="stop";
       c= t===null? `<b>長期 ADT：先做 DXA</b>；同時補充鈣與維生素 D、負重運動、戒菸。` : `目前未達藥物治療門檻（T-score ${fmt(t,1)}、無骨折）：<b>鈣、維生素 D、負重運動、戒菸</b>，定期追蹤 DXA。`;
       W.push(`預防措施 ${src("auaApc","#38 Clinical Principle")}；長期 ADT 開始時 DXA（EAU Strong）${src("eau")}。`);
+    }else if(boneOP){
+      k="info";
+      c=`<b>使用骨鬆劑量骨保護藥物（${S.m_bone==="deno60"?"denosumab 60 mg SC q6m":"bisphosphonate"}）</b>：同時補充鈣與維生素 D、負重運動、戒菸；依骨折風險定期追蹤 DXA。`;
+      W.push(`預防措施 ${src("auaApc","#38 Clinical Principle")}；骨折高風險者 bisphosphonate 或 denosumab ${src("auaApc","#39 Clinical Principle")}。`);
     }else{
       return "";
     }
-    if(hiFx) L.push(`Prolia、alendronate、zoledronate（骨鬆劑量）：${fx&&t!==null&&t<=-2.5? nhiQ("5.6.1：男性可用；需 T ≤−2.5 並有脊椎或髖骨骨折（部分品項含遠端橈骨、近端肱骨），或 −2.5～−1.0 並有 ≥2 處上述骨折") : nhiSelf("5.6.1 需骨鬆合併脊椎／髖骨骨折；僅 ADT 骨質流失、無骨折者不符")}${src("nhi561")}`);
+    if(hiFx||boneOP) L.push(`Prolia、alendronate、zoledronate（骨鬆劑量）：${fx&&t!==null&&t<=-2.5? nhiQ("5.6.1：男性可用；需 T ≤−2.5 並有脊椎或髖骨骨折（部分品項含遠端橈骨、近端肱骨），或 −2.5～−1.0 並有 ≥2 處上述骨折") : nhiSelf("5.6.1 需骨鬆合併脊椎／髖骨骨折；僅 ADT 骨質流失、無骨折者不符")}${src("nhi561")}`);
   }
   return stepCard({n:"D",k,t:"骨骼健康",c,x:L.join("<br>"),why:W.join("<br>")+`<br>開始骨保護前牙科評估；注意 ONJ、低血鈣；denosumab 停藥後反彈性骨折風險。`});
 }
@@ -1683,7 +1693,12 @@ function renderRefPanel(){
     <div class="note">指引強度標示：AUA＝Strong／Moderate／Conditional ＋ Evidence Grade A／B／C，或 Clinical Principle、Expert Opinion；EAU＝Strong／Weak；NCCN＝category 1、2A、2B。</div>
   </div></div>
   <div class="card"><h2>Changelog</h2><div class="cb small">
-    <p style="margin:0 0 6px"><b>v1.0（${CHECKED}）</b></p>
+    <p style="margin:0 0 6px"><b>v1.1（${CHECKED}）</b></p>
+    <ul class="tight"><li>nmCRPC：睪固酮未達去勢或傳統影像已見轉移時，只顯示警示，不再列出「持續 ADT ＋ ARPI」等治療卡。</li>
+    <li>mCRPC：已用過 PARPi 時，「PARPi ＋ ARPI 一線合併」改列為不重複推薦。</li>
+    <li>監測：只選骨鬆劑量骨保護藥物（無 ADT／ARPI）時顯示骨骼監測與提示，不再整頁空白；ADT 選「無」時不再顯示「長期 ADT：先做 DXA」。</li>
+    <li>外觀：頁首、按鈕、遮罩的寫死顏色改用 token；深色模式下選取按鈕文字改深色以提高對比。測試：靜態檢查、快照、nmCRPC／mCRPC／監測組合模擬、瀏覽器快速模式＋晚期治療與監測頁完整操作。</li></ul>
+    <p style="margin:8px 0 6px"><b>v1.0（2026-10-17）</b></p>
     <ul class="tight"><li>全面測試：決策引擎約 20 萬組輸入組合模擬、320–1280 px 與深淺色瀏覽器實測、所有下拉選項、出處與縮寫彈窗、跨頁同步、清除全部。</li>
     <li>修正：已做救援 RT 且 PSA 測不到時不再建議救援 RT；傳統影像已見轉移時術後・復發頁直接導向晚期治療；RT 後 BCR 的 PSMA PET 說明改為 RT 情境；mCRPC 不適合化療時 docetaxel、cabazitaxel 標為不適用；數值欄位不接受負值（T-score 除外）。</li></ul>
     <p style="margin:8px 0 6px"><b>v0.4</b></p>
