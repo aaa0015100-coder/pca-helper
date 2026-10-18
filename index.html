@@ -173,7 +173,7 @@ footer{color:var(--ink3);font-size:12px;padding:10px 0 calc(28px + env(safe-area
   <div id="panels" style="margin-top:12px"></div>
   <footer>
     <div>v<span id="ver2"></span>　最後查證日期：<span id="checked"></span></div>
-    <div>指引版本：NCCN（現行版本號請確認；最近可確認公開版 Insights v5.2026）、NCCN Early Detection v2.2026 ／ EAU 2026 ／ AUA/ASTRO 2026、AUA/ASTRO/SUO 救援治療 2024、AUA/SUO 2026（晚期、早期偵測）／ 健保藥品給付規定 115.09.22 版。詳見「來源・版本」。</div>
+    <div>指引版本：NCCN v1.2027、NCCN Early Detection v2.2026 ／ EAU 2026 ／ AUA/ASTRO 2026、AUA/ASTRO/SUO 救援治療 2024、AUA/SUO 2026（晚期、早期偵測）／ 健保藥品給付規定 115.09.22 版。詳見「來源・版本」。</div>
   </footer>
 </div></main>
 <div id="ov" role="dialog" aria-modal="true"><div id="ovBox"></div></div>
@@ -181,23 +181,22 @@ footer{color:var(--ink3);font-size:12px;padding:10px 0 calc(28px + env(safe-area
 <script>
 "use strict";
 /* ================= 基本設定 ================= */
-const APP_VERSION = "1.3";
+const APP_VERSION = "1.4";
 const CHECKED = "2026-10-18";
 
 /* ================= 出處 ================= */
 const REF = {
-  nccn:{t:"NCCN（版本請確認）",f:"NCCN Clinical Practice Guidelines in Oncology: Prostate Cancer。2026-10-18 查證時 nccn.org 無法存取、公開來源亦查不到 v1.2027，現行版本號請至 nccn.org 確認；最近可確認之公開版本為 Insights v5.2026（JNCCN 2026;24(5)）與 v3.2026 全文（JNCCN 2025;23(11)）。NCCN 全文需登入，本工具之 NCCN 內容依公開資料整理：NCCN Guidelines Insights v5.2026（JNCCN 2026;24(5)）、Prostate Cancer v3.2026（JNCCN 2025;23(11)）、v1–2.2026 更新摘要與 2026 年會報導。使用前請至 nccn.org 核對。",u:"https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1459"},
+  nccn:{t:"NCCN v1.2027",f:"NCCN Clinical Practice Guidelines in Oncology: Prostate Cancer, Version 1.2027（2026-10-18 於 nccn.org 確認為現行版）。v1.2027 修訂內容無公開摘要；NCCN 全文需登入，本工具之 NCCN 內容依公開資料整理（與 v1.2027 的差異請確認）：NCCN Guidelines Insights v5.2026（JNCCN 2026;24(5)）、Prostate Cancer v3.2026（JNCCN 2025;23(11)）、v1–2.2026 更新摘要與 2026 年會報導。使用前請至 nccn.org 核對。",u:"https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1459"},
   nccnI:{t:"NCCN Insights v5.2026",f:"Spratt DE, Srinivas S, Adra N, et al. NCCN Guidelines® Insights: Prostate Cancer, Version 5.2026. J Natl Compr Canc Netw 2026;24(5). doi:10.6004/jnccn.2026.0023。重點：刪除 very-low-risk 組、更新 active surveillance 原則、新診斷者不建議 focal therapy 作為初始治療。",u:"https://jnccn.org/view/journals/jnccn/24/5/article-p140.xml"},
   nccnUpd:{t:"NCCN v1–2.2026 更新摘要",f:"NCCN Prostate Cancer v1.2026：刪除 very-low-risk group。v2.2026（2025-09-15）：多數 FIR 接受 RT 不建議併用 ADT；新增心血管風險評估頁；新增 FDA 核可 PET tracer 表。"},
   nccn326:{t:"NCCN v3.2026（JNCCN）",f:"Prostate Cancer, Version 3.2026, NCCN Clinical Practice Guidelines in Oncology. J Natl Compr Canc Netw 2025;23(11)。mCSPC 依同時性／異時性與轉移負荷決定強化程度及 prostate-directed／metastasis-directed therapy。"},
   ascoNccn:{t:"NCCN 2026 年會（ASCO Post）",f:"2026 NCCN Clinical Practice Guidelines in Oncology: Key Updates Across Tumor Types. The ASCO Post, 2026-05-25。異時性寡轉移 APMS 疾病納入 MDT；「other hormonal agents」統一改稱 ARPI。",u:"https://ascopost.com/issues/may-25-2026/2026-nccn-clinical-practice-guidelines-in-oncology-key-updates-across-tumor-types/"},
-  eau:{t:"EAU 2026",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer, 2026 edition（limited update, March 2026）. Cornford P, Tilki D, et al. EAU Guidelines Office, Arnhem.",u:"https://uroweb.org/guidelines/prostate-cancer"},
+  eau:{t:"EAU 2026",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer, 2026 edition（limited update, March 2026）. Cornford P, Tilki D, et al. EAU Guidelines Office, Arnhem。2026-10-18 於 uroweb.org 線上版核對：6.7.14 177Lu-PSMA-617 用於 ARPI＋docetaxel 後、≥1 處 PSMA 高表現且無相關 PSMA 陰性轉移（Strong）；ARPI 後、PSMA 攝取高於肝臟、不適合 docetaxel 者（Weak）。6.3.2.f 中風險 IMRT/VMAT＋IGRT 合併短期 ADT 4–6 個月（Strong）；NCCN 有利中風險另列 LDR 近接（Strong）與超低分次／SBRT（Weak），未併 ADT。",u:"https://uroweb.org/guidelines/prostate-cancer/chapter/treatment"},
   eauRisk:{t:"EAU 2026 Table 4.3",f:"EAU 2026 Table 4.3 EAU risk groups：Low＝ISUP GG1 且 PSA <10 且 cT1–2；Favourable intermediate＝GG2 且 PSA <10（cT1–2），或 GG1 且 PSA 10–20；Unfavourable intermediate＝GG2 且 PSA 10–20，或 GG3（cT1–2）；High＝GG4–5 或 PSA >20；Locally advanced＝cT3–4 和/或 cN+（任何 PSA、GG）。cT 依 DRE；影像分期另行記錄。",u:"https://uroweb.org/guidelines/prostate-cancer/chapter/classification-and-staging-systems"},
   eauP1:{t:"EAU 2026 Part I（Eur Urol）",f:"EAU–EANM–ESTRO–ESUR–ISUP–SIOG Guidelines on Prostate Cancer—2026 Update. Part I: Screening, Diagnosis, and Local Treatment with Curative Intent. Eur Urol 2026。新五級 EAU 分組；PSMA PET 為建議分期檢查。",u:"https://www.sciencedirect.com/science/article/pii/S0302283826021147"},
   auaLoc:{t:"AUA/ASTRO 2026",f:"Eastham JA, Barocas DA, Chu CE, Morgans AK, Rodrigues G, et al. Clinically Localized Prostate Cancer: AUA/ASTRO Guideline (2022; amended 2026). J Urol 2026;216(1):2–11。Table 3 risk groups；Statement 6–8 分期影像；Statement 44 高風險 RT＋ADT＋abiraterone 24 個月。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/clinically-localized-prostate-cancer"},
   auaApc:{t:"AUA/SUO 2026",f:"Advanced Prostate Cancer: AUA/SUO Guideline (2023; amended 2026)。Part I（BCR、mHSPC）2026 年 5 月；Part II（mCRPC）2026 年 7 月。文獻檢索至 2025-08-26，共 40 條建議。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/advanced-prostate-cancer"},
-  eauP2:{t:"EAU 2026 Part II（Eur Urol）",f:"Tilki D, van den Bergh RCN, Briers E, et al. EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer. Part II: 2026 Update: Treatment of Relapsing and Metastatic Prostate Cancer. Eur Urol 2026;90(3)（線上 2026-07-15）. doi:10.1016/j.eururo.2026.04.014。本版未取得全文（摘要未列 177Lu-PSMA 個別建議），化療前 177Lu-PSMA 之 EAU 2026 確切文字與強度請確認。",u:"https://doi.org/10.1016/j.eururo.2026.04.014"},
-  eauPk25:{t:"EAU 2025 Pocket",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Pocket Guidelines on Prostate Cancer 2025（updated）。mCRPC：對 PSMA PET 高表現（攝取高於肝臟）、曾治療（pre-treated）之 mCRPC 提供 177Lu-PSMA-617（Strong），未區分是否用過 docetaxel。中風險 IMRT/VMAT＋IGRT 合併短期 ADT 4–6 個月（Strong）；未另列 favourable intermediate 可省略 ADT 之建議。",u:"https://d56bochluxqnz.cloudfront.net/documents/pocket-guidelines/EAU-EANM-ESTRO-ESUR-ISUP-SIOG-Pocket-on-Prostate-Cancer-2025_updated.pdf"},
+  eauP2:{t:"EAU 2026 Part II（Eur Urol）",f:"Tilki D, van den Bergh RCN, Briers E, et al. EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer. Part II: 2026 Update: Treatment of Relapsing and Metastatic Prostate Cancer. Eur Urol 2026;90(3)（線上 2026-07-15）. doi:10.1016/j.eururo.2026.04.014。建議條文已於 uroweb.org 2026 版線上指引核對（見 EAU 2026）。",u:"https://doi.org/10.1016/j.eururo.2026.04.014"},
   esmoAdv:{t:"ESMO 2026（晚期）",f:"Fizazi K, et al. Advanced and metastatic prostate cancer: ESMO Clinical Practice Guideline for diagnosis, treatment and follow-up. Ann Oncol 2026（線上 2026-02-10）. doi:10.1016/j.annonc.2026.01.015。177Lu-PSMA-617：曾用 ARPI、未用 taxane、不適合立即使用 docetaxel 之 PSMA 陽性 mCRPC 建議使用 [I, B；ESMO-MCBS 3；FDA 核准、EMA 未核准此情境]；docetaxel＋ARPI 後、≥1 處 PSMA 陽性且無 PSMA 陰性病灶 [I, A；MCBS 5]。",u:"https://www.annalsofoncology.org/article/S0923-7534(26)00042-6/fulltext"},
   esmoLoc:{t:"ESMO 2025（局部）",f:"Walz J, et al. Local and locoregional prostate cancer: ESMO Clinical Practice Guideline for diagnosis, treatment and follow-up. Ann Oncol（線上 2025-12-18）. doi:10.1016/j.annonc.2025.12.009。不良中風險（如 ISUP GG3）接受根治性 RT 時應合併 4–6 個月 ADT [I, A]；是否加 ADT 及時長需考量健康狀態 [II, A]；有利中風險建議 RP 或 RT [I, B]，未另建議加 ADT。",u:"https://www.annalsofoncology.org/article/S0923-7534(25)06330-6/fulltext"},
   ascoCrpc:{t:"ASCO 2026.1.4（mCRPC）",f:"Taplin ME, et al. Systemic Therapy in Patients With Metastatic Castration-Resistant Prostate Cancer: ASCO Living Guideline, Version 2026.1.4. J Clin Oncol（2026-08-06）. doi:10.1200/JCO-26-01898；文獻至 2025-08-01。Rec 1.2.2.1（ADT＋ARPI 後、未用 taxane）：docetaxel、radium-223，或 177Lu-PSMA-617（PSMA PET 陽性），不論 HRR 狀態（Strong；證據 Moderate）。Rec 1.4.1（ARPI＋docetaxel 後）：PSMA 陽性 177Lu-PSMA-617、PSMA 陰性 radium-223，或 cabazitaxel（Strong；Moderate）。",u:"https://doi.org/10.1200/JCO-26-01898"},
@@ -838,19 +837,19 @@ function renderMCRPC(){
   if(arpi && !S.c_lu){
     if(psmaPos){
       if(doc){
-        cards.push(optCard({cls:"pref",title:"177Lu-PSMA-617（ARPI ＋ taxane 後）",tags:src("auaApc","#31 Strong/B")+src("eauPk25","Strong")+src("nccn","category 1"),
+        cards.push(optCard({cls:"pref",title:"177Lu-PSMA-617（ARPI ＋ taxane 後）",tags:src("auaApc","#31 Strong/B")+src("eau","Strong")+src("nccn","category 1"),
           lead:"177Lu-PSMA-617 7.4 GBq（200 mCi）IV q6w，最多 6 療程；ADT 持續。",
-          rows:[["證據",`VISION OS HR 0.62 ${src("VISION")}`],["條件","PSMA PET 陽性：EAU 為攝取高於肝臟 "+src("eauPk25")+"；ESMO 為 ≥1 處陽性且無 PSMA 陰性病灶 "+src("esmoAdv","I, A")+"。"],
+          rows:[["證據",`VISION OS HR 0.62 ${src("VISION")}`],["條件","PSMA PET 陽性：EAU 為 ≥1 處高表現且無相關 PSMA 陰性轉移 "+src("eau","6.7.14")+"；ESMO 為 ≥1 處陽性且無 PSMA 陰性病灶 "+src("esmoAdv","I, A")+"。"],
             ["補充","ESMO 2026 [I, A；MCBS 5] "+src("esmoAdv")+"；ASCO 2026.1.4 Rec 1.4.1（Strong／Moderate）"+src("ascoCrpc")+"。各指引方向一致。"],
             ["台灣","TFDA 核准適應症內；"+nhiSelf("健保未給付")+src("tfdaLu")]]}));
       }else{
-        cards.push(optCard({title:"177Lu-PSMA-617（ARPI 後、化療前）",tags:upd("FDA 2025-03 擴大至化療前（PSMAfore）")+tag("指引不一致","t-mid")+src("auaApc","#31 Strong/B")+src("fdaPsmafore"),
-          lead: fit? "指引說法不一，分列如下；docetaxel 為各指引共同建議的化療前選項。" : "不適合化療：AUA #31 建議、ESMO 限此族群使用（I, B）；其餘指引說法分列如下。",
+        cards.push(optCard({title:"177Lu-PSMA-617（ARPI 後、化療前）",tags:upd("FDA 2025-03 擴大至化療前（PSMAfore）")+tag("指引不一致","t-mid")+src("auaApc","#31 Strong/B")+src("eau","Weak（不適合 docetaxel）")+src("fdaPsmafore"),
+          lead: fit? "指引說法不一，分列如下；docetaxel 為各指引共同建議的化療前選項。" : "不適合化療：AUA #31（Strong）、EAU（Weak）、ESMO（I, B）皆支持；NCCN 類別請確認。",
           rows:[["劑量","177Lu-PSMA-617 7.4 GBq IV q6w × 最多 6 療程；ADT 持續。"],
             ["證據",`PSMAfore rPFS HR 0.41；OS 因交叉無差異 ${src("PSMAfore")}`],
             ["各指引",`<ul class="tight">
-              <li><b>NCCN</b>：現行版本此情境之類別<span class="cau">請確認</span>（官網無法存取）；BJUI 2026 綜述指 v1.2025 已納入未化療族群 ${src("nccn")}${src("bjuiLu")}</li>
-              <li><b>EAU</b>：2025 Pocket「曾治療之 mCRPC」＋PSMA 高表現 Strong，未區分化療前後 ${src("eauPk25","Strong")}；2026 Part II 化療前之確切文字與強度<span class="cau">請確認</span> ${src("eauP2")}</li>
+              <li><b>NCCN v1.2027</b>：此情境之類別需登入全文，<span class="cau">請確認</span>；BJUI 2026 綜述指 v1.2025 已納入未化療族群 ${src("nccn")}${src("bjuiLu")}</li>
+              <li><b>EAU 2026</b>：限不適合 docetaxel 者，且 PSMA 攝取高於肝臟 ${src("eau","6.7.14 Weak")}${src("eauP2")}</li>
               <li><b>AUA/SUO 2026</b> #31：ARPI 後、PSMA PET 陽性即應提供，不論是否用過 docetaxel ${src("auaApc","#31 Strong/B")}</li>
               <li><b>補充 ESMO 2026</b>：限不適合立即使用 docetaxel 者 ${src("esmoAdv","I, B；MCBS 3")}</li>
               <li><b>補充 ASCO 2026.1.4</b> Rec 1.2.2.1：docetaxel、radium-223 或 177Lu-PSMA-617 並列 ${src("ascoCrpc","Strong／Moderate")}</li>
@@ -1259,8 +1258,8 @@ function renderLoc(){
     H.push(optCard({title:"RT（不加 ADT 為原則）",tags:src("auaLoc","#35 Moderate/B")+src("nccnUpd")+upd("NCCN v2.2026：多數 FIR 接受 RT 不建議併用 ADT"),
       lead:"劑量提升之中度低分次 EBRT、超低分次 SBRT、LDR 或 HDR 近接治療擇一；不常規照骨盆淋巴結。",
       rows:[["各指引",`<ul class="tight">
-          <li><b>NCCN</b> v2.2026：多數 FIR 接受 RT 不建議併用 ADT ${src("nccnUpd")}</li>
-          <li><b>EAU</b>：2025 Pocket 中風險 IMRT/VMAT＋IGRT 合併短期 ADT 4–6 個月（Strong），未另列 FIR 可省略 ${src("eauPk25","Strong")}；2026 改為五級分組後 FIR 是否修訂<span class="cau">請確認</span> ${src("eau")}</li>
+          <li><b>NCCN</b>：v2.2026 起多數 FIR 接受 RT 不建議併用 ADT（v1.2027 是否變動請確認）${src("nccnUpd")}</li>
+          <li><b>EAU 2026</b>：中風險 IMRT/VMAT＋IGRT 合併短期 ADT 4–6 個月（Strong），未區分 FIR／UIR；FIR 另列 LDR 近接（Strong）、超低分次／SBRT（Weak），未併 ADT ${src("eau","6.3.2.f")}</li>
           <li><b>AUA/ASTRO 2026</b>：FIR 不常規加 ADT ${src("auaLoc","#35 Moderate/B")}</li>
           <li><b>補充 ESMO 2025</b>：不良中風險（如 GG3）RT 應合併 4–6 個月 ADT [I, A]；FIR 建議 RP 或 RT [I, B]，未另建議加 ADT ${src("esmoLoc")}</li>
           <li><b>補充 ASCO</b>：未查到局部攝護腺癌 RT＋ADT 之現行指引，<span class="cau">請確認</span>；<b>TUA</b>：未取得現行版，<span class="cau">請確認</span></li></ul>`],
@@ -1706,7 +1705,7 @@ function buildPanels(){
 
 function renderRefPanel(){
   const groups = [
-    ["指引",["nccn","nccnI","nccnUpd","nccn326","ascoNccn","nccnEd","eau","eauRisk","eauP1","eauDx","auaLoc","auaApc","auaEd","auaEdAm","auaStp","eauP2","eauPk25"]],
+    ["指引",["nccn","nccnI","nccnUpd","nccn326","ascoNccn","nccnEd","eau","eauRisk","eauP1","eauDx","auaLoc","auaApc","auaEd","auaEdAm","auaStp","eauP2"]],
     ["補充來源（NCCN／EAU／AUA 衝突時；ESMO → ASCO → TUA）",["esmoAdv","esmoLoc","ascoCrpc","bjuiLu"]],
     ["其他文獻與台灣",["pilatz","mohwScr","eauBcr","twPsma"]],
     ["分級與分期",["damico","capra","ajcc","isup","catalona","pcwg3","mskDT"]],
@@ -1722,7 +1721,9 @@ function renderRefPanel(){
     <div class="note">指引強度標示：AUA＝Strong／Moderate／Conditional ＋ Evidence Grade A／B／C，或 Clinical Principle、Expert Opinion；EAU＝Strong／Weak；NCCN＝category 1、2A、2B。</div>
   </div></div>
   <div class="card"><h2>Changelog</h2><div class="cb small">
-    <p style="margin:0 0 6px"><b>v1.3（${CHECKED}）</b></p>
+    <p style="margin:0 0 6px"><b>v1.4（${CHECKED}）</b></p>
+    <ul class="tight"><li>更正 v1.3：nccn.org 確認現行版為 NCCN v1.2027；EAU 2026 線上版原文確認化療前 177Lu-PSMA-617 限不適合 docetaxel 者（Weak），恢復此標示；FIR 放療之 EAU 條文改依 2026 原文（中風險合併短期 ADT，Strong；未區分 FIR／UIR）。移除 EAU 2025 Pocket 出處。</li></ul>
+    <p style="margin:8px 0 6px"><b>v1.3（2026-10-18）</b></p>
     <ul class="tight"><li>指引版本比對：NCCN 現行版本號無法由公開來源確認，改標「版本請確認」（最近可確認 Insights v5.2026）；新增 EAU 2026 Part II（Eur Urol 2026;90(3)）、EAU 2025 Pocket 出處。</li>
     <li>mCRPC「177Lu-PSMA-617（ARPI 後、化療前）」：改為逐條列出 NCCN、EAU、AUA 與補充來源 ESMO 2026、ASCO 2026.1.4、TUA 的說法；原標「EAU Weak（不適合 docetaxel）」查無原文依據，改為「請確認」。</li>
     <li>「177Lu-PSMA-617（ARPI ＋ taxane 後）」：加 ESMO、ASCO 補充；PSMA 陽性條件分列 EAU 與 ESMO 定義。</li>
