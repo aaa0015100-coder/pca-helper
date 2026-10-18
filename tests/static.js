@@ -49,7 +49,7 @@ console.log(F.length?"STATIC FAIL "+F.length+"\n  "+F.join("\n  "):"STATIC OK");
 if(W.length) console.log("STATIC WARN "+W.length+"\n  "+W.join("\n  "));
 process.exitCode=F.length?1:0;
 // CSS 變數：用到的 var(--x) 都必須在基礎 :root（淺色）定義（v1.1 漏定義 --onHead 導致頁首字看不見）
-{ const base=(css.match(/(^|\})\s*:root\s*\{([^}]*)\}/)||["","",""])[2]; // 淺色基礎 :root；深色區塊只能覆寫
+{ const base=(css.replace(/\/\*[\s\S]*?\*\//g,"").match(/(^|\})\s*:root\s*\{([^}]*)\}/)||["","",""])[2]; // 淺色基礎 :root；深色區塊只能覆寫
   const def=new Set([...base.matchAll(/(--[\w-]+)\s*:/g)].map(m=>m[1]));
   const used=new Set([...(css+js).matchAll(/var\((--[\w-]+)/g)].map(m=>m[1]));
   const miss=[...used].filter(v=>!def.has(v));
