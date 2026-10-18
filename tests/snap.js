@@ -19,6 +19,7 @@ const SC=[
   ["mhspcLow",{adv:"mhspc",psa:12,p1:4,p2:4,cm:"M1b",h_time:"meta",h_bone:2,h_out:"n",h_visc:"n",h_ecog:"0",h_fit:"n",h_hrr:"none",h_seiz:true}],
   ["nmcrpc",{adv:"nmcrpc",psa:4.4,testo:20,n_castr:"y",n_ci:"y",n_ecog:"0"},RISE],
   ["mcrpc2L",{adv:"mcrpc",cm:"M1b",c_arpi:"abi",c_doc:"y",c_doccyc:6,c_hrr:"brca",c_msi:"n",c_psma:"pos",c_sympbone:"y",c_visc:"n",c_ecog:"1",c_fit:"y"}],
+  ["mcrpcPreChemo",{adv:"mcrpc",cm:"M1b",c_arpi:"enza",c_doc:"n",c_hrr:"none",c_msi:"n",c_psma:"pos",c_sympbone:"n",c_visc:"n",c_ecog:"0",c_fit:"y"}],
   ["mcrpcNaive",{adv:"mcrpc",cm:"M1c",c_arpi:"none",c_doc:"n",c_hrr:"none",c_msi:"y",c_psma:"neg",c_visc:"y",c_ecog:"3",c_fit:"n"}],
   ["monitor",{m_adt:"agonist",m_long:true,m_abi:true,m_bone:"deno120",m_bmets:"crpc",m_t:-2.7,m_fx:true,m_cvd:true,m_dm:true,wt:70,ht:170}],
 ];
