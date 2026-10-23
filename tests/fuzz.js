@@ -1,9 +1,9 @@
 // 組合模擬（00 第八節第 2 點）。node tests/fuzz.js [index.html] [--mod=risk,mcrpc,…] [--n=3000] [--seed=1]
-// 模組：all（全頁隨機，查 undefined／NaN／例外與步驟編號）、risk（窮舉，單調性與定義）、mhspc、nmcrpc、mcrpc、mon
+// 模組：all（全頁隨機，查 undefined／NaN／例外與步驟編號）、risk（窮舉，單調性與定義）、mhspc、nmcrpc、mcrpc、mon、cc（目前結論卡）
 // 只印失敗摘要；失敗依「規則＋訊息」分組，每組附一個重現用的輸入。
-const {A,set,txt,spec,conv,runAll}=require('./harness')((process.argv[2]&&!process.argv[2].startsWith("--"))?process.argv[2]:undefined);
+const {A,set,txt,out,spec,conv,runAll}=require('./harness')((process.argv[2]&&!process.argv[2].startsWith("--"))?process.argv[2]:undefined);
 const arg=k=>{const a=process.argv.find(x=>x.startsWith("--"+k+"="));return a?a.split("=")[1]:null;};
-const MODS=(arg("mod")||"all,risk,mhspc,nmcrpc,mcrpc,mon").split(",");
+const MODS=(arg("mod")||"all,risk,mhspc,nmcrpc,mcrpc,mon,cc").split(",");
 const N=+(arg("n")||3000);
 let seed=+(arg("seed")||1); const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;}; // 可重現
 const pick=a=>a[Math.floor(rnd()*a.length)];
@@ -123,6 +123,49 @@ if(MODS.includes("mon")) for(let i=0;i<Math.min(N,1500);i++){
   { const L=[...R["r-mon"].matchAll(/class="st-n">([^<]*)</g)].map(m=>m[1]).join(""); if(L!=="ABCDEFGH".slice(0,L.length)) fail("mon",o,"步驟字母不連續："+L); }
   if(o.m_adt&&o.m_adt!=="none"&&!o.m_long&&/長期 ADT：先做 DXA/.test(t)) fail("mon",o,"未勾長期 ADT 卻顯示「長期 ADT：先做 DXA」");
   if((!o.m_adt||o.m_adt==="none") && !o.m_long && /長期 ADT：先做 DXA/.test(t)) fail("mon",o,"未用 ADT 卻顯示「長期 ADT：先做 DXA」");
+}
+
+/* ---------- cc：目前結論卡只摘錄頁面輸出（v1.6） ---------- */
+if(MODS.includes("cc")) for(let i=0;i<N;i++){
+  const o=randState(); if(rnd()<.3) o.cm=pick(["M1a","M1b","M1c"]); const r=rows(); set(o,r); n++;
+  const MODES=[["dx",null],["risk",null],["loc","init"],["loc","post"],["adv","mhspc"],["adv","nmcrpc"],["adv","mcrpc"],["mon",null]];
+  let R; try{ R=runAll(); }catch(e){ fail("cc",o,"EXC "+e.message); continue; }
+  for(const [tab,sub] of MODES){
+    if(tab==="loc"){ A.S.loc=sub; A.renderLocTab(); } if(tab==="adv"){ A.S.adv=sub; A.renderAdv(); }
+    const cid={dx:"r-dx",risk:"r-risk",mon:"r-mon",loc:sub==="post"?"r-post":"r-loc",adv:"r-"+sub}[tab];
+    const lab=tab+(sub?"/"+sub:"");
+    let D; try{ D=A.ccData(tab); }catch(e){ fail("cc",o,lab+" EXC "+e.message); continue; }
+    const H=JSON.stringify(D); const m=txt(D.map(([k,it])=>k+" "+it.map(x=>x.h).join(" ")).join(" ")).match(new RegExp(".{0,30}("+BAD.source+").{0,30}"));
+    if(m) fail("cc",o,lab+" BAD「"+m[0]+"」");
+    if(!D.length) fail("cc",o,lab+" 結論卡空白");
+    // 跳轉目標存在
+    for(const [,it] of D) for(const x of it){ if(!x.go) continue; const [c,kind,ix]=x.go.split("|"); if(c==="pin") continue;
+      const h=out(c); if(kind==="c"){ continue; }
+      const cnt=(h.match(new RegExp('<div class="'+{step:"step ",opt:"opt ",alert:"alert "}[kind],"g"))||[]).length;
+      if(+ix>=cnt){ fail("cc",o,`${lab} 跳轉目標不存在：${x.go}（只有 ${cnt} 個）`); continue; }
+      // 跳轉目標須是被摘錄的那一段（標題對得上）
+      const it=txt(x.h);
+      if(kind==="opt"){ const t=[...h.matchAll(/<div class="opt [a-z ]*"><div class="opt-h"><b>([\s\S]*?)<\/b>/g)].map(m=>txt(m[1]))[+ix]; if(!it.startsWith(t)) fail("cc",o,`${lab} 首選跳轉到別張卡：「${it.slice(0,30)}」→「${t.slice(0,30)}」`); }
+      if(kind==="step"&&!/^另 /.test(it)){ const t=[...h.matchAll(/<span class="st-t">([\s\S]*?)<\/span>/g)].map(m=>txt(m[1]))[+ix]; if(!it.includes(t)) fail("cc",o,`${lab} 步驟跳轉到別一步：「${it.slice(0,30)}」→「${t}」`); }
+      if(kind==="alert"){ const t=[...h.matchAll(/<div class="alert a-[a-z]+">([\s\S]*?)<\/div>/g)].map(m=>txt(m[1].replace(/<button[^>]*class="src"[\s\S]*?<\/button>/g,"")))[+ix]; if(!t.replace(/\s/g,"").startsWith(it.replace(/…$/,"").replace(/\s/g,""))) fail("cc",o,`${lab} 提醒跳轉到別則：「${it.slice(0,30)}」→「${t.slice(0,30)}」`); } }
+    const h=out(cid), row=k=>(D.find(x=>x[0]===k)||[null,[]])[1];
+    // 首選：與頁面 .opt.pref 標題完全一致（loc/init、adv）
+    if(tab==="adv"||(tab==="loc"&&sub==="init")){ const want=[...h.matchAll(/<div class="opt pref"><div class="opt-h"><b>([\s\S]*?)<\/b>/g)].map(m=>txt(m[1])).join("｜");
+      const got=row("首選").map(x=>txt(x.h).replace(/ 指引不一致.*$| 健保.*$/,"")).join("｜");
+      if(want!==got) fail("cc",o,`${lab} 首選不一致：頁面「${want.slice(0,80)}」結論卡「${got.slice(0,80)}」`); }
+    // 分組：與風險函式一致
+    if(tab==="risk"||(tab==="loc"&&sub==="init")){ const g=row("分組").map(x=>txt(x.h)).join("｜");
+      for(const [k,f] of [["NCCN",A.riskNCCN],["EAU",A.riskEAU],["AUA/ASTRO",A.riskAUA]]){ const v=f().g;
+        if(tab==="loc" && /請見「晚期治療」|後顯示/.test(txt(h))) continue;
+        if(v && !g.includes(k+" "+v)) fail("cc",o,`${lab} 分組缺 ${k} ${v}`); if(!v && g.includes(k+" ")) fail("cc",o,`${lab} ${k} 無分組卻列出`); }
+      if(tab==="risk"){ const a=A.ajcc(); if(a.st && !g.includes("AJCC Stage "+a.st)) fail("cc",o,"AJCC 分期未摘錄"); } }
+    // 步驟：與頁面步驟數一致（最多 5 項＋「另 n 項」）
+    if(["dx","mon"].includes(tab)||(tab==="loc"&&sub==="post")){ const ns=(h.match(/<div class="step /g)||[]).length, it=row("步驟");
+      const exp= ns>5? 6 : ns; if(it.length!==exp) fail("cc",o,`${lab} 步驟數 ${it.length}，頁面 ${ns}`); }
+    // 注意：頁面非 info 提醒都列出（步驟頁只算步驟之前的提醒）
+    { const hh=(["dx","mon"].includes(tab)||(tab==="loc"&&sub==="post"))? h.replace(/<div class="step [\s\S]*$/,"") : h;
+      const na=(hh.match(/<div class="alert a-(warn|bad)">/g)||[]).length; if(row("注意").length!==na) fail("cc",o,`${lab} 注意 ${row("注意").length} 項，頁面 ${na} 項`); }
+  }
 }
 
 // 輸出
