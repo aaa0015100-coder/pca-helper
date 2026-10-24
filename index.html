@@ -247,7 +247,7 @@ details.rgrp>summary .muted{font-weight:400}
   <footer>
     <div class="disc2" id="disc2" hidden>僅供臨床決策參考，不取代臨床判斷、院內規範與最新指引原文。本頁不儲存任何病人資料，重新整理即清空。</div>
     <div>v<span id="ver2"></span>　最後查證日期：<span id="checked"></span></div>
-    <div>指引版本：NCCN v1.2027、NCCN Early Detection v2.2026 ／ EAU 2026 ／ AUA/ASTRO 2026、AUA/ASTRO/SUO 救援治療 2024、AUA/SUO 2026（晚期、早期偵測）／ 健保藥品給付規定 115.09.22 版。詳見「來源・版本」。</div>
+    <div>指引版本：NCCN v1.2027、NCCN Early Detection v2.2026 ／ EAU 2026 ／ AUA/ASTRO 2026、AUA/ASTRO/SUO 救援治療 2024、AUA/SUO 2026（晚期、早期偵測）／ 健保藥品給付規定 115.09.22 版、支付標準 27084C（p2PSA，113.12.01）。詳見「來源・版本」。</div>
   </footer>
 </div></main>
 <div id="ov" role="dialog" aria-modal="true"><div id="ovBox"></div></div>
@@ -257,7 +257,7 @@ details.rgrp>summary .muted{font-weight:400}
 <script>
 "use strict";
 /* ================= 基本設定 ================= */
-const APP_VERSION = "1.6";
+const APP_VERSION = "1.7";
 const CHECKED = "2026-10-18";
 
 /* ================= 出處 ================= */
@@ -276,7 +276,11 @@ const REF = {
   esmoAdv:{t:"ESMO 2026（晚期）",f:"Fizazi K, et al. Advanced and metastatic prostate cancer: ESMO Clinical Practice Guideline for diagnosis, treatment and follow-up. Ann Oncol 2026（線上 2026-02-10）. doi:10.1016/j.annonc.2026.01.015。177Lu-PSMA-617：曾用 ARPI、未用 taxane、不適合立即使用 docetaxel 之 PSMA 陽性 mCRPC 建議使用 [I, B；ESMO-MCBS 3；FDA 核准、EMA 未核准此情境]；docetaxel＋ARPI 後、≥1 處 PSMA 陽性且無 PSMA 陰性病灶 [I, A；MCBS 5]。",u:"https://www.annalsofoncology.org/article/S0923-7534(26)00042-6/fulltext"},
   esmoLoc:{t:"ESMO 2025（局部）",f:"Walz J, et al. Local and locoregional prostate cancer: ESMO Clinical Practice Guideline for diagnosis, treatment and follow-up. Ann Oncol（線上 2025-12-18）. doi:10.1016/j.annonc.2025.12.009。不良中風險（如 ISUP GG3）接受根治性 RT 時應合併 4–6 個月 ADT [I, A]；是否加 ADT 及時長需考量健康狀態 [II, A]；有利中風險建議 RP 或 RT [I, B]，未另建議加 ADT。",u:"https://www.annalsofoncology.org/article/S0923-7534(25)06330-6/fulltext"},
   ascoCrpc:{t:"ASCO 2026.1.4（mCRPC）",f:"Taplin ME, et al. Systemic Therapy in Patients With Metastatic Castration-Resistant Prostate Cancer: ASCO Living Guideline, Version 2026.1.4. J Clin Oncol（2026-08-06）. doi:10.1200/JCO-26-01898；文獻至 2025-08-01。Rec 1.2.2.1（ADT＋ARPI 後、未用 taxane）：docetaxel、radium-223，或 177Lu-PSMA-617（PSMA PET 陽性），不論 HRR 狀態（Strong；證據 Moderate）。Rec 1.4.1（ARPI＋docetaxel 後）：PSMA 陽性 177Lu-PSMA-617、PSMA 陰性 radium-223，或 cabazitaxel（Strong；Moderate）。",u:"https://doi.org/10.1200/JCO-26-01898"},
-  eauDx:{t:"EAU 2026 Ch.5",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer 2026, Chapter 5 Diagnostic Evaluation：5.2.8 Recommendations for individual early detection and germline testing；5.3 病理（ASAP、HGPIN）；5.5 Biopsy strategy；5.5.8 Recommendations on MRI imaging in biopsy indication and strategy；Table 5.5 PI-RADS × PSA density。",u:"https://uroweb.org/guidelines/prostate-cancer/chapter/diagnostic-evaluation"},
+  nhiPhi:{t:"健保 27084C",f:"全民健康保險醫療服務給付項目及支付標準 27084C「二胺基酸攝護腺特異抗原前驅物（p2PSA）」1,606 點，113 年 12 月 1 日起（衛生福利部 113-11-28 衛部保字第 1131260686 號令）。註：1. 適應症（須全部符合）：(1) PSA 介於 4.0 至 10.0 ng/ml；(2) 尿液分析及臨床症狀已排除攝護腺感染或發炎；(3) 肛門指診無異常；(4) 五十歲以上或未滿五十歲但有攝護腺癌家族史。2. 每十二個月限執行一次。3. 限由泌尿科專科醫師開立處方始可申報。4. 須檢附八週內 PSA 報告及本次 PHI 指數於病歷紀錄備查。5. 若 PHI 指數顯示為攝護腺癌低風險（PHI <30），再檢測 PSA 至少間隔二十四週。",u:"https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg030223/ch08/type1/gov70/num50/images/Eg01.pdf"},
+  phiIFU:{t:"Beckman phi 仿單 A80984N（2020）",f:"Beckman Coulter Access Hybritech p2PSA Instructions for Use A80984 Rev. N（2020-05）。適用：≥50 歲、total PSA 2.0–10.0 ng/mL、DRE 不疑似癌症，作為區分攝護腺癌與良性病變之輔助；確診需切片。試驗：6 中心 519 人（50–84 歲；排除曾用 dutasteride／finasteride、急性攝護腺炎或 UTI）。罹癌機率（癌症盛行率以 bootstrap 校正為 25%）：Hybritech 校正（PSA 2–10）PHI 0–21：8.4%、21–40：21.0%、40+：44.0%；WHO 校正（PSA 1.6–7.8）0–23：8.7%、23–45：20.6%、45+：43.8%。不可混用 Hybritech 與 WHO 校正；其他廠牌 PSA／fPSA 不可互換。5-ARI 會降低 PSA、fPSA、p2PSA。採血應在 DRE、按摩、超音波、切片之前；切片後間隔 6 週；檢體 3 小時內離心冷藏。",u:"https://www.beckmancoulter.com/download/file/phxA80984N-EN_US/A80984N?type=pdf"},
+  fdaPhi:{t:"FDA P090026（2012）",f:"FDA PMA P090026，Access Hybritech p2PSA，2012-06-14 核准：與 Access Hybritech total PSA、free PSA 合併計算 Beckman Coulter Prostate Health Index（PHI），用於 ≥50 歲、total PSA ≥4.0 至 ≤10.0 ng/mL、DRE 不疑似癌症之男性，作為區分攝護腺癌與良性病變之輔助；確診需切片。",u:"https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpma/pma.cfm?id=P090026"},
+  mayoPhi:{t:"Mayo Clinic Labs PHI",f:"Mayo Clinic Laboratories, Prostate Health Index Reflex（PHI11）。PHI＝(p2PSA ÷ free PSA) × √PSA。PSA 4.0–10.0 ng/mL 之切片罹癌機率：PHI 0–26.9：9.8%（95% CI 5.2–15.4%）；27.0–35.9：16.8%（11.3–22.2%）；36.0–54.9：33.3%（26.8–39.9%）；≥55.0：50.1%（39.8–61.0%）。適用 ≥50 歲；採血應在 DRE 等攝護腺操作之前，切片後間隔 6 週。",u:"https://oncology.testcatalog.org/show/PHI11"},
+  eauDx:{t:"EAU 2026 Ch.5",f:"EAU-EANM-ESTRO-ESUR-ISUP-SIOG Guidelines on Prostate Cancer 2026, Chapter 5 Diagnostic Evaluation：5.2.7 血液／尿液生物標記（PHI、4K 於 PSA 2–10 優於 f/t PSA；目前無單一檢測可推薦）；5.2.8 Recommendations for individual early detection and germline testing（PSA 3–20 以 MRI〔Strong〕、校準之 risk calculator 或血液／尿液生物標記〔Weak〕擇一決定切片）；5.4.1.b 以 PHI >30 決定 MRI 與切片可避免 25% 之 MRI 與切片、漏 8% ISUP GG ≥2；5.3 病理（ASAP、HGPIN）；5.5 Biopsy strategy；5.5.8 Recommendations on MRI imaging in biopsy indication and strategy；Table 5.5 PI-RADS × PSA density。",u:"https://uroweb.org/guidelines/prostate-cancer/chapter/diagnostic-evaluation"},
   auaEd:{t:"AUA/SUO EDPC 2026",f:"Wei JT, Barocas D, Carlsson S, et al. Early Detection of Prostate Cancer: AUA/SUO Guideline (2023; amended 2026，AUA 理事會 2026-02 通過，文獻至 2024-12)。Statement 1–35（篩檢、初次切片、重複切片、切片技術）。",u:"https://www.auanet.org/guidelines-and-quality/guidelines/early-detection-of-prostate-cancer-guidelines"},
   auaEdAm:{t:"AUA EDPC 2026 修訂摘要",f:"AUA/SUO Early Detection of Prostate Cancer 2026 Amendment Summary：#13 MRI 於初次切片前 Grade B→A；#28 ASAP 由 Expert Opinion 改為 Moderate/C（明列可含重複切片）；#35 經直腸或經會陰 Grade C→B；Table 6 生物標記更新。",u:"https://www.auanet.org/documents/Guidelines/PDF/2026%20Guidelines/EDPC%20Guideline%202026%20-%20Amendment%20Summary.pdf"},
   nccnEd:{t:"NCCN Early Detection v2.2026",f:"NCCN Clinical Practice Guidelines in Oncology: Prostate Cancer Early Detection, Version 2.2026（2026-02-18）。PSA ≥3 ng/mL 或明顯可疑 DRE：重驗 PSA、DRE、排除良性原因，mpMRI（category 1）；MRI 陰性不能排除癌症；經會陰可降低敗血症風險與抗生素需求；生物標記不可取代 mpMRI。全文需登入，請至 nccn.org 核對。",u:"https://www.nccn.org/guidelines/guidelines-detail?category=2&id=1460"},
@@ -385,6 +389,8 @@ const GLOSS = {
   "CRPC":"castration-resistant prostate cancer：睪固酮達去勢濃度下仍惡化",
   "BCR":"biochemical recurrence，生化復發",
   "PSAD":"PSA density＝PSA ÷ 攝護腺體積（ng/mL/cc）",
+  "PHI":"Prostate Health Index＝(p2PSA ÷ free PSA) × √PSA（p2PSA pg/mL；free PSA、PSA ng/mL）",
+  "p2PSA":"[-2]proPSA，free PSA 的前驅物異構體（pg/mL）",
   "PSADT":"PSA doubling time，PSA 倍增時間",
   "PSAV":"PSA velocity，PSA 速度（ng/mL/年）",
   "ISUP":"International Society of Urological Pathology",
@@ -431,6 +437,7 @@ const S0 = {
   psa:null, p1:null, p2:null, ct:"", cn:"N0", cm:"M0", basis:"c", pos:null, tot:null, g45:null, age:null, vol:null,
   // calculators
   vl:null, vw:null, vh:null, fpsa:null, testo:null, tunit:"ngdl",
+  p2psa:null, phi:null,   // PHI：p2PSA（pg/mL）或直接輸入報告 PHI
   psadt:null, psadtNhi:null,
   // mHSPC
   h_time:"", h_bone:null, h_out:"", h_visc:"", h_ecog:"", h_fit:"", h_hrr:"", h_pten:"", h_psma:"", h_seiz:false, h_liver:false,
@@ -537,6 +544,51 @@ function testoConv(){
   return {ngdl, nmol: ngdl/28.84};
 }
 function calcBSA(){ const w=num(S.wt), h=num(S.ht); if(!w||!h) return null; return Math.sqrt(w*h/3600); }
+
+/* ================= PHI（Prostate Health Index） ================= */
+// PHI＝(p2PSA ÷ free PSA) × √PSA；直接輸入的報告值優先（各院 PSA／fPSA 校正與廠牌不同，報告值才是原廠計算）
+function phiCalc(){ const p2=num(S.p2psa), f=num(S.fpsa), t=num(S.psa); if(p2===null||!f||!t||f<=0||t<=0) return null; return p2/f*Math.sqrt(t); }
+function phiV(){ const d=num(S.phi); return d!==null? d : phiCalc(); }
+function phiSrc(){ return num(S.phi)!==null? "report" : phiCalc()!==null? "calc" : null; }
+// 驗證族群以外的情況（數值照算，只提醒）
+function phiWarn(){
+  const W=[], psa=num(S.psa), age=num(S.age);
+  if(psa!==null && (psa<2||psa>10)) W.push(`PSA ${fmt(psa,2)} 不在仿單適用範圍 2–10 ng/mL`);
+  else if(psa!==null && psa<4) W.push(`PSA ${fmt(psa,2)}：2012 FDA 核准範圍為 4–10 ng/mL（現行仿單 2–10），健保適應症亦為 4–10`);
+  if(S.ct && S.ct!=="T1c") W.push("DRE 異常：PHI 驗證族群為 DRE 不疑似癌症者");
+  if(S.ari) W.push("服用 5-ARI：會降低 PSA、free PSA、p2PSA，仿單試驗排除曾用 dutasteride／finasteride 者");
+  if(S.uti) W.push("近期感染、導尿／器械操作或尿滯留：試驗排除急性攝護腺炎與 UTI；採血應在攝護腺操作前、切片後間隔 6 週");
+  if(age!==null && age<50) W.push(`年齡 ${age}：驗證族群為 ≥50 歲`);
+  const c=phiCalc(), d=num(S.phi);
+  if(c!==null && d!==null && Math.abs(c-d)/Math.max(c,d) > 0.05) W.push(`報告 PHI ${fmt(d,1)} 與輸入值計算 ${fmt(c,1)} 不一致（相差 >5%）：以報告值判讀，請確認各數值與單位（p2PSA 為 pg/mL）`);
+  return W; }
+// 各來源判讀（並列，不合併）。b：[下限, 上限（不含）, 標籤, 機率]
+const PHI_IFU=[[0,21,"0–21","8.4%"],[21,40,"21–40","21.0%"],[40,Infinity,"40+","44.0%"]];
+const PHI_2012=[[0,27,"0–26.9","9.8%"],[27,36,"27.0–35.9","16.8%"],[36,55,"36.0–54.9","33.3%"],[55,Infinity,"≥55.0","50.1%"]];
+const phiBand=(B,v)=>B.findIndex(b=>v>=b[0]&&v<b[1]);
+// 健保 27084C 逐項：[項目, true／false／null（待確認）, 說明]
+function nhiPhiItems(){
+  const psa=num(S.psa), age=num(S.age);
+  return [
+    ["PSA 4.0–10.0 ng/mL", psa===null? null : (psa>=4&&psa<=10), psa===null? "未輸入 PSA" : `PSA ${fmt(psa,2)}`+(S.ari?"（以實測值判定，未 ×2）":"")],
+    ["尿液分析及症狀已排除感染或發炎", S.uti? false : null, S.uti? "已勾選近期感染／器械操作／尿滯留" : "請確認尿液分析"],
+    ["肛門指診無異常", S.ct===""? null : S.ct==="T1c", S.ct===""? "未填 DRE" : S.ct==="T1c"? "DRE 正常" : "DRE 異常"],
+    ["≥50 歲，或 <50 歲有家族史", age===null? null : (age>=50||S.fhx), age===null? "未輸入年齡" : age>=50? `${age} 歲` : S.fhx? `${age} 歲、有家族史` : `${age} 歲、未勾家族史`]
+  ]; }
+function nhiPhiHtml(){
+  const it=nhiPhiItems(), ng=it.some(x=>x[1]===false), q=it.some(x=>x[1]===null);
+  const head = ng? nhiNG("適應症未全部符合") : q? nhiQ("適應症尚有待確認項目") : nhiOK("適應症四項皆符合");
+  return `${head}<ul class="tight">${it.map(x=>`<li>${x[1]===null?'<span class="cau">?</span>':x[1]?'<span class="ok">✔</span>':'<span class="ng">✘</span>'} ${x[0]}：${x[2]}</li>`).join("")}
+    <li>另須：每 12 個月限一次；限泌尿科專科醫師開立；病歷附 8 週內 PSA 報告與本次 PHI。</li></ul>`; }
+// 一行摘要（診斷流程用）：PHI 值＋各來源落點；不改變流程
+function phiLine(short){
+  const v=phiV(); if(v===null) return "";
+  if(short) return `<b>PHI ${fmt(v,1)}</b>（各來源落點見前一步驟與「計算器」）`;
+  const psa=num(S.psa), i=phiBand(PHI_IFU,v), j=phiBand(PHI_2012,v), w=phiWarn();
+  const parts=[`健保 ${v<30?"<30 低風險（再驗 PSA 至少間隔 24 週）":"≥30 非低風險"}`, `EAU >30 門檻：${v>30?"高於":"未高於"}`,
+    `仿單（PSA 2–10）${PHI_IFU[i][2]}：罹癌 ${PHI_IFU[i][3]}`];
+  if(psa!==null && psa>=4 && psa<=10) parts.push(`2012 FDA（PSA 4–10）${PHI_2012[j][2]}：罹癌 ${PHI_2012[j][3]}`);
+  return `<b>PHI ${fmt(v,1)}</b>${phiSrc()==="calc"?"（由 p2PSA 計算）":""}：${parts.join("；")}${w.length?`<br><span class="cau">超出驗證範圍：${w.join("；")}</span>`:""}`; }
 
 /* ================= 風險分級 ================= */
 function needBasics(){
@@ -1173,6 +1225,8 @@ function renderDx(){
     if(c.dre==="na") x1+=(x1?"<br>":"")+`尚未做 DRE：建議補做，DRE 異常會改變後續（MRI 陰性仍需考慮切片）。${src("nccnEd")}`;
   }
   if(S.ari) x1+=(x1?"<br>":"")+`<span class="cau">服用 5-ARI：PSA 以 ×2 解讀（服用約 6 個月後才穩定；個人差異大）。</span>${src("auaEd","5-ARI 討論")}${src("eauDx","5.2.2")}`;
+  // 流程停在追蹤或重驗時仍顯示已輸入的 PHI，並註明指引順序（不因 PHI 改變流程）
+  if(g.gate!=="proceed" && phiV()!==null) x1+=(x1?"<br>":"")+phiLine()+`<br><span class="muted">${g.gate==="repeat"?"任何升高的 PSA 宜先重驗，再做生物標記、影像或切片":"PSA 未達進一步評估門檻：生物標記僅在會改變切片決策時使用"} ${src("auaEd",g.gate==="repeat"?"#3 Expert Opinion":"#17 Conditional/C")}。</span>`;
   H.push(stepCard({n:++n,k:k1,t:"PSA／DRE 判讀",c:c1,x:x1,
     why:`<ul class="tight">
       <li>PSA 3–10 ng/mL 之無症狀者，先重驗再進一步檢查（EAU Weak）${src("eauDx","5.2.8")}；任何升高的 PSA 先重驗再做生物標記、影像或切片 ${src("auaEd","#3 Expert Opinion")}。</li>
@@ -1188,17 +1242,17 @@ function renderDx(){
     H.push(stepCard({n:++n,k:"bx",t:"切片前檢查",
       c: c.dre==="adv"? `<b>DRE 明顯局部晚期：可不先做 MRI，直接做有限的系統性切片</b>，之後依高風險流程安排分期影像。`
         : `預期壽命短：通常不再進一步檢查；若仍需確診（例如考慮治療），<b>可不先做 MRI，只做有限切片</b>。`,
-      x: (c.adj!==null&&c.adj>50)? `PSA >50 且排除感染等良性原因：若需盡快治療，可省略切片。${src("auaEd","#18 Expert Opinion")}` : "",
+      x: [(c.adj!==null&&c.adj>50)? `PSA >50 且排除感染等良性原因：若需盡快治療，可省略切片。${src("auaEd","#18 Expert Opinion")}` : "", phiLine()].filter(Boolean).join("<br>"),
       why:`EAU：DRE 明顯局部晚期或不考慮根治治療者，只做有限切片、不需 MRI（Weak）${src("eauDx","5.5.8")}。若仍考慮根治治療，MRI 可評估局部範圍並引導標靶 ${src("auaLoc","#5 Conditional/B")}。`}));
   }else{
     H.push(stepCard({n:++n,k:"go",t:"切片前檢查",
       c:`<b>先做攝護腺 MRI（PI-RADS v2.1 判讀），再決定是否切片。</b>`,
-      x: (c.adj!==null&&c.adj>50)? `PSA >50 且排除感染等良性原因：若需盡快治療，可省略切片。${src("auaEd","#18 Expert Opinion")}` : "",
+      x: [(c.adj!==null&&c.adj>50)? `PSA >50 且排除感染等良性原因：若需盡快治療，可省略切片。${src("auaEd","#18 Expert Opinion")}` : "", phiLine()? phiLine()+`<br><span class="muted">PHI 不取代 MRI；各來源切點並列見「計算器」。</span>` : ""].filter(Boolean).join("<br>"),
       why:`<ul class="tight">
         <li>懷疑局限性疾病者，切片前做 MRI（EAU Strong）${src("eauDx","5.5.8")}；初次切片前可用 MRI 提高 GG ≥2 偵測率 ${src("auaEd","#13 Conditional/A")}${upd("AUA/SUO 2026 修訂：#13 證據等級由 Grade B 升為 Grade A")}${src("auaEdAm")}；mpMRI（category 1）${src("nccnEd")}。</li>
         <li>依 PI-RADS 報告 ${src("auaEd","#14 Moderate/C")}；MRI 結果宜在多專科會議討論並回饋病理（EAU Strong）${src("eauDx","5.5.8")}。</li>
         <li><b>輔助工具</b>（PSA 3–20）：MRI、校準過的 risk calculator（ERSPC、PBCG 等）或血液／尿液生物標記（PHI、4Kscore、SelectMDx、Stockholm3 等）擇一協助決定 ${src("eauDx","5.2.8")}；生物標記僅在會改變切片決策時使用 ${src("auaEd","#17 Conditional/C")}；risk calculator ${src("auaEd","#10 Conditional/B")}；生物標記不可取代 mpMRI ${src("nccnEd")}。</li>
-        <li>台灣：PHI 部分醫院可檢測；健保給付狀態請以院內與健保署公告確認。</li></ul>`}));
+        <li>台灣：PHI（p2PSA）健保 113 年 12 月 1 日起給付 ${upd("健保 113 年 12 月 1 日起給付 p2PSA（PHI），原為自費")}：PSA 4.0–10.0、已排除感染或發炎、DRE 無異常、≥50 歲（或 <50 歲有家族史），每 12 個月一次、限泌尿科開立；PHI <30（低風險）再驗 PSA 至少間隔 24 週 ${src("nhiPhi")}。PHI 各來源切點不同（健保 <30 低風險；EAU >30 決定 MRI＋切片；仿單、2012 FDA 機率分層），見「計算器」。</li></ul>`}));
   }
 
   // 3. MRI → 切片決策
@@ -1240,6 +1294,7 @@ function mriDecision(c,n){
       else t=`<b>標靶切片＋病灶周圍取樣</b>（系統性切片可選擇加做）。`;
     }else{ k="stop"; t=`<b>懷疑度很低（PSAD <0.10、無家族史）：不切片，PSA 追蹤。</b>`; }
     x=`PI-RADS 3、PSAD ${dT}、${fam}${dreS?"、DRE 可疑":""}`;
+    if(phiV()!==null) x+=`<br>${phiLine(true)}：<span class="muted">指引未設 PHI 用於 PI-RADS 3 之切點；生物標記僅在會改變切片決策時使用 ${src("auaEd","#17 Conditional/C")}。</span>`;
   }else{
     t=`<b>標靶切片＋病灶周圍取樣</b>（系統性切片可選擇加做）。`;
     x=`PI-RADS ${p}：不論 PSAD 皆切片。`;
@@ -1278,6 +1333,7 @@ function prevBxCard(n){
     hgpinM:{t:"前次切片：多灶 HGPIN",c:`<b>可進一步風險評估</b>（MRI、生物標記），依結果決定是否重切。`,why:src("auaEd","#27 Expert Opinion")},
     aip:{t:"前次切片：AIP（非典型導管內增生）",c:`<b>需進一步檢查</b>（MRI ± 重複切片）。`,why:src("auaEd","#29 Expert Opinion")}
   }[v];
+  if(M && v==="neg" && phiV()!==null) M.x+=`<br>${phiLine(true)}：<span class="muted">陰性切片後可選擇性使用血液、尿液或組織生物標記 ${src("auaEd","#25 Conditional/C")}；不常規反射性檢測 ${src("auaEd","#24 Clinical Principle")}。</span>`;
   return M? stepCard({n,k:"info",t:M.t,c:M.c,x:M.x,why:M.why}) : "";
 }
 function renderScreenRef(){
@@ -1654,7 +1710,12 @@ function buildPanels(){
 
   <div class="card"><h2>其他換算</h2><div class="cb">
     <div class="grid">${fld("fpsa","free PSA（ng/mL）")}${fld("testo","Testosterone")}${sel("tunit","單位",[["ngdl","ng/dL"],["nmol","nmol/L"]])}</div>
-  </div><div class="res" id="r-misc"></div></div></div>`;
+  </div><div class="res" id="r-misc"></div></div>
+
+  <div class="card"><h2>PHI <span class="sub">Prostate Health Index</span></h2><div class="cb">
+    <div class="grid">${fld("p2psa","p2PSA（pg/mL）")}${fld("fpsa","free PSA（ng/mL）")}${fld("psa","PSA（ng/mL）")}${fld("phi","或直接輸入報告 PHI")}</div>
+    <div class="note">PHI＝(p2PSA ÷ free PSA) × √PSA ${src("mayoPhi")}。報告值優先：各院 PSA／free PSA 校正（Hybritech 或 WHO）與廠牌不同，不可混用 ${src("phiIFU")}。</div>
+  </div><div class="res" id="r-phi"></div></div></div>`;
 
   P.dx = `<div class="split"><div class="card cc" id="cc-dx"></div><div class="pin">
   <div class="card incard"><h2>輸入</h2><div class="cb">
@@ -1663,6 +1724,7 @@ function buildPanels(){
       ${sel("ct","DRE",optsDRE)}
       ${fld("vol","攝護腺體積（mL，MRI）")}
       ${sel("pirads","MRI PI-RADS（最高分）",[["","未做"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]])}
+      ${fld("phi","PHI（報告值）")}
     </div>
     ${chk("psaRep","PSA 已重驗確認升高")}
     <details style="margin-top:6px;border-top:0"><summary style="padding-left:0">其他條件（勾選後才影響結果）</summary><div style="padding:4px 0 0">
@@ -1676,7 +1738,7 @@ function buildPanels(){
       ${chk("fhx","一等親攝護腺癌家族史")}
       ${chk("germ","已知 germline 帶因（BRCA2 等）")}
     </div></details>
-    <div class="note">DRE 與「分期・風險」的臨床 T 共用；體積與「計算器」共用。</div>
+    <div class="note">DRE 與「分期・風險」的臨床 T 共用；體積、PHI 與「計算器」共用（計算器可由 p2PSA 計算 PHI）。</div>
   </div></div></div>
   <div class="pout"><div class="card"><h2>下一步</h2><div class="cb" id="r-dx"></div>${renderScreenRef()}</div></div></div>`;
 
@@ -1815,10 +1877,10 @@ function renderRefPanel(){
   const groups = [
     ["指引",["nccn","nccnI","nccnUpd","nccn326","ascoNccn","nccnEd","eau","eauRisk","eauP1","eauDx","auaLoc","auaApc","auaEd","auaEdAm","auaStp","eauP2"]],
     ["補充來源（NCCN／EAU／AUA 衝突時；ESMO → ASCO → TUA）",["esmoAdv","esmoLoc","ascoCrpc"]],
-    ["其他文獻與台灣",["pilatz","mohwScr","eauBcr","twPsma"]],
+    ["其他文獻與台灣",["pilatz","mohwScr","eauBcr","twPsma","mayoPhi"]],
     ["分級與分期",["damico","capra","ajcc","isup","catalona","pcwg3","mskDT"]],
-    ["健保（115.09.22 版給付規定）",["nhi","nhi551","nhi554","nhi561","nhiZol","nhi949","nhi954","nhi990","nhi994","nhi985","nhi9137","nhi968","nhi93","nhi969"]],
-    ["法規核准與仿單",["zytigaPI","erleadaPI","xtandiPI","nubeqaPI","parpPI","adtPI","fdaCapi","fdaLu","fdaAkeega","fdaPsmafore","fdaTala","tfdaLu"]],
+    ["健保（115.09.22 版給付規定）",["nhi","nhiPhi","nhi551","nhi554","nhi561","nhiZol","nhi949","nhi954","nhi990","nhi994","nhi985","nhi9137","nhi968","nhi93","nhi969"]],
+    ["法規核准與仿單",["fdaPhi","phiIFU","zytigaPI","erleadaPI","xtandiPI","nubeqaPI","parpPI","adtPI","fdaCapi","fdaLu","fdaAkeega","fdaPsmafore","fdaTala","tfdaLu"]],
     ["主要試驗",["LATITUDE","STAMPEDEabi","TITAN","ARCHES","ENZAMET","ARANOTE","CHAARTED","PEACE1","ARASENS","STAMPEDEH","AMPLITUDE","CAPI281","PSMAddition","SPARTAN","PROSPER","ARAMIS","COU302","PREVAIL","TAX327","CARD","PROSELICA","VISION","PSMAfore","ALSYMPCA","ERA223","EMBARK","STAMPEDEabiM0","HALT","calgb","PRONOUNCE","PROfound","PROpel","MAGNITUDE","TALAPRO2","KN158","HERO"]]
   ];
   const list = `<div class="sec">出處（${Object.keys(REF).length}）</div><div class="qbox"><input type="search" id="rq" placeholder="篩選出處（指引、試驗、健保條文…）" aria-label="篩選出處" autocomplete="off"></div>`+
@@ -1830,7 +1892,15 @@ function renderRefPanel(){
     <div class="note">指引強度標示：AUA＝Strong／Moderate／Conditional ＋ Evidence Grade A／B／C，或 Clinical Principle、Expert Opinion；EAU＝Strong／Weak；NCCN＝category 1、2A、2B。</div>
   </div></div>
   <div class="card"><h2>Changelog</h2><div class="cb small">
-    <p style="margin:0 0 6px"><b>v1.6（2026-10-24）</b></p>
+    <p style="margin:0 0 6px"><b>v1.7（2026-10-24）</b></p>
+    <ul class="tight"><li>新增 PHI（Prostate Health Index）：
+      <ul class="tight"><li>計算器「PHI」卡：輸入 p2PSA（pg/mL）以 (p2PSA ÷ free PSA) × √PSA 計算，或直接輸入報告值（報告值優先，與計算值相差 >5% 時提示）。</li>
+      <li>判讀並列各來源，不合併：健保 27084C（<30 低風險，再驗 PSA 至少間隔 24 週）、EAU 2026（>30 決定 MRI＋切片；Weak）、仿單 A80984N（PSA 2–10：0–21／21–40／40+）、2012 FDA 核准（PSA 4–10：<27／27–35.9／36–54.9／≥55）、AUA/SUO 2026（未設切點，#17）、NCCN（請確認）。</li>
+      <li>超出驗證範圍提醒：PSA 不在 2–10（2–4 另註 2012 FDA 與健保為 4–10）、DRE 異常、5-ARI、近期感染或器械操作、<50 歲、報告值與計算值不一致。</li>
+      <li>健保 27084C 適應症逐項檢核（PSA 4–10、排除感染、DRE 無異常、≥50 歲或家族史），並提醒每 12 個月一次、限泌尿科開立。</li>
+      <li>診斷流程：輸入卡加 PHI 欄（與計算器共用）；「切片前檢查」、PI-RADS 3、前次切片陰性步驟顯示 PHI 與各來源落點，不改變步驟走向。台灣 PHI 健保狀態由「請確認」更新為 113.12.01 起給付。摘要列顯示 PHI。</li></ul></li>
+    <li>PHI 相關查證日期 2026-10-24（健保支付標準、仿單、FDA、EAU 2026、AUA/SUO 2026）。</li></ul>
+    <p style="margin:8px 0 6px"><b>v1.6（2026-10-24）</b></p>
     <ul class="tight"><li>介面優化，臨床內容未變：
       <ul class="tight"><li>分頁依診斷邏輯排列：診斷流程 → 分期・風險 → 局部治療 → 晚期治療 → 監測 → 藥物 → 計算器 → 來源・版本。窄螢幕用短名，依序放得下幾個就顯示幾個，其餘依同樣順序收進「更多」（390 px：診斷、分期、局部、晚期、監測＋更多）；寬螢幕全部顯示。預設開啟「診斷流程」。</li>
       <li>寬螢幕（≥920 px）雙欄：左欄輸入（固定、可捲動），右欄結果。</li>
@@ -1938,6 +2008,32 @@ function renderCalc(){
   if(t) mh+=`<div><div class="k">Testosterone</div><span class="big">${fmt(t.ngdl,1)}</span><span class="unit">ng/dL</span>　<span class="big" style="font-size:16px">${fx(t.nmol,2)}</span><span class="unit">nmol/L</span> ${t.ngdl<20?tag("<20：深度去勢","t-low"):t.ngdl<50?tag("<50：達去勢","t-low"):tag("≥50：未達去勢","t-high")}</div>`;
   mh+=`</div><div class="note">free/total PSA 主要用於總 PSA 4–10 ng/mL ${src("catalona")}。服用 finasteride／dutasteride ≥6 個月，PSA 約降一半，判讀時乘以 2。去勢標準 <50 ng/dL（1.7 nmol/L）；換算 1 nmol/L＝28.84 ng/dL ${src("auaApc","Table 3")}${src("eau")}。</div>`;
   document.getElementById("r-misc").innerHTML=mh;
+  renderPhi();
+}
+function renderPhi(){
+  const v=phiV(), c=phiCalc(), psa=num(S.psa);
+  // 診斷流程的 PHI 欄：未填報告值時以計算值作為提示文字
+  document.querySelectorAll('input[data-f="phi"]').forEach(el=>{ el.placeholder = c!==null? "計算值 "+fmt(c,1) : ""; });
+  let h;
+  if(v===null){ const miss=[["p2psa","p2PSA"],["fpsa","free PSA"],["psa","PSA"]].filter(x=>num(S[x[0]])===null||num(S[x[0]])<=0&&x[0]!=="p2psa").map(x=>x[1]);
+    h=`<span class="muted">${miss.length<3? "計算 PHI 缺："+miss.join("、")+"；" : "輸入 p2PSA、free PSA、PSA，"}或直接輸入報告 PHI。</span>`; }
+  else{
+    const i=phiBand(PHI_IFU,v), j=phiBand(PHI_2012,v), w=phiWarn(), in410 = psa!==null&&psa>=4&&psa<=10;
+    const row=(B,k)=>B.map((b,x)=>`<span class="${x===k?"tag t-info":"muted"}" style="margin-right:6px">${b[2]}：${b[3]}</span>`).join("");
+    h=`<div class="kv"><div><div class="k">PHI${phiSrc()==="calc"?"（計算）":"（報告值）"}</div><span class="big">${fmt(v,1)}</span></div>
+      ${c!==null&&phiSrc()==="report"?`<div><div class="k">由輸入值計算</div><b>${fmt(c,1)}</b></div>`:""}</div>
+      ${w.length?`<div class="alert a-warn">超出驗證範圍（數值照算，判讀需保留）：<ul class="tight">${w.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}
+      <table class="t" style="margin-top:8px"><tbody>
+        <tr><th style="width:118px">健保 27084C</th><td>${v<30?tag("<30 低風險","t-low")+" 再驗 PSA 至少間隔 24 週":tag("≥30","t-mid")+" 非低風險"} ${src("nhiPhi","註 5")}</td></tr>
+        <tr><th>EAU 2026</th><td>${v>30?tag(">30","t-mid"):tag("≤30","t-low")} 以 PHI >30 決定 MRI＋切片：可避免 25% 之 MRI 與切片，漏 8% GG ≥2；生物標記為 MRI、risk calculator 之外的選項之一（Weak），目前無單一檢測可推薦 ${src("eauDx","5.2.8、5.4.1.b")}</td></tr>
+        <tr><th>仿單（PSA 2–10）</th><td>${row(PHI_IFU,i)}<div class="note">切片罹癌機率（任何癌症；Hybritech 校正）。仿單表列 0–21、21–40、40+，本頁將 21、40 歸入較高組。WHO 校正之切點為 23、45 ${src("phiIFU")}</div></td></tr>
+        <tr><th>2012 FDA（PSA 4–10）</th><td>${in410?row(PHI_2012,j):'<span class="muted">PSA 不在 4–10，不適用此表</span>'}<div class="note">切片罹癌機率 ${src("fdaPhi")}${src("mayoPhi")}</div></td></tr>
+        <tr><th>AUA/SUO 2026</th><td>未設 PHI 切點；生物標記僅在會改變切片決策時使用 ${src("auaEd","#17 Conditional/C")}</td></tr>
+        <tr><th>NCCN</th><td>Early Detection v2.2026 全文需登入，PHI 切點未能核對，<span class="cau">請確認</span> ${src("nccnEd")}</td></tr>
+      </tbody></table>`;
+  }
+  h+=`<details><summary>健保 27084C 適應症檢核${upd("健保 113 年 12 月 1 日起給付 p2PSA（PHI），原為自費")}</summary><div class="cb small">${nhiPhiHtml()}${src("nhiPhi")}</div></details>`;
+  document.getElementById("r-phi").innerHTML=h;
 }
 
 function riskRow(sys,r,ref){
@@ -2031,6 +2127,7 @@ function renderStrip(){
   if(S.cn!=="N0"||S.cm!=="M0") c.push(chip(S.cn!=="N0"?"cn":"cm",`<b>${S.cn} ${S.cm}</b>`));
   if(pct!==null) c.push(chip("pos",`陽性針 <b>${S.pos}/${S.tot}</b>`));
   if(S.pirads) c.push(chip("pirads",`PI-RADS <b>${S.pirads}</b>`));
+  if(phiV()!==null) c.push(chip("phi",`PHI <b>${fmt(phiV(),1)}</b>`));
   if(S.ari) c.push(chip("ari",`<b>5-ARI</b>`));
   if(S.prevBx&&S.prevBx!=="none") c.push(chip("prevBx",`前次切片 <b>${{neg:"陰性",asap:"ASAP",hgpin1:"HGPIN",hgpinM:"多灶 HGPIN",aip:"AIP"}[S.prevBx]}</b>`));
   if(S.vol) c.push(chip("vol",`體積 <b>${fmt(S.vol,1)}</b> mL`));
@@ -2250,7 +2347,7 @@ function ccGo(go){
     el= kind==="c"? (c.closest(".card")||c) : c.querySelectorAll({step:".step",opt:".opt",alert:".alert"}[kind])[+i]; }
   reveal(el);
 }
-const JF_TAB={psa:"risk",p1:"risk",ct:"risk",cn:"risk",cm:"risk",pos:"risk",g45:"risk",age:"risk",pirads:"dx",ari:"dx",prevBx:"dx",vol:"calc",psadt:"calc"};
+const JF_TAB={phi:"calc",psa:"risk",p1:"risk",ct:"risk",cn:"risk",cm:"risk",pos:"risk",g45:"risk",age:"risk",pirads:"dx",ari:"dx",prevBx:"dx",vol:"calc",psadt:"calc"};
 function revealField(f){
   const find=()=>[...panelEl().querySelectorAll(`[data-f="${f}"]`)].find(shown);
   let el=find();

@@ -33,7 +33,7 @@ module.exports=function(file){
   const conv=(f,v)=>{ if(A.BOOL_F.has(f)) return !!v; if(A.STR_F.has(f)) return String(v);
     if(A.INT_F.has(f)) return v===""?null:+v; if(v===""||v===null) return null; const n=+v; return isNaN(n)||(n<0&&f!=="m_t")?null:n; };
   // 依目前 S 跑完所有分頁與子模式（局部：初始／術後；晚期：mHSPC／nmCRPC／mCRPC），回傳 {輸出區 id: HTML}
-  const OUT_IDS={calc:["r-psad","r-kin","r-ajcc","r-img","r-misc"],risk:["r-risk"],dx:["r-dx"],mon:["r-mon"],drug:["r-bsa","r-drugs"],strip:["strip"]};
+  const OUT_IDS={calc:["r-psad","r-kin","r-ajcc","r-img","r-misc","r-phi"],risk:["r-risk"],dx:["r-dx"],mon:["r-mon"],drug:["r-bsa","r-drugs"],strip:["strip"]};
   const runAll=()=>{ reset(); const R={}, s0=JSON.parse(JSON.stringify(A.S));
     const grab=ids=>ids.forEach(i=>R[i]=out(i));
     A.S.loc="init"; A.S.adv="mhspc"; A.renderAll(); Object.values(OUT_IDS).forEach(grab); grab(["r-loc","r-mhspc"]);

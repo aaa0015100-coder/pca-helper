@@ -16,7 +16,7 @@ SHOTS=next((a.split("=",1)[1] for a in sys.argv if a.startswith("--shots=")),Non
 WIDTHS=[320,390,768,1280] if (FULL or "--wide" in sys.argv) else [390,1280]
 SUB={"loc":"#locSeg [data-loc]","adv":"#advSeg [data-adv]","drug":"#dSeg [data-dc]"}
 NUMV={"psa":"12","fpsa":"1.2","testo":"30","vl":"4.5","vw":"4","vh":"3.8","vol":"40","age":"68","pos":"4","tot":"12","g45":"1",
-      "b_psa":"0.3","psadt":"8","b_nn":"2","b_mo":"24","h_bone":"5","c_doccyc":"6","m_t":"-2.6","wt":"70","ht":"170"}
+      "b_psa":"0.3","psadt":"8","b_nn":"2","b_mo":"24","h_bone":"5","c_doccyc":"6","m_t":"-2.6","wt":"70","ht":"170","p2psa":"15","phi":"32"}
 errs=[];issues=[]
 BADJS="(()=>{const t=document.body.innerText;const m=t.match(/.{0,30}(\\bundefined\\b|\\bNaN\\b|\\[object|Infinity).{0,30}/);return m?m[0]:''})()"
 def chk(pg,W,where):
@@ -200,7 +200,7 @@ with sync_playwright() as p:
                 if not el: issues.append(f"{W} 找不到 {s}"); continue
                 t=el.evaluate("e=>{const p=e.closest('.panel');return p?p.id.slice(2):null}")
                 if t: tab(pg,t)
-                el.evaluate("e=>{let d=e.closest('details');while(d){d.open=true;d=d.parentElement.closest('details')}}")
+                el.evaluate("e=>{let d=e.closest('details');while(d){d.open=true;d=d.parentElement.closest('details')} const c=e.closest('.card.col'); if(c) setCol(c,false)}")
                 if not el.is_visible():
                     issues.append(f"{W} {s} 不可見，略過"); continue
                 el.click(); pg.wait_for_timeout(30)

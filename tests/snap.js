@@ -21,9 +21,11 @@ const SC=[
   ["mcrpc2L",{adv:"mcrpc",cm:"M1b",c_arpi:"abi",c_doc:"y",c_doccyc:6,c_hrr:"brca",c_msi:"n",c_psma:"pos",c_sympbone:"y",c_visc:"n",c_ecog:"1",c_fit:"y"}],
   ["mcrpcPreChemo",{adv:"mcrpc",cm:"M1b",c_arpi:"enza",c_doc:"n",c_hrr:"none",c_msi:"n",c_psma:"pos",c_sympbone:"n",c_visc:"n",c_ecog:"0",c_fit:"y"}],
   ["mcrpcNaive",{adv:"mcrpc",cm:"M1c",c_arpi:"none",c_doc:"n",c_hrr:"none",c_msi:"y",c_psma:"neg",c_visc:"y",c_ecog:"3",c_fit:"n"}],
+  ["phiCalc",{age:62,psa:6.5,fpsa:0.9,p2psa:18,ct:"T1c",pirads:"3",vol:45,le:"ge10"}],
+  ["phiReport",{age:48,psa:3.2,fpsa:0.5,p2psa:9,phi:25,ari:true,uti:true,ct:"T2a",prevBx:"neg",pirads:"2",vol:30}],
   ["monitor",{m_adt:"agonist",m_long:true,m_abi:true,m_bone:"deno120",m_bmets:"crpc",m_t:-2.7,m_fx:true,m_cvd:true,m_dm:true,wt:70,ht:170}],
 ];
-const ORDER=["strip","r-psad","r-kin","r-ajcc","r-img","r-misc","r-dx","r-risk","r-loc","r-post","r-mhspc","r-nmcrpc","n-psadtSrc","r-mcrpc","r-mon","r-bsa","r-drugs"];
+const ORDER=["strip","r-psad","r-kin","r-ajcc","r-img","r-misc","r-phi","r-dx","r-risk","r-loc","r-post","r-mhspc","r-nmcrpc","n-psadtSrc","r-mcrpc","r-mon","r-bsa","r-drugs"];
 const L=[];
 const add=(lab,f)=>{ let h; try{h=f();}catch(e){h="EXC "+e.message;} L.push("## "+lab+"\n"+txt(h)); };
 add("panels",()=>{ set({}); const P=A.buildPanels(); return Object.keys(P).sort().map(k=>"["+k+"] "+P[k]).join("\n"); });

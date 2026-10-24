@@ -1,9 +1,9 @@
 // 組合模擬（00 第八節第 2 點）。node tests/fuzz.js [index.html] [--mod=risk,mcrpc,…] [--n=3000] [--seed=1]
-// 模組：all（全頁隨機，查 undefined／NaN／例外與步驟編號）、risk（窮舉，單調性與定義）、mhspc、nmcrpc、mcrpc、mon、cc（目前結論卡）
+// 模組：all（全頁隨機，查 undefined／NaN／例外與步驟編號）、risk（窮舉，單調性與定義）、mhspc、nmcrpc、mcrpc、mon、cc（目前結論卡）、phi
 // 只印失敗摘要；失敗依「規則＋訊息」分組，每組附一個重現用的輸入。
 const {A,set,txt,out,spec,conv,runAll}=require('./harness')((process.argv[2]&&!process.argv[2].startsWith("--"))?process.argv[2]:undefined);
 const arg=k=>{const a=process.argv.find(x=>x.startsWith("--"+k+"="));return a?a.split("=")[1]:null;};
-const MODS=(arg("mod")||"all,risk,mhspc,nmcrpc,mcrpc,mon,cc").split(",");
+const MODS=(arg("mod")||"all,risk,mhspc,nmcrpc,mcrpc,mon,cc,phi").split(",");
 const N=+(arg("n")||3000);
 let seed=+(arg("seed")||1); const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;}; // 可重現
 const pick=a=>a[Math.floor(rnd()*a.length)];
@@ -17,7 +17,7 @@ const NUMV={psa:[null,0.5,2.9,3,4,6,9.9,10,15,19.9,20,20.1,30,100],fpsa:[null,0.
   vl:[null,3,4.5,6],vw:[null,3,4.5,6],vh:[null,3,4.5,6],vol:[null,20,40,80],age:[null,45,55,65,75,85],
   pos:[null,0,2,6,12],tot:[null,6,12,14],g45:[null,0,2,5],b_psa:[null,0.05,0.1,0.2,0.5,2,5],psadt:[null,3,6,9,10,10.1,12,15,30],
   b_nn:[null,0,1,4],b_mo:[null,6,18,36,60],h_bone:[null,0,1,3,4,6,10],c_doccyc:[null,1,2,6,10],m_t:[null,-3,-2.5,-1.5,0],
-  wt:[null,50,70,90],ht:[null,150,170]};
+  wt:[null,50,70,90],ht:[null,150,170],p2psa:[null,5,12,20,40],phi:[null,15,20.5,21,26.9,27,29.9,30,30.1,35.9,36,39.9,40,54.9,55,80]};
 const RISE=[["2026-01-10",2.1],["2026-04-10",3.0],["2026-07-10",4.4]], SLOW=[["2025-01-10",2.0],["2026-01-10",2.6]];
 function randState(tabs){ const o={};
   for(const [f,v] of Object.entries(F)){ if(tabs&&!tabs.includes(v.tab)) continue;
@@ -166,6 +166,43 @@ if(MODS.includes("cc")) for(let i=0;i<N;i++){
     { const hh=(["dx","mon"].includes(tab)||(tab==="loc"&&sub==="post"))? h.replace(/<div class="step [\s\S]*$/,"") : h;
       const na=(hh.match(/<div class="alert a-(warn|bad)">/g)||[]).length; if(row("注意").length!==na) fail("cc",o,`${lab} 注意 ${row("注意").length} 項，頁面 ${na} 項`); }
   }
+}
+
+/* ---------- phi：計算、各來源判讀、健保逐項、不改變診斷流程（v1.7） ---------- */
+if(MODS.includes("phi")) for(let i=0;i<N;i++){
+  const o=randState(["dx","calc","risk"]); if(rnd()<.5) o.psaRep=true; n++;
+  set(o); let R; try{ R=runAll(); }catch(e){ fail("phi",o,"EXC "+e.message); continue; }
+  const h=R["r-phi"], t=txt(h), dx=R["r-dx"];
+  badIn("phi",o,"r-phi",h);
+  const p2=o.p2psa, f=o.fpsa, ps=o.psa;
+  const calc=(p2!=null&&f>0&&ps>0)? p2/f*Math.sqrt(ps) : null;
+  const c=A.phiCalc(); if((c===null)!==(calc===null) || (c!==null && Math.abs(c-calc)>1e-9)) fail("phi",o,`計算錯誤：${c} vs ${calc}`);
+  const v=o.phi!=null? o.phi : calc;
+  if(A.phiV()!==v && !(v==null&&A.phiV()==null)) fail("phi",o,"未以報告值優先");
+  if(v!=null){
+    if(v<30 && !/<30 低風險/.test(t)) fail("phi",o,"PHI <30 未標健保低風險"); if(v>=30 && /<30 低風險/.test(t)) fail("phi",o,"PHI ≥30 卻標低風險");
+    const eauTag=(h.match(/EAU 2026<\/th><td><span class="tag [^"]*">([^<]*)</)||[])[1]; if(eauTag!==(v>30?">30":"≤30")) fail("phi",o,`EAU 標籤 ${eauTag}（PHI ${v}）`);
+    const hl=[...h.matchAll(/<span class="tag t-info" style="margin-right:6px">([^：<]*)：/g)].map(m=>m[1]);
+    const ifu = v<21?"0–21":v<40?"21–40":"40+", f12 = v<27?"0–26.9":v<36?"27.0–35.9":v<55?"36.0–54.9":"≥55.0";
+    const in410 = ps!=null && ps>=4 && ps<=10;
+    const exp = in410? [ifu,f12] : [ifu];
+    if(hl.join("|")!==exp.join("|")) fail("phi",o,`分級標示 ${hl.join("|")}，應為 ${exp.join("|")}`);
+    // 超出驗證範圍提醒
+    const need=[]; if(ps!=null&&(ps<2||ps>10)) need.push("不在仿單適用範圍"); else if(ps!=null&&ps<4) need.push("2012 FDA 核准範圍");
+    if(o.ct&&o.ct!=="T1c") need.push("DRE 異常"); if(o.ari) need.push("5-ARI"); if(o.uti) need.push("近期感染"); if(o.age!=null&&o.age<50) need.push("驗證族群為 ≥50 歲");
+    for(const k of need) if(!t.includes(k)) fail("phi",o,"缺提醒："+k);
+    if(!need.length && /超出驗證範圍/.test(t) && !(calc!=null&&o.phi!=null)) fail("phi",o,"無條件卻出現超出範圍提醒");
+    // 診斷流程有顯示 PHI（流程未停在「輸入 PSA 與 DRE」時）
+    if(!/輸入 PSA 與 DRE 後顯示/.test(txt(dx)) && !/PHI [\d.]/.test(txt(dx))) fail("phi",o,"診斷流程未顯示 PHI");
+  }
+  // 健保逐項
+  const it=[ ps==null?null:(ps>=4&&ps<=10), o.uti?false:null, !o.ct?null:o.ct==="T1c", o.age==null?null:(o.age>=50||!!o.fhx) ];
+  const head = it.includes(false)? "✘ 不符" : it.includes(null)? "待確認" : "✔ 符合";
+  if(!t.includes(head+" 適應症")) fail("phi",o,`健保判定應為 ${head}`);
+  // PHI 不改變診斷流程：拿掉 PHI 相關欄位後，步驟標題、類型、主文相同
+  const steps=x=>[...x.matchAll(/<div class="step ([a-z-]+)"><div class="st-h"><span class="st-n">([^<]*)<\/span><span class="st-t">([^<]*)<\/span><\/div>\s*<div class="st-c">([\s\S]*?)<\/div>/g)].map(m=>m.slice(1).join("|")).join("\n");
+  set(Object.assign({},o,{phi:null,p2psa:null})); const R0=runAll();
+  if(steps(R0["r-dx"])!==steps(dx)) fail("phi",o,"PHI 改變了診斷流程的步驟或結論");
 }
 
 // 輸出
